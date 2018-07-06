@@ -197,9 +197,11 @@
 <p><strong>无向图算法概念</strong>(一种递归原理)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">先按照一条边进行搜索,当遇到第一个节点时,对它相邻的其他节点进行搜索并标记为已查找的节点(会查找完第一条节点的最深层后返回)</span><br><span class="line">详细见算法目录(持续更新)</span><br></pre></td></tr></table></figure>
 <p><img src="http://i.imgur.com/vJ23ZgT.jpg" alt="&quot;无向图算法图片&quot;的图片搜索结果"></p>
-<h3 id="FastDFS–结构"><a href="#FastDFS–结构" class="headerlink" title="FastDFS–结构"></a>FastDFS–结构</h3><p><strong>FastDFS服务有三个角色:跟踪服务器(tracker server)、存储服务器(storage server)和客户端(client)</strong></p>
+<h3 id="FastDFS–结构"><a href="#FastDFS–结构" class="headerlink" title="FastDFS–结构"></a>FastDFS–结构</h3><h2 id="1">FastDFS 架构–结构</h2>
+
+
+<p><strong>FastDFS服务有三个角色:跟踪服务器(tracker server)、存储服务器(storage server)和客户端(client)</strong></p>
 <p>主要解决了海量数据存储问题 ,特别适合以中小文件（建议范围：4KB &lt; file_size &lt;500MB）为载体的在线服务。 </p>
-<p><img src="http://haystack.u.qiniudn.com/arch.jpg" alt="网络扑朔图"></p>
 <h4 id="跟踪器Tracker"><a href="#跟踪器Tracker" class="headerlink" title="跟踪器Tracker :"></a>跟踪器Tracker :</h4><p>主要做调度工作，相当于mvc中的controller的角色，在访问上起负载均衡的作用。跟踪器和存储节点都可以由一台或多台服务器构成，跟踪器和存储节点中的服务器均可以随时增加或下线而不会影响线上服务，其中<strong>跟踪器</strong>中的所有服务器都是<strong>对等</strong>的，可以根据服务器的压力情况随时增加或减少。 </p>
 <p>跟踪器Tracker负责管理所有的Storage和group，本身不需要持久化任何数据,直接增加机器就可以拓展tracker,每个Storage在启动后会连接Tracker，并周期性保持联系.</p>
 <h4 id="存储服务器Storage"><a href="#存储服务器Storage" class="headerlink" title="存储服务器Storage:"></a>存储服务器Storage:</h4><p>以group为最小单位,方便实现 应用隔离、负载均衡、副本数定制（group内storage server数量即为该group的副本数）,建议同一group内的配置尽量相同,减少资源浪费(storage依赖于本地文件系统)</p>
