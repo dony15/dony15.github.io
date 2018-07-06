@@ -209,7 +209,10 @@
 <h3 id="FastDFS–运行"><a href="#FastDFS–运行" class="headerlink" title="FastDFS–运行"></a>FastDFS–运行</h3><p><strong>tracker</strong></p>
 <p>当集群中不止一个tracker server时，由于tracker之间是完全对等的关系，客户端在upload文件时可以任意选择一个trakcer。</p>
 <p><strong>group</strong></p>
-<p>当tracker接收到upload file的请求时，会为该文件分配一个可以存储该文件的group，支持如下选择group的规则： 1. Round robin，所有的group间轮询 </p>
+<p>当tracker接收到upload file的请求时，会为该文件分配一个可以存储该文件的group，支持如下选择group的规则：</p>
+<ol>
+<li>Round robin，所有的group间轮询 </li>
+</ol>
 <ol start="2">
 <li>Specified group，指定某一个确定的group </li>
 <li>Load balance，剩余存储空间多多group优先</li>
@@ -246,7 +249,7 @@
 <p>FastDFS在V3.0版本里引入小文件合并存储的机制，可将多个小文件存储到一个大的文件（trunk file），为了支持这个机制，FastDFS生成的文件fileid需要额外增加16个字节 </p>
 <h4 id="HTTP访问支持"><a href="#HTTP访问支持" class="headerlink" title="HTTP访问支持"></a>HTTP访问支持</h4><p>客户端可以通过http协议来下载文件，tracker在接收到请求时，通过http的redirect机制将请求[重定向]至文件所在的storage上；除了内置的http协议外，FastDFS还提供了通过apache或nginx扩展模块下载文件的支持。</p>
 <h4 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h4><p>group机制本身可用来做负载均衡，但这只是一种静态的负载均衡机制，需要预先知道应用的访问特性；同时group机制也导致不可能在group之间迁移数据来做动态负载均衡。</p>
-<h3 id="FastDFS–使用小结"><a href="#FastDFS–使用小结" class="headerlink" title="FastDFS–使用小结"></a>FastDFS–使用小结</h3><p>（1）每次上传文件后都会返回一个地址，用户需要自己保存此地址。<br>（2）为了支持大容量，存储节点（服务器）采用了分卷（或分组）的组织方式。存储系统由一个或多个卷组成，卷与卷之间的文件是相互独立的，所有卷的文件容量累加就是整个存储系统中的文件容量。一个卷可以由一台或多台存储服务器组成，一个卷下的存储服务器中的文件都是相同的，卷中的多台存储服务器起到了冗余备份和负载均衡的作用。</p>
+<h3 id="FastDFS–使用小结"><a href="#FastDFS–使用小结" class="headerlink" title="FastDFS–使用小结"></a>FastDFS–使用小结</h3><p>1.每次上传文件后都会返回一个地址，用户需要自己保存此地址。<br>2.为了支持大容量，存储节点（服务器）采用了分卷（或分组）的组织方式。存储系统由一个或多个卷组成，卷与卷之间的文件是相互独立的，所有卷的文件容量累加就是整个存储系统中的文件容量。一个卷可以由一台或多台存储服务器组成，一个卷下的存储服务器中的文件都是相同的，卷中的多台存储服务器起到了冗余备份和负载均衡的作用。</p>
 <h3 id="FastDFS原理系列文章-转发"><a href="#FastDFS原理系列文章-转发" class="headerlink" title="FastDFS原理系列文章(转发)"></a>FastDFS原理系列文章(转发)</h3><p><strong><a href="https://blog.csdn.net/hfty290/article/details/42076205" target="_blank" rel="noopener">https://blog.csdn.net/hfty290/article/details/42076205</a></strong></p>
 
     </div>
@@ -337,13 +340,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/03/FastDfs基础原理/">FastDFS 基础原理</a>
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                    <a href="/2018/07/03/FastDfs基础原理/">FastDFS 基础原理</a>
                 </span>
             </li>
             
