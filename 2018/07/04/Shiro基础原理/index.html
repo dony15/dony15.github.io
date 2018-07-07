@@ -297,6 +297,18 @@
 <p><strong>Shiro内部结构</strong></p>
 <p><img src="file:///C:/Users/Administrator/Documents/My%20Knowledge/temp/1b7bc2c3-9f2c-4ea2-8ed7-97820c205482/128/index_files/9b959a65-799d-396e-b5f5-b4fcfe88f53c.png" alt="img"></p>
 <p><strong>详细原理深入和运用:<a href="http://jinnianshilongnian.iteye.com/blog/2018398" target="_blank" rel="noopener">http://jinnianshilongnian.iteye.com/blog/2018398</a></strong></p>
+<h3 id="6-Shiro使用技巧整理"><a href="#6-Shiro使用技巧整理" class="headerlink" title="6.Shiro使用技巧整理"></a>6.Shiro使用技巧整理</h3><h4 id="工具类接口的使用"><a href="#工具类接口的使用" class="headerlink" title="工具类接口的使用"></a>工具类接口的使用</h4><p>建立一个工具类接口Constants,以常量字符串的方式,专门存放Shiro中自定义的<strong>标识符</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public interface Constants &#123;</span><br><span class="line">    // md5(用户密码+PASSWORD_SALT_KEY)保存到数据库中。</span><br><span class="line">    String PASSWORD_SALT_KEY = &quot;Shiro.admin.2017&quot;;</span><br><span class="line">    //Shiro的session中存放用户的key</span><br><span class="line">    String SESSION_USER_KEY = &quot;SESSION_USER_KEY&quot;;</span><br><span class="line">    //redis中存放的用户权限菜单的key</span><br><span class="line">    String SESSION_USER_MANU = &quot;SESSION_USER_MANU&quot;;</span><br><span class="line">    //Shiro存放的角色信息</span><br><span class="line">    String SESSION_USER_ROLE = &quot;SESSION_USER_ROLE&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在使用用户信息授权(Session)等操作时,可以从这里快速准确找到需要的内容,便于后期维护和合作开发</p>
+<p><strong>接口工具类的思路不仅限于Shiro,灵活的定义接口,将冗余和容易混淆的部分抽离出来统一管理,可以极大的提高开发和维护的效率</strong></p>
+<h4 id="shiro-xml-拦截器设置"><a href="#shiro-xml-拦截器设置" class="headerlink" title="..shiro.xml 拦截器设置"></a>..shiro.xml 拦截器设置</h4><p><strong>Shiro主过滤器本身功能十分强大,其强大之处就在于它支持任何基于URL路径表达式的、自定义的过滤器的执行</strong></p>
+<ul>
+<li>/login.html=anon 静态资源的方式屏蔽过滤器</li>
+<li>/**=authc 该路径下需要认证才能访问</li>
+<li>…</li>
+</ul>
+<p>过滤器的完整参考：</p>
+<p><a href="http://blog.csdn.net/jadyer/article/details/12172839" target="_blank" rel="noopener">http://blog.csdn.net/jadyer/article/details/12172839</a></p>
 
     </div>
 </article>
@@ -398,13 +410,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/04/Shiro基础原理/">Shiro基础原理</a>
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                    <a href="/2018/07/04/Shiro基础原理/">Shiro基础原理</a>
                 </span>
             </li>
             
