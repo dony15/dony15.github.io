@@ -10,7 +10,7 @@
     
     
     
-    <title>tags | DonY15</title>
+    <title>Solr基础原理 | DonY15</title>
     <link href=”http://yoursite.com“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -149,7 +149,7 @@
                 
                 
                 
-                <li class="current">
+                <li class="">
                     <a href="/tags">
                         <i class="fa fa-tags"></i>标签
                     </a>
@@ -173,21 +173,28 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <!-- 搜索页面(尽可能接近ZanBlog搜索功能) -->
-
-
+                    
 <article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+       
+				<a href="/">DonY15</a>
+        >
+        <span>Solr基础原理</span>
+    </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/tags/index.html">tags</a>
+                <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
             </h1>
         </div>
         <div class="tag-article">
+            
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2018-07-05
+                <i class="fa fa-calendar"></i> 2018-07-06
             </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -195,20 +202,112 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/tags/index.html">tags</a>
+                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2018-07-05
+                <i class="fa fa-calendar"></i> 2018-07-06
+            </p>
+            <p>
+                
+                
             </p>
         </center>
     </div>
     <div class="content-article">
-        <p>暂无标签哦</p>
+        <h3 id="Solr基础原理"><a href="#Solr基础原理" class="headerlink" title="Solr基础原理"></a>Solr基础原理</h3><h4 id="1-目录核心组成"><a href="#1-目录核心组成" class="headerlink" title="1.目录核心组成"></a>1.目录核心组成</h4><p><strong>1.core</strong></p>
+<p>​    solr的索引库,可以理解为数据库,需要手动创建(文件夹),core可以根据需要建立多个索引库,索引库的内容可以在后台看到也可以在core中看到</p>
+<p><strong>2.solrhome</strong></p>
+<p>​    solr的配置目录,solr服务器所有的配置文件存放的目录(<strong>core创建在solrhome中</strong>)</p>
+<p><strong>3.collection</strong></p>
+<p>​    solr的逻辑索引(逻辑意义上的完整索引),由多个shard的组成,每个shard又由一个leadereplica和多个replica,每个replica都是物理索引,即每个replica都对应着一个core,collection本质是可以跨越多个核的索引,包含冗余的索引.</p>
+<p><strong>参考<a href="https://blog.csdn.net/zhousenshan/article/details/51799567" target="_blank" rel="noopener">https://blog.csdn.net/zhousenshan/article/details/51799567</a></strong></p>
+<h4 id="2-配置详解"><a href="#2-配置详解" class="headerlink" title="2.配置详解"></a>2.配置详解</h4><h5 id="1-配置中文分词"><a href="#1-配置中文分词" class="headerlink" title="1.配置中文分词"></a>1.配置中文分词</h5><ol>
+<li><fieldtype name="text_ik" class="solr.TextField">   <!-- text_ik 中文分词包的引用名 --></fieldtype></li>
+<li><analyzer class="org.wltea.analyzer.lucene.IKAnalyzer">  <!-- 中文分词包 --></analyzer></li>
+<li></li>
+<li><!-- 字段title 使用中文分词 stored="true"下载并索引 --></li>
+<li><field name="item_title" type="text_ik" indexed="true" stored="true"> </field></li>
+<li><!-- 字段price 使用long类型 --></li>
+<li><field name="item_price" type="long" indexed="true" stored="true"></field></li>
+<li><!-- city_id 使用long类型 --></li>
+<li><field name="item_city_id" type="long" indexed="true" stored="true"> </field></li>
+<li><!-- city_name 因为城市名固定,所以不需要分词,String即可 --></li>
+<li><field name="item_city_name" type="string" indexed="true" stored="true"></field></li>
+<li><!-- image 图片地址,String类型 --></li>
+<li><field name="item_image" type="string" indexed="true" stored="true"></field></li>
+<li><!-- content 中文分词 stored="false"(不下载,但可以索引) --></li>
+<li><field name="item_content" type="text_ik" indexed="true" stored="false"></field></li>
+<li><!-- item_keywords 自定义查询名(关键字);可以根据title||city_name||content来查询 --></li>
+<li><field name="item_keywords" type="text_ik" indexed="true" stored="false" multivalued="true"></field></li>
+<li><copyfield source="item_title" dest="item_keywords"></copyfield></li>
+<li><copyfield source="item_city_name" dest="item_keywords"></copyfield></li>
+<li><copyfield source="item_content" dest="item_keywords">
+
+
+
+
+
+</copyfield></li>
+</ol>
+<ol>
+<li><!-- 默认使用item_keywords(Solr后台分词查询中显示自定义的字段) --></li>
+<li><requesthandler name="/select" class="solr.SearchHandler"></requesthandler></li>
+<li>​    &lt;!– default values for query parameters can be specified, these</li>
+<li>​         will be overridden by parameters in the request</li>
+<li>​      –&gt;</li>
+<li>​     <lst name="defaults"></lst></li>
+<li>​       <str name="echoParams">explicit</str></li>
+<li>​       <str name="df">item_keywords</str></li>
+<li>​        <int name="rows">10</int></li>
+</ol>
+<ol>
+<li><!-- 默认使用item_keywords(开启查询) --></li>
+<li><requesthandler name="/query" class="solr.SearchHandler"></requesthandler></li>
+<li>​     <lst name="defaults"></lst></li>
+<li>​       <str name="echoParams">explicit</str></li>
+<li>​       <str name="wt">json</str></li>
+<li>​       <str name="indent">true</str></li>
+<li>​       <str name="df">item_keywords</str></li>
+<li>​     </li>
+<li></li>
+</ol>
+<h5 id="2-配置Solr-Dataimport"><a href="#2-配置Solr-Dataimport" class="headerlink" title="2.配置Solr Dataimport"></a>2.配置Solr Dataimport</h5><ol>
+<li><!-- dataimport 开启Solr连接数据库功能 --></li>
+<li><requesthandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler"> </requesthandler></li>
+<li>​    <lst name="defaults">      </lst></li>
+<li><!-- dataimport读取data-config.xml设定的JDBC配置文件 -->   </li>
+<li>​         <str name="config">data-config.xml</str> </li>
+<li>​              </li>
+<li>  </li>
+</ol>
+<ol>
+<li><dataconfig>       </dataconfig></li>
+<li><!-- JDBC配置 --></li>
+<li>​    <datasource type="JdbcDataSource" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/travel_db?characterEncoding=utf-8" user="root" password="root" batchsize="-1">   </datasource></li>
+<li>​    <document>   </document></li>
+<li><!-- 查询语句(全表查询)字段,并匹配分词中设定的name -->  </li>
+<li>​        <entity name="hotel" query="select ID,TITLE,PRICE,IMAGE,CITY_NAME, CITY_ID from HOTEL" datasource="JdbcDataSource">        </entity></li>
+<li>​            <field column="ID" name="id"> </field></li>
+<li>​            <field column="TITLE" name="item_title"> </field></li>
+<li>​                            <field column="PRICE" name="item_price"> </field></li>
+<li>​                            <field column="CONTENT" name="item_content"></field></li>
+<li><field column="IMAGE" name="item_image"></field></li>
+<li>​                            <field column="CITY_NAME" name="item_city_name"></field></li>
+<li><field column="CITY_ID" name="item_city_id"></field></li>
+<li>​                </li>
+<li>​            </li>
+<li>  </li>
+</ol>
+<h5 id="3-Solr后台的使用"><a href="#3-Solr后台的使用" class="headerlink" title="3.Solr后台的使用"></a>3.Solr后台的使用</h5><p>第一次先Dataimport–&gt;Execute导入,然后Refresh刷新状态即可</p>
+<p><strong>Query:查询功能</strong> </p>
+<p>​    q  <em> ; </em>    –&gt;第一个 <em> 表示字段; 第二个 </em> 表示字段的内容;  </p>
+<p>​    如    item_keywords:北京   分词中有”北京”关键字的内容</p>
+<p>​        item_price:[* TO 200]  价格是200以内的内容</p>
+<p>​        item_price:[100 TO 700]  价格是100-200的内容</p>
 
     </div>
 </article>
-
 
 
                 </div>
@@ -374,13 +473,13 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/tags/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2018/07/06/Solr基础原理/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/tags/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2018/07/06/Solr基础原理/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/tags/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/07/06/Solr基础原理/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">

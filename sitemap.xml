@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/07/02/GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</loc>
+    
+    <lastmod>2018-07-09T12:47:38.560Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/07/04/Redis%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/</loc>
+    
+    <lastmod>2018-07-09T12:13:41.338Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/07/06/Solr%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/</loc>
+    
+    <lastmod>2018-07-09T10:54:34.722Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/07/04/Shiro%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/</loc>
     
     <lastmod>2018-07-08T08:10:04.178Z</lastmod>

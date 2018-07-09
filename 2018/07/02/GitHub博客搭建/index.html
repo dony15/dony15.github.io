@@ -10,7 +10,7 @@
     
     
     
-    <title>tags | DonY15</title>
+    <title>GitHub 博客快速搭建 | DonY15</title>
     <link href=”http://yoursite.com“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -149,7 +149,7 @@
                 
                 
                 
-                <li class="current">
+                <li class="">
                     <a href="/tags">
                         <i class="fa fa-tags"></i>标签
                     </a>
@@ -173,21 +173,28 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <!-- 搜索页面(尽可能接近ZanBlog搜索功能) -->
-
-
+                    
 <article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+       
+				<a href="/">DonY15</a>
+        >
+        <span>GitHub 博客快速搭建</span>
+    </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/tags/index.html">tags</a>
+                <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
             </h1>
         </div>
         <div class="tag-article">
+            
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2018-07-05
+                <i class="fa fa-calendar"></i> 2018-07-02
             </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -195,20 +202,60 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/tags/index.html">tags</a>
+                    <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2018-07-05
+                <i class="fa fa-calendar"></i> 2018-07-02
+            </p>
+            <p>
+                
+                
             </p>
         </center>
     </div>
     <div class="content-article">
-        <p>暂无标签哦</p>
+        <h3 id="GitHub-博客快速搭建"><a href="#GitHub-博客快速搭建" class="headerlink" title="GitHub 博客快速搭建"></a>GitHub 博客快速搭建</h3><p><strong>环境:Win7</strong></p>
+<p><strong>搭建流程</strong></p>
+<p>Node.js | Hexo | Next(themes) </p>
+<p><strong>基础</strong></p>
+<ol>
+<li>首先安装Node.js 注意<strong>Path指定位置</strong>(影响到balabala一些配置的存放的位置,默认C盘,建议改)</li>
+<li>Node.js安装好后,选择一个文件夹安装Hexo(此处为<strong>搭建Blog的位置</strong>)</li>
+<li>将GitHub账号的博客地址添加到Hexo的配置文件中(根目录 <strong>_config.yml</strong>),并将部署方式改为Git(老版本是GitHub方式)</li>
+<li>根据指令部署后即可完成基础的博客搭建,此时查看博客仓库是否上传了静态资源(如果上传了则代表搭建成功)</li>
+<li>短暂的延迟后进入博客网页即可看到搭建的博客</li>
+<li>写博客的方式–&gt;将编写的md文章放在posts下,然后 hexo g d 部署一下即可(每次方式用这个指令就可以上传文章了,文章会被自适应解析)</li>
+</ol>
+<p><strong>参考<a href="https://www.cnblogs.com/fengxiongZz/p/7707219.html" target="_blank" rel="noopener">https://www.cnblogs.com/fengxiongZz/p/7707219.html</a></strong></p>
+<hr>
+<p><strong>进阶</strong></p>
+<p>Hexo中的themes是主题设定的位置,可以选择主题,教程中选择Next的基础主题(没有追求可以凑合用( • ̀ω•́ )✧)</p>
+<p>themes中的(<strong>_config.yml</strong>)是主题的配置,里面可以根据提示做自己的简单配置,包括菜单的增减和修改,布局等等,如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># Directory</span><br><span class="line">source_dir: source</span><br><span class="line">public_dir: public</span><br><span class="line">tag_dir: tags</span><br><span class="line">archive_dir: archives</span><br><span class="line">category_dir: categories</span><br><span class="line">code_dir: downloads/code</span><br><span class="line">i18n_dir: :lang</span><br><span class="line">skip_render:</span><br></pre></td></tr></table></figure>
+<p>根据教程和注释完成自己的布局即可</p>
+<p><strong>参考<a href="http://www.cnblogs.com/fengxiongZz/p/7707568.html" target="_blank" rel="noopener">http://www.cnblogs.com/fengxiongZz/p/7707568.html</a></strong></p>
+<hr>
+<p><strong>进阶加强</strong></p>
+<p>完成这些想玩点花的话可以去官网或者GitHub找喜欢的themes修改使用,教程百度一大堆( • ̀ω•́ )✧</p>
+<p><strong>一大波官网主题:<a href="https://hexo.io/themes/" target="_blank" rel="noopener">https://hexo.io/themes/</a></strong></p>
+<p><strong>第三方的插件口头整合</strong></p>
+<ol>
+<li>第三方登录(Github)</li>
+<li>评论功能</li>
+<li>站内搜索</li>
+<li>站内统计</li>
+<li>交互式背景</li>
+<li>网易云播放器插件</li>
+<li>将网站的所有图片通过url委托给第三方云图片服务器(七牛云存储10G免费)</li>
+<li>…</li>
+</ol>
+<hr>
+<p><strong>维护技巧</strong></p>
+<p>当不能保证在同一台电脑上传文章时,可以选择master分离的方式或者将博客部署在自己的远程服务器上</p>
 
     </div>
 </article>
-
 
 
                 </div>
@@ -374,13 +421,13 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/tags/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2018/07/02/GitHub博客搭建/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/tags/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2018/07/02/GitHub博客搭建/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/tags/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/07/02/GitHub博客搭建/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
