@@ -40,24 +40,25 @@
   </entry>
   
   <entry>
-    <title>工具类集合分析--接口</title>
-    <link href="http://yoursite.com/2018/07/08/%E5%B7%A5%E5%85%B7%E7%B1%BB%E9%9B%86%E5%90%88%E5%88%86%E6%9E%90--%E6%8E%A5%E5%8F%A3/"/>
-    <id>http://yoursite.com/2018/07/08/工具类集合分析--接口/</id>
+    <title>基础排序 组合</title>
+    <link href="http://yoursite.com/2018/07/08/%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%20%E7%BB%84%E5%90%88/"/>
+    <id>http://yoursite.com/2018/07/08/基础排序 组合/</id>
     <published>2018-07-07T16:00:00.000Z</published>
-    <updated>2018-07-10T23:58:23.218Z</updated>
+    <updated>2018-07-09T15:35:26.541Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="工具类集合分析–接口"><a href="#工具类集合分析–接口" class="headerlink" title="工具类集合分析–接口"></a>工具类集合分析–接口</h3><h4 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h4><p>使用接口作为工具类,一般分两种情况</p><p>​    (1)定义常量</p><p>​    (2)定义动态工具类</p><h4 id="2-分析"><a href="#2-分析" class="headerlink" title="2.分析"></a>2.分析</h4><h5 id="1-定义常量"><a href="#1-定义常量" class="headerlink" title="1.定义常量"></a>1.定义常量</h5><p>可以在工具类中快捷明了的定义常量来使用,因为接口中默认属性便是常量,如:</p><p>​    int HOTEL_STATUS_INVALID=0;//酒店失效</p><p>​    int HOTEL_STATUS_VALID=1;//酒店有效</p><p>当controller中往前端传递数据时,需要判断状态,而状态从controller中多次定义会导致观察不变,不利于交接和后期维护,此时便可以将状态抽出来存进接口工具类中,提高代码的<strong>可读性</strong>和<strong>开发效率</strong> (RestFull开发风格中,提高代码可读性尤为突出)</p><h5 id="2-定义动态工具类"><a href="#2-定义动态工具类" class="headerlink" title="2.定义动态工具类"></a>2.定义动态工具类</h5><p>当程序运行在不同的环境中时,因为程序对环境的耦合性,频繁的修改代码会大大降低开发效率,可以使用工具类接口的方式,将耦合性降低,如<strong>动态工具类</strong></p><p><strong>场景</strong></p><p>​    redis 单机版和集群版    (可以根据需要选择具体的方案,减少代码的修改量)</p><p>​    </p>]]></content>
+    <content type="html"><![CDATA[<p><strong>规范:()中,先写下,在写上</strong></p><h3 id="1-排序"><a href="#1-排序" class="headerlink" title="1.排序"></a>1.排序</h3><p>转换为计算机写法<strong>A(n,m)</strong>     n在下  m在上</p><p>​    即:n个数中取m个来排序</p><h3 id="2-组合"><a href="#2-组合" class="headerlink" title="2.组合"></a>2.组合</h3><p>转换为计算机写法<strong>C(n,m)</strong>    n在下 m在上</p><p>​    即: 分子:n的阶乘,阶乘的个数为m</p><p>​          分母:m的阶乘</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h3 id=&quot;工具类集合分析–接口&quot;&gt;&lt;a href=&quot;#工具类集合分析–接口&quot; class=&quot;headerlink&quot; title=&quot;工具类集合分析–接口&quot;&gt;&lt;/a&gt;工具类集合分析–接口&lt;/h3&gt;&lt;h4 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;head
+        &lt;p&gt;&lt;strong&gt;规范:()中,先写下,在写上&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;1-排序&quot;&gt;&lt;a href=&quot;#1-排序&quot; class=&quot;headerlink&quot; title=&quot;1.排序&quot;&gt;&lt;/a&gt;1.排序&lt;/h3&gt;&lt;p&gt;转换为计算机写法&lt;strong&gt;A(n,m)&lt;
       
     
     </summary>
     
-      <category term="工具类" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7%E7%B1%BB/"/>
+      <category term="初等数学" scheme="http://yoursite.com/categories/%E5%88%9D%E7%AD%89%E6%95%B0%E5%AD%A6/"/>
     
     
   </entry>
@@ -87,25 +88,47 @@
   </entry>
   
   <entry>
-    <title>基础排序 组合</title>
-    <link href="http://yoursite.com/2018/07/08/%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%20%E7%BB%84%E5%90%88/"/>
-    <id>http://yoursite.com/2018/07/08/基础排序 组合/</id>
+    <title>工具类集合分析--接口</title>
+    <link href="http://yoursite.com/2018/07/08/%E5%B7%A5%E5%85%B7%E7%B1%BB%E9%9B%86%E5%90%88%E5%88%86%E6%9E%90--%E6%8E%A5%E5%8F%A3/"/>
+    <id>http://yoursite.com/2018/07/08/工具类集合分析--接口/</id>
     <published>2018-07-07T16:00:00.000Z</published>
-    <updated>2018-07-09T15:35:26.541Z</updated>
+    <updated>2018-07-10T23:58:23.218Z</updated>
     
-    <content type="html"><![CDATA[<p><strong>规范:()中,先写下,在写上</strong></p><h3 id="1-排序"><a href="#1-排序" class="headerlink" title="1.排序"></a>1.排序</h3><p>转换为计算机写法<strong>A(n,m)</strong>     n在下  m在上</p><p>​    即:n个数中取m个来排序</p><h3 id="2-组合"><a href="#2-组合" class="headerlink" title="2.组合"></a>2.组合</h3><p>转换为计算机写法<strong>C(n,m)</strong>    n在下 m在上</p><p>​    即: 分子:n的阶乘,阶乘的个数为m</p><p>​          分母:m的阶乘</p>]]></content>
+    <content type="html"><![CDATA[<h3 id="工具类集合分析–接口"><a href="#工具类集合分析–接口" class="headerlink" title="工具类集合分析–接口"></a>工具类集合分析–接口</h3><h4 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h4><p>使用接口作为工具类,一般分两种情况</p><p>​    (1)定义常量</p><p>​    (2)定义动态工具类</p><h4 id="2-分析"><a href="#2-分析" class="headerlink" title="2.分析"></a>2.分析</h4><h5 id="1-定义常量"><a href="#1-定义常量" class="headerlink" title="1.定义常量"></a>1.定义常量</h5><p>可以在工具类中快捷明了的定义常量来使用,因为接口中默认属性便是常量,如:</p><p>​    int HOTEL_STATUS_INVALID=0;//酒店失效</p><p>​    int HOTEL_STATUS_VALID=1;//酒店有效</p><p>当controller中往前端传递数据时,需要判断状态,而状态从controller中多次定义会导致观察不变,不利于交接和后期维护,此时便可以将状态抽出来存进接口工具类中,提高代码的<strong>可读性</strong>和<strong>开发效率</strong> (RestFull开发风格中,提高代码可读性尤为突出)</p><h5 id="2-定义动态工具类"><a href="#2-定义动态工具类" class="headerlink" title="2.定义动态工具类"></a>2.定义动态工具类</h5><p>当程序运行在不同的环境中时,因为程序对环境的耦合性,频繁的修改代码会大大降低开发效率,可以使用工具类接口的方式,将耦合性降低,如<strong>动态工具类</strong></p><p><strong>场景</strong></p><p>​    redis 单机版和集群版    (可以根据需要选择具体的方案,减少代码的修改量)</p><p>​    </p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;&lt;strong&gt;规范:()中,先写下,在写上&lt;/strong&gt;&lt;/p&gt;
-&lt;h3 id=&quot;1-排序&quot;&gt;&lt;a href=&quot;#1-排序&quot; class=&quot;headerlink&quot; title=&quot;1.排序&quot;&gt;&lt;/a&gt;1.排序&lt;/h3&gt;&lt;p&gt;转换为计算机写法&lt;strong&gt;A(n,m)&lt;
+        &lt;h3 id=&quot;工具类集合分析–接口&quot;&gt;&lt;a href=&quot;#工具类集合分析–接口&quot; class=&quot;headerlink&quot; title=&quot;工具类集合分析–接口&quot;&gt;&lt;/a&gt;工具类集合分析–接口&lt;/h3&gt;&lt;h4 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;head
       
     
     </summary>
     
-      <category term="初等数学" scheme="http://yoursite.com/categories/%E5%88%9D%E7%AD%89%E6%95%B0%E5%AD%A6/"/>
+      <category term="工具类" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7%E7%B1%BB/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Solr基础原理</title>
+    <link href="http://yoursite.com/2018/07/06/Solr%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/"/>
+    <id>http://yoursite.com/2018/07/06/Solr基础原理/</id>
+    <published>2018-07-05T16:00:00.000Z</published>
+    <updated>2018-07-10T09:55:45.537Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Solr基础原理"><a href="#Solr基础原理" class="headerlink" title="Solr基础原理"></a>Solr基础原理</h3><h4 id="1-目录核心组成"><a href="#1-目录核心组成" class="headerlink" title="1.目录核心组成"></a>1.目录核心组成</h4><p><strong>1.core</strong></p><p>​    solr的索引库,可以理解为数据库,需要手动创建(文件夹),core可以根据需要建立多个索引库,索引库的内容可以在后台看到也可以在core中看到</p><p><strong>2.solrhome</strong></p><p>​    solr的配置目录,solr服务器所有的配置文件存放的目录(<strong>core创建在solrhome中</strong>)</p><p><strong>3.collection</strong></p><p>​    solr的逻辑索引(逻辑意义上的完整索引),由多个shard的组成,每个shard又由一个leadereplica和多个replica,每个replica都是物理索引,即每个replica都对应着一个core,collection本质是可以跨越多个核的索引,包含冗余的索引.</p><p><strong>参考<a href="https://blog.csdn.net/zhousenshan/article/details/51799567" target="_blank" rel="noopener">https://blog.csdn.net/zhousenshan/article/details/51799567</a></strong></p><h4 id="2-配置详解"><a href="#2-配置详解" class="headerlink" title="2.配置详解"></a>2.配置详解</h4><h5 id="1-配置中文分词"><a href="#1-配置中文分词" class="headerlink" title="1.配置中文分词"></a>1.配置中文分词</h5><ol><li><fieldtype name="text_ik" class="solr.TextField">   <!-- text_ik 中文分词包的引用名 --></fieldtype></li><li><analyzer class="org.wltea.analyzer.lucene.IKAnalyzer">  <!-- 中文分词包 --></analyzer></li><li></li><li><!-- 字段title 使用中文分词 stored="true"下载并索引 --></li><li><field name="item_title" type="text_ik" indexed="true" stored="true"> </field></li><li><!-- 字段price 使用long类型 --></li><li><field name="item_price" type="long" indexed="true" stored="true"></field></li><li><!-- city_id 使用long类型 --></li><li><field name="item_city_id" type="long" indexed="true" stored="true"> </field></li><li><!-- city_name 因为城市名固定,所以不需要分词,String即可 --></li><li><field name="item_city_name" type="string" indexed="true" stored="true"></field></li><li><!-- image 图片地址,String类型 --></li><li><field name="item_image" type="string" indexed="true" stored="true"></field></li><li><!-- content 中文分词 stored="false"(不下载,但可以索引) --></li><li><field name="item_content" type="text_ik" indexed="true" stored="false"></field></li><li><!-- item_keywords 自定义查询名(关键字);可以根据title||city_name||content来查询 --></li><li><field name="item_keywords" type="text_ik" indexed="true" stored="false" multivalued="true"></field></li><li><copyfield source="item_title" dest="item_keywords"></copyfield></li><li><copyfield source="item_city_name" dest="item_keywords"></copyfield></li><li><copyfield source="item_content" dest="item_keywords"></copyfield></li></ol><ol><li><!-- 默认使用item_keywords(Solr后台分词查询中显示自定义的字段) --></li><li><requesthandler name="/select" class="solr.SearchHandler"></requesthandler></li><li>​    &lt;!– default values for query parameters can be specified, these</li><li>​         will be overridden by parameters in the request</li><li>​      –&gt;</li><li>​     <lst name="defaults"></lst></li><li>​       <str name="echoParams">explicit</str></li><li>​       <str name="df">item_keywords</str></li><li>​        <int name="rows">10</int></li></ol><ol><li><!-- 默认使用item_keywords(开启查询) --></li><li><requesthandler name="/query" class="solr.SearchHandler"></requesthandler></li><li>​     <lst name="defaults"></lst></li><li>​       <str name="echoParams">explicit</str></li><li>​       <str name="wt">json</str></li><li>​       <str name="indent">true</str></li><li>​       <str name="df">item_keywords</str></li><li>​     </li><li></li></ol><h5 id="2-配置Solr-Dataimport"><a href="#2-配置Solr-Dataimport" class="headerlink" title="2.配置Solr Dataimport"></a>2.配置Solr Dataimport</h5><ol><li><!-- dataimport 开启Solr连接数据库功能 --></li><li><requesthandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler"> </requesthandler></li><li>​    <lst name="defaults">      </lst></li><li><!-- dataimport读取data-config.xml设定的JDBC配置文件 -->   </li><li>​         <str name="config">data-config.xml</str> </li><li>​              </li><li>  </li></ol><ol><li><dataconfig>       </dataconfig></li><li><!-- JDBC配置 --></li><li>​    <datasource type="JdbcDataSource" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/travel_db?characterEncoding=utf-8" user="root" password="root" batchsize="-1">   </datasource></li><li>​    <document>   </document></li><li><!-- 查询语句(全表查询)字段,并匹配分词中设定的name -->  </li><li>​        <entity name="hotel" query="select ID,TITLE,PRICE,IMAGE,CITY_NAME, CITY_ID from HOTEL" datasource="JdbcDataSource">        </entity></li><li>​            <field column="ID" name="id"> </field></li><li>​            <field column="TITLE" name="item_title"> </field></li><li>​                            <field column="PRICE" name="item_price"> </field></li><li>​                            <field column="CONTENT" name="item_content"></field></li><li><field column="IMAGE" name="item_image"></field></li><li>​                            <field column="CITY_NAME" name="item_city_name"></field></li><li><field column="CITY_ID" name="item_city_id"></field></li><li>​                </li><li>​            </li><li>  </li></ol><h5 id="3-Solr后台的使用"><a href="#3-Solr后台的使用" class="headerlink" title="3.Solr后台的使用"></a>3.Solr后台的使用</h5><p>第一次先Dataimport–&gt;Execute导入,然后Refresh刷新状态即可</p><p><strong>Query:查询功能</strong> </p><p>​    q  <em> ; </em>    –&gt;第一个 <em> 表示字段; 第二个 </em> 表示字段的内容;  </p><p>​    如    item_keywords:北京   分词中有”北京”关键字的内容</p><p>​        item_price:[* TO 200]  价格是200以内的内容</p><p>​        item_price:[100 TO 700]  价格是100-200的内容</p><h4 id="3-java中的作用"><a href="#3-java中的作用" class="headerlink" title="3.java中的作用"></a>3.java中的作用</h4><p>建立一个新的索引模块 index,接口层和实现发布层</p><p>写Solr<strong>更新</strong>和<strong>搜索</strong>两个方法dubbo发布即可在controller中使用</p><p>(一般与MQ一起使用,如activeMQ,见<strong>activeMQ基础与运用章节</strong>)</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;Solr基础原理&quot;&gt;&lt;a href=&quot;#Solr基础原理&quot; class=&quot;headerlink&quot; title=&quot;Solr基础原理&quot;&gt;&lt;/a&gt;Solr基础原理&lt;/h3&gt;&lt;h4 id=&quot;1-目录核心组成&quot;&gt;&lt;a href=&quot;#1-目录核心组成&quot; class=&quot;head
+      
+    
+    </summary>
+    
+      <category term="框架" scheme="http://yoursite.com/categories/%E6%A1%86%E6%9E%B6/"/>
     
     
   </entry>
@@ -147,29 +170,6 @@
       
       
         &lt;h2 id=&quot;FastDFS-基础原理&quot;&gt;&lt;a href=&quot;#FastDFS-基础原理&quot; class=&quot;headerlink&quot; title=&quot;FastDFS 基础原理&quot;&gt;&lt;/a&gt;FastDFS 基础原理&lt;/h2&gt;&lt;h3 id=&quot;深度优先搜索&quot;&gt;&lt;a href=&quot;#深度优先搜索&quot;
-      
-    
-    </summary>
-    
-      <category term="框架" scheme="http://yoursite.com/categories/%E6%A1%86%E6%9E%B6/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Solr基础原理</title>
-    <link href="http://yoursite.com/2018/07/06/Solr%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/"/>
-    <id>http://yoursite.com/2018/07/06/Solr基础原理/</id>
-    <published>2018-07-05T16:00:00.000Z</published>
-    <updated>2018-07-10T09:55:45.537Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Solr基础原理"><a href="#Solr基础原理" class="headerlink" title="Solr基础原理"></a>Solr基础原理</h3><h4 id="1-目录核心组成"><a href="#1-目录核心组成" class="headerlink" title="1.目录核心组成"></a>1.目录核心组成</h4><p><strong>1.core</strong></p><p>​    solr的索引库,可以理解为数据库,需要手动创建(文件夹),core可以根据需要建立多个索引库,索引库的内容可以在后台看到也可以在core中看到</p><p><strong>2.solrhome</strong></p><p>​    solr的配置目录,solr服务器所有的配置文件存放的目录(<strong>core创建在solrhome中</strong>)</p><p><strong>3.collection</strong></p><p>​    solr的逻辑索引(逻辑意义上的完整索引),由多个shard的组成,每个shard又由一个leadereplica和多个replica,每个replica都是物理索引,即每个replica都对应着一个core,collection本质是可以跨越多个核的索引,包含冗余的索引.</p><p><strong>参考<a href="https://blog.csdn.net/zhousenshan/article/details/51799567" target="_blank" rel="noopener">https://blog.csdn.net/zhousenshan/article/details/51799567</a></strong></p><h4 id="2-配置详解"><a href="#2-配置详解" class="headerlink" title="2.配置详解"></a>2.配置详解</h4><h5 id="1-配置中文分词"><a href="#1-配置中文分词" class="headerlink" title="1.配置中文分词"></a>1.配置中文分词</h5><ol><li><fieldtype name="text_ik" class="solr.TextField">   <!-- text_ik 中文分词包的引用名 --></fieldtype></li><li><analyzer class="org.wltea.analyzer.lucene.IKAnalyzer">  <!-- 中文分词包 --></analyzer></li><li></li><li><!-- 字段title 使用中文分词 stored="true"下载并索引 --></li><li><field name="item_title" type="text_ik" indexed="true" stored="true"> </field></li><li><!-- 字段price 使用long类型 --></li><li><field name="item_price" type="long" indexed="true" stored="true"></field></li><li><!-- city_id 使用long类型 --></li><li><field name="item_city_id" type="long" indexed="true" stored="true"> </field></li><li><!-- city_name 因为城市名固定,所以不需要分词,String即可 --></li><li><field name="item_city_name" type="string" indexed="true" stored="true"></field></li><li><!-- image 图片地址,String类型 --></li><li><field name="item_image" type="string" indexed="true" stored="true"></field></li><li><!-- content 中文分词 stored="false"(不下载,但可以索引) --></li><li><field name="item_content" type="text_ik" indexed="true" stored="false"></field></li><li><!-- item_keywords 自定义查询名(关键字);可以根据title||city_name||content来查询 --></li><li><field name="item_keywords" type="text_ik" indexed="true" stored="false" multivalued="true"></field></li><li><copyfield source="item_title" dest="item_keywords"></copyfield></li><li><copyfield source="item_city_name" dest="item_keywords"></copyfield></li><li><copyfield source="item_content" dest="item_keywords"></copyfield></li></ol><ol><li><!-- 默认使用item_keywords(Solr后台分词查询中显示自定义的字段) --></li><li><requesthandler name="/select" class="solr.SearchHandler"></requesthandler></li><li>​    &lt;!– default values for query parameters can be specified, these</li><li>​         will be overridden by parameters in the request</li><li>​      –&gt;</li><li>​     <lst name="defaults"></lst></li><li>​       <str name="echoParams">explicit</str></li><li>​       <str name="df">item_keywords</str></li><li>​        <int name="rows">10</int></li></ol><ol><li><!-- 默认使用item_keywords(开启查询) --></li><li><requesthandler name="/query" class="solr.SearchHandler"></requesthandler></li><li>​     <lst name="defaults"></lst></li><li>​       <str name="echoParams">explicit</str></li><li>​       <str name="wt">json</str></li><li>​       <str name="indent">true</str></li><li>​       <str name="df">item_keywords</str></li><li>​     </li><li></li></ol><h5 id="2-配置Solr-Dataimport"><a href="#2-配置Solr-Dataimport" class="headerlink" title="2.配置Solr Dataimport"></a>2.配置Solr Dataimport</h5><ol><li><!-- dataimport 开启Solr连接数据库功能 --></li><li><requesthandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler"> </requesthandler></li><li>​    <lst name="defaults">      </lst></li><li><!-- dataimport读取data-config.xml设定的JDBC配置文件 -->   </li><li>​         <str name="config">data-config.xml</str> </li><li>​              </li><li>  </li></ol><ol><li><dataconfig>       </dataconfig></li><li><!-- JDBC配置 --></li><li>​    <datasource type="JdbcDataSource" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/travel_db?characterEncoding=utf-8" user="root" password="root" batchsize="-1">   </datasource></li><li>​    <document>   </document></li><li><!-- 查询语句(全表查询)字段,并匹配分词中设定的name -->  </li><li>​        <entity name="hotel" query="select ID,TITLE,PRICE,IMAGE,CITY_NAME, CITY_ID from HOTEL" datasource="JdbcDataSource">        </entity></li><li>​            <field column="ID" name="id"> </field></li><li>​            <field column="TITLE" name="item_title"> </field></li><li>​                            <field column="PRICE" name="item_price"> </field></li><li>​                            <field column="CONTENT" name="item_content"></field></li><li><field column="IMAGE" name="item_image"></field></li><li>​                            <field column="CITY_NAME" name="item_city_name"></field></li><li><field column="CITY_ID" name="item_city_id"></field></li><li>​                </li><li>​            </li><li>  </li></ol><h5 id="3-Solr后台的使用"><a href="#3-Solr后台的使用" class="headerlink" title="3.Solr后台的使用"></a>3.Solr后台的使用</h5><p>第一次先Dataimport–&gt;Execute导入,然后Refresh刷新状态即可</p><p><strong>Query:查询功能</strong> </p><p>​    q  <em> ; </em>    –&gt;第一个 <em> 表示字段; 第二个 </em> 表示字段的内容;  </p><p>​    如    item_keywords:北京   分词中有”北京”关键字的内容</p><p>​        item_price:[* TO 200]  价格是200以内的内容</p><p>​        item_price:[100 TO 700]  价格是100-200的内容</p><h4 id="3-java中的作用"><a href="#3-java中的作用" class="headerlink" title="3.java中的作用"></a>3.java中的作用</h4><p>建立一个新的索引模块 index,接口层和实现发布层</p><p>写Solr<strong>更新</strong>和<strong>搜索</strong>两个方法dubbo发布即可在controller中使用</p><p>(一般与MQ一起使用,如activeMQ,见<strong>activeMQ基础与运用章节</strong>)</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;Solr基础原理&quot;&gt;&lt;a href=&quot;#Solr基础原理&quot; class=&quot;headerlink&quot; title=&quot;Solr基础原理&quot;&gt;&lt;/a&gt;Solr基础原理&lt;/h3&gt;&lt;h4 id=&quot;1-目录核心组成&quot;&gt;&lt;a href=&quot;#1-目录核心组成&quot; class=&quot;head
       
     
     </summary>
