@@ -52,17 +52,19 @@
       }
     </script>-->
 		<!--统计-->
-			<script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
+			<!--<script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>-->
 		<!--<script>AV.initialize("Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz", "nYP6CNjSvE1TUhTur6M4ldxz");</script>-->
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-realtime@4.1.0/dist/realtime.browser.min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-live-query-min.js"></script>
+		
 		<script>
-		var APP_ID = 'Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz';
-		var APP_KEY = 'nYP6CNjSvE1TUhTur6M4ldxz';
-		var AV = require('leancloud-storage');
-
-		AV.init({
-			appId: Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz,
-			appKey: nYP6CNjSvE1TUhTur6M4ldxz
-		});
+		// 存储服务
+		var { Query, User } = AV;
+		AV.init('Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz', 'nYP6CNjSvE1TUhTur6M4ldxz');
+		// 实时消息服务
+		var { Realtime, TextMessage } = AV;
+		
 		</script>
 		
 </head>
@@ -155,19 +157,19 @@
                         
                         
                         <li>
-                            <a href="/categories/搭建/">搭建</a>
-                        </li>
-                        
-                        <li>
                             <a href="/categories/框架/">框架</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/初等数学/">初等数学</a>
+                            <a href="/categories/搭建/">搭建</a>
                         </li>
                         
                         <li>
                             <a href="/categories/工具类/">工具类</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/初等数学/">初等数学</a>
                         </li>
                         
                         
@@ -316,13 +318,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
                 </span>
             </li>
             
@@ -352,13 +354,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
+                    <a href="/2018/07/04/Shiro基础原理/">Shiro基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/04/Shiro基础原理/">Shiro基础原理</a>
+                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
                 </span>
             </li>
             
@@ -386,6 +388,12 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2018/07/06/FastDfs基础原理/">FastDFS 基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
                 </span>
             </li>
@@ -398,19 +406,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/FastDfs基础原理/">FastDFS 基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
                 </span>
             </li>
             
@@ -422,13 +418,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/实用工具类集合/">实用工具类集合</a>
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
+                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/实用工具类集合/">实用工具类集合</a>
                 </span>
             </li>
             
