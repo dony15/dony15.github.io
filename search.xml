@@ -9,14 +9,6 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[工具类集合分析--接口]]></title>
-    <url>%2F2018%2F07%2F08%2F%E5%B7%A5%E5%85%B7%E7%B1%BB%E9%9B%86%E5%90%88%E5%88%86%E6%9E%90--%E6%8E%A5%E5%8F%A3%2F</url>
-    <content type="text"><![CDATA[工具类集合分析–接口[TOC] 1.概述使用接口作为工具类,一般分两种情况 ​ (1)定义常量 ​ (2)定义动态工具类 2.分析1.定义常量可以在工具类中快捷明了的定义常量来使用,因为接口中默认属性便是常量,如: ​ int HOTEL_STATUS_INVALID=0;//酒店失效 ​ int HOTEL_STATUS_VALID=1;//酒店有效 当controller中往前端传递数据时,需要判断状态,而状态从controller中多次定义会导致观察不变,不利于交接和后期维护,此时便可以将状态抽出来存进接口工具类中,提高代码的可读性和开发效率 (RestFull开发风格中,提高代码可读性尤为突出) 2.定义动态工具类当程序运行在不同的环境中时,因为程序对环境的耦合性,频繁的修改代码会大大降低开发效率,可以使用工具类接口的方式,将耦合性降低,如动态工具类 场景 ​ redis 单机版和集群版 (可以根据需要选择具体的方案,减少代码的修改量) ​]]></content>
-      <categories>
-        <category>工具类</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[基础排序 组合]]></title>
     <url>%2F2018%2F07%2F08%2F%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%20%E7%BB%84%E5%90%88%2F</url>
     <content type="text"><![CDATA[规范:()中,先写下,在写上 [TOC] 1.排序转换为计算机写法A(n,m) n在下 m在上 ​ 即:n个数中取m个来排序 2.组合转换为计算机写法C(n,m) n在下 m在上 ​ 即: 分子:n的阶乘,阶乘的个数为m ​ 分母:m的阶乘]]></content>
@@ -28,6 +20,14 @@
     <title><![CDATA[实用工具类集合]]></title>
     <url>%2F2018%2F07%2F08%2F%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB%E9%9B%86%E5%90%88%2F</url>
     <content type="text"><![CDATA[实用工具类集合[TOC] 简述 该工具类集合章会持续更新,具体工具类会集成到我的GitHub仓库中 传送门 https://github.com/dony15/mymodes 1.js-utils.js常用js的前段封装 XMLHttpRequest 原生ajax的获取 ,内置了Chrome和IE的兼容转换 图片上传功能前段,四个id解决 | 图片 | 表单 | 回显 | 的结合 验证码显示和输入框校验 两个id 一个url 即可解决 | 校验 | 提示 | 提交url |的结合 点击切换验证码 id和url 2.pattern.js包含开发中各种验证常用的正则封装 2.CollectionsFactory包含各种集合类型的构建,静态工具类,使代码看起来更加规范简洁 3.DownloadUtil文件下载工具类,根据文件名或者文件路径获取文件进行下载(多场景的封装) 3.FileUtil非常实用的文件处理工具,如获取文件名/去重/清空但不删除文件夹/磁盘遍历/xml生成等等… 4.FormatStyle文件容量单位的格式转换,主要解决特殊情况下因为数字太大导致java直接写无法识别的 5.IDUtilsID的多种生成策略 5.JsonUtils使用jackson,多种类型和json的转化封装 对象 | List 6.ResourcesUtil资源读取工具类,较为特殊,使用较少(主要是国际语言的匹配读取,现在前段控制即可) 7.UtilFuns该工具类非常的丰富.各种SE的基础转换和时间/固定长度转换/编码解码等都有涉猎 其他中文命名工具类不再解释(简单明了)]]></content>
+      <categories>
+        <category>工具类</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[工具类集合分析--接口]]></title>
+    <url>%2F2018%2F07%2F08%2F%E5%B7%A5%E5%85%B7%E7%B1%BB%E9%9B%86%E5%90%88%E5%88%86%E6%9E%90--%E6%8E%A5%E5%8F%A3%2F</url>
+    <content type="text"><![CDATA[工具类集合分析–接口[TOC] 1.概述使用接口作为工具类,一般分两种情况 ​ (1)定义常量 ​ (2)定义动态工具类 2.分析1.定义常量可以在工具类中快捷明了的定义常量来使用,因为接口中默认属性便是常量,如: ​ int HOTEL_STATUS_INVALID=0;//酒店失效 ​ int HOTEL_STATUS_VALID=1;//酒店有效 当controller中往前端传递数据时,需要判断状态,而状态从controller中多次定义会导致观察不变,不利于交接和后期维护,此时便可以将状态抽出来存进接口工具类中,提高代码的可读性和开发效率 (RestFull开发风格中,提高代码可读性尤为突出) 2.定义动态工具类当程序运行在不同的环境中时,因为程序对环境的耦合性,频繁的修改代码会大大降低开发效率,可以使用工具类接口的方式,将耦合性降低,如动态工具类 场景 ​ redis 单机版和集群版 (可以根据需要选择具体的方案,减少代码的修改量) ​]]></content>
       <categories>
         <category>工具类</category>
       </categories>
