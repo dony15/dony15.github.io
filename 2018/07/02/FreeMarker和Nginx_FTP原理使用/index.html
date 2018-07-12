@@ -10,7 +10,7 @@
     
     
     
-    <title>基础排序 组合 | DonY15</title>
+    <title>FreeMarker结合Nginx|FTP基础使用 | DonY15</title>
     <link href=”http://yoursite.com“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -216,19 +216,19 @@
        
 				<a href="/">DonY15</a>
         >
-        <span>基础排序 组合</span>
+        <span>FreeMarker结合Nginx|FTP基础使用</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
             </h1>
         </div>
         <div class="tag-article">
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2018-07-08
+                <i class="fa fa-calendar"></i> 2018-07-02
             </span>
             
             <span class="label label-gal">
@@ -242,11 +242,11 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                    <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2018-07-08
+                <i class="fa fa-calendar"></i> 2018-07-02
             </p>
             <p>
                 
@@ -257,12 +257,31 @@
         </center>
     </div>
     <div class="content-article">
-        <p><strong>规范:()中,先写下,在写上</strong></p>
-<h3 id="1-排序"><a href="#1-排序" class="headerlink" title="1.排序"></a>1.排序</h3><p>转换为计算机写法<strong>A(n,m)</strong>     n在下  m在上</p>
-<p>​    即:n个数中取m个来排序</p>
-<h3 id="2-组合"><a href="#2-组合" class="headerlink" title="2.组合"></a>2.组合</h3><p>转换为计算机写法<strong>C(n,m)</strong>    n在下 m在上</p>
-<p>​    即: 分子:n的阶乘,阶乘的个数为m</p>
-<p>​          分母:m的阶乘</p>
+        <h3 id="FreeMarker结合Nginx-FTP基础使用"><a href="#FreeMarker结合Nginx-FTP基础使用" class="headerlink" title="FreeMarker结合Nginx|FTP基础使用"></a>FreeMarker结合Nginx|FTP基础使用</h3><p>目前做页面模板引擎主流使用<strong>Thymeleaf</strong>(效率更高),本文主要介绍<strong>FreeMarker</strong>的相关知识</p>
+<p><strong>传送门:Thymeleaf基础原理<a href="https://blog.csdn.net/abap_brave/article/details/53009149" target="_blank" rel="noopener">https://blog.csdn.net/abap_brave/article/details/53009149</a></strong></p>
+<p><strong>传送门:Thymeleaf快速使用<a href="https://blog.csdn.net/u014042066/article/details/75614906" target="_blank" rel="noopener">https://blog.csdn.net/u014042066/article/details/75614906</a></strong></p>
+<h4 id="1-FreeMarker"><a href="#1-FreeMarker" class="headerlink" title="1.FreeMarker"></a>1.FreeMarker</h4><h5 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h5><ol>
+<li>FreeMarker是一个模板引擎,一个基于模板生成文件的通用工具,由<strong>纯java</strong>代码编写</li>
+<li>FreeMarker不是一个Web框架,而是<strong>适合Web框架</strong>的一个组件</li>
+<li>FreeMarker与容器无关,更加<strong>通用</strong>,而且免费</li>
+</ol>
+<p>数值类型:<strong>| String | 数值(不区分浮点) | boolean | 日期 | 集合 |</strong>等大部分类型</p>
+<h5 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h5><ol>
+<li>引入jar包</li>
+<li>建立模板</li>
+<li>进行输出</li>
+</ol>
+<h4 id="2-FTP结合"><a href="#2-FTP结合" class="headerlink" title="2.FTP结合"></a>2.FTP结合</h4><h5 id="1-介绍-1"><a href="#1-介绍-1" class="headerlink" title="1.介绍"></a>1.介绍</h5><p>FTP连接分主动模式和被动模式</p>
+<p><strong>主动模式(port)</strong>使用N(发送数据) 和N+1(发送FTP命令)两个端口,一般20 21</p>
+<p>固定端口,可能造成数据被拦截窃取</p>
+<p><strong>被动模式(pasv)</strong>使用21 和P&gt;1024所有端口</p>
+<p>不固定大范围端口,可能造服务器服务器被攻击</p>
+<p><strong>解决方案分析:<a href="https://blog.csdn.net/u014774781/article/details/48376633" target="_blank" rel="noopener">https://blog.csdn.net/u014774781/article/details/48376633</a></strong></p>
+<p><strong>FTP传送门(待更新)</strong></p>
+<h5 id="2-使用-1"><a href="#2-使用-1" class="headerlink" title="2.使用"></a>2.使用</h5><p>FreeMarker生成静态页面后,可以通过FTP发送到服务器指定的位置存放</p>
+<h4 id="3-Nginx结合"><a href="#3-Nginx结合" class="headerlink" title="3.Nginx结合"></a>3.Nginx结合</h4><h5 id="1-介绍-2"><a href="#1-介绍-2" class="headerlink" title="1.介绍"></a>1.介绍</h5><p>Nginx是一个Http服务器,可以将服务器上的<strong>静态文件通过Http协议</strong>展现给客户端</p>
+<h5 id="2-使用-2"><a href="#2-使用-2" class="headerlink" title="2.使用"></a>2.使用</h5><p>Nginx将FreeMarker发送来的静态页面以url的方式发送到客户端完成一套静态部署</p>
+<p><strong>Nginx传送门(待更新)</strong></p>
 
     </div>
 </article>
@@ -273,7 +292,7 @@
 <script>
 	if(!window.commentConfig) {
       window.commentConfig = {}
-      window.commentConfig.title = '基础排序 组合'
+      window.commentConfig.title = 'FreeMarker结合Nginx|FTP基础使用'
     }
 </script>
 
@@ -439,6 +458,12 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
                 </span>
             </li>
@@ -463,13 +488,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/实用工具类集合/">实用工具类集合</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/04/Shiro基础原理/">Shiro基础原理</a>
+                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
                 </span>
             </li>
             
@@ -488,13 +507,13 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/2018/07/08/基础排序 组合/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/2018/07/08/基础排序 组合/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/2018/07/08/基础排序 组合/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -675,7 +694,7 @@ $(function(){
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     if(window.commentConfig) {
-      window.commentConfig.id = 'Sun Jul 08 2018 00:00:00 GMT+0800'
+      window.commentConfig.id = 'Mon Jul 02 2018 00:00:00 GMT+0800'
       window.commentConfig.owner = 'dony15'
       window.commentConfig.repo = 'reply.github.io'
       window.commentConfig.client_id = '3e620f638731b84942ed'
@@ -683,7 +702,7 @@ $(function(){
       window.commentConfig.redirect_uri = ''
     } else {
       window.commentConfig = {
-      	id: 'Sun Jul 08 2018 00:00:00 GMT+0800',
+      	id: 'Mon Jul 02 2018 00:00:00 GMT+0800',
         owner: 'dony15',
         repo: 'reply.github.io',
         client_id: '3e620f638731b84942ed',
