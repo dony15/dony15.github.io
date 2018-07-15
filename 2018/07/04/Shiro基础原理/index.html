@@ -169,11 +169,19 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/Spring全家桶/">Spring全家桶</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/初等数学/">初等数学</a>
                         </li>
                         
                         <li>
                             <a href="/categories/工具类/">工具类</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/服务器/">服务器</a>
                         </li>
                         
                         
@@ -270,14 +278,13 @@
 <li>拔插性:shiro干净的API(工具类集合)和设计模式(单例+工厂)使它可以方便的和许多其他框架整合,Spring Security则只能与Spring一起集成</li>
 </ol>
 <h3 id="3-组成"><a href="#3-组成" class="headerlink" title="3.组成"></a>3.组成</h3><p><img src="file:///C:/Users/Administrator/Documents/My%20Knowledge/temp/1b7bc2c3-9f2c-4ea2-8ed7-97820c205482/128/index_files/871676-20160722213407794-1894786938.png" alt="img"></p>
-<p><strong>三个核心组件</strong>    </p>
-<ol>
+<h4 id="1-三个核心组件"><a href="#1-三个核心组件" class="headerlink" title="1.三个核心组件"></a>1.三个核心组件</h4><ol>
 <li>Subject: 令牌与项目的登录关系,Shiro保证了项目整体的安全性,是<strong>Shiro对外API的核心</strong></li>
 <li>Security Manager:负责安全认证预授权等  <strong>Shiro的核心</strong> </li>
 <li>Realm:整个框架中<strong>必须</strong>由设计者自行实现的模块之一.并且Shiro支持多个<strong>Realm数据源</strong>,最为重要的一种实现方式—&gt;数据库查询,当需要多个数据库组合验证时,多个数据源的效果就体现出来</li>
 </ol>
 <hr>
-<ol>
+<h4 id="2-主要功能"><a href="#2-主要功能" class="headerlink" title="2.主要功能"></a>2.主要功能</h4><ol>
 <li>Authentication:    身份认证</li>
 <li>Authorization:  授权,权限验证</li>
 <li>Session Manager: 会话管理</li>
@@ -289,6 +296,30 @@
 <li>Run As:允许一个用户假装另一个用户访问</li>
 <li>Remember Me: 记住我</li>
 </ol>
+<h4 id="3-组件和内容流程分析"><a href="#3-组件和内容流程分析" class="headerlink" title="3.组件和内容流程分析"></a>3.组件和内容流程分析</h4><h5 id="1-subject"><a href="#1-subject" class="headerlink" title="1.subject"></a>1.subject</h5><p>外部API核心,存储用户数据和返回数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Subject currentUser = SecurityUtils.getSubject();</span><br></pre></td></tr></table></figure>
+<p><strong>获得Subject的方法,有了Subject才能和Shiro做深入的交互</strong></p>
+<h5 id="2-SessionManager"><a href="#2-SessionManager" class="headerlink" title="2.SessionManager"></a>2.SessionManager</h5><ol>
+<li><p>Shiro的Session提供了HttpSession常规的大部分功能,但是又有区别,即:Session不依赖于<strong>HTTP环境</strong>,可以在程序任何地方使用</p>
+</li>
+<li><p>Shiro的Session可以在任何的环境下使用<strong>相同的API</strong>,而且是<strong>自动启动SessionManager</strong></p>
+</li>
+</ol>
+<p>如果希望在*<em>当前与应用程序会话期间</em>,为用户提供内容,则可以设置Session</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Session session = currentUser.getSession();</span><br><span class="line">session.setAttribute( &quot;someKey&quot;, &quot;aValue&quot; );</span><br></pre></td></tr></table></figure>
+<h5 id="3-登录认证Authentication"><a href="#3-登录认证Authentication" class="headerlink" title="3.登录认证Authentication"></a>3.登录认证Authentication</h5><p>Shiro的认证功能,会根据Subject的信息进行判断,如果认证过,则直接进入/如果没认证,则需要先认证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if ( !currentUser.isAuthenticated() ) &#123;</span><br><span class="line">    //collect user principals and credentials in a gui specific manner</span><br><span class="line">    //such as username/password html form, X509 certificate, OpenID, etc.</span><br><span class="line">    //We&apos;ll use the username/password example here since it is the most common.</span><br><span class="line">    //(do you know what movie this is from? ;)</span><br><span class="line">    UsernamePasswordToken token = new UsernamePasswordToken(&quot;lonestarr&quot;, &quot;vespa&quot;);</span><br><span class="line">    //this is all you have to do to support &apos;remember me&apos; (no config - built in!):</span><br><span class="line">    token.setRememberMe(true);</span><br><span class="line">    currentUser.login(token);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>UsernamePasswordToken</strong>(username/password)</p>
+<p>以特定的方式收集用户的<strong>主体</strong>和<strong>凭证</strong></p>
+<p><strong>Remember Me</strong>  no config - built in!(true/false)</p>
+<p>Shiro内置功能,记住用户(详情待更新)</p>
+<p><strong>登录尝试失败的反馈–异常</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    currentUser.login( token );</span><br><span class="line">    //if no exception, that&apos;s it, we&apos;re done!</span><br><span class="line">&#125; catch ( UnknownAccountException uae ) &#123;</span><br><span class="line">    //username wasn&apos;t in the system, show them an error message?</span><br><span class="line">&#125; catch ( IncorrectCredentialsException ice ) &#123;</span><br><span class="line">    //password didn&apos;t match, try again?</span><br><span class="line">&#125; catch ( LockedAccountException lae ) &#123;</span><br><span class="line">    //account for that username is locked - can&apos;t login.  Show them a message?</span><br><span class="line">&#125;</span><br><span class="line">    ... more types exceptions to check if you want ...</span><br><span class="line">&#125; catch ( AuthenticationException ae ) &#123;</span><br><span class="line">    //unexpected condition - error?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Shiro中使用多种异常完善认证</strong></p>
+<ul>
+<li>将Subject的.login(token)进行捕获,从而的到许多种异常提醒,根据相应的异常判断用户登录的错误信息</li>
+<li>注意:Shiro有丰富的认证异常设定并支持自定义异常,在Realm中通过判断条件,抛出异常的方式,可以在Controller中接收需要的异常数据来完善程序的开发</li>
+</ul>
 <hr>
 <p><img src="file:///C:/Users/Administrator/Documents/My%20Knowledge/temp/b9f81ac7-ad34-4adc-b4c2-cb2f73a4f2dd/128/index_files/48cae49c-8924-4a4e-8efd-bdbf38f07c97.jpg" alt="img">    </p>
 <ol>
@@ -326,12 +357,12 @@
 <p>主体，即访问应用的用户，在Shiro中使用Subject代表该用户。用户只有授权后才允许访问相应的资源。</p>
 <p><strong>资源</strong></p>
 <p>在应用中用户可以访问的任何东西，比如JSP 页面、某些数据、某个业务方法等等都是资源。用户只要授权后才能访问。</p>
-<p><strong>权限</strong></p>
-<p>权限表示在应用中用户能不能访问某个资源，</p>
-<p>如：访问用户列表页面查看/新增/修改/删除用户数据（即很多时候都是CRUD（增查改删）式权限控制）打印文档等等。。。</p>
 <p><strong>角色</strong></p>
 <p>角色代表了操作集合，可以理解为权限的集合，一般情况下我们会赋予用户角色而不是权限，即这样用户可以拥有一组权限，赋予权限时比较方便。</p>
 <p>典型的如：项目经理、技术总监、CTO、开发工程师等都是角色，不同的角色拥有一组不同的权限。</p>
+<p><strong>权限</strong></p>
+<p>权限表示在应用中用户能不能访问某个资源，</p>
+<p>如：访问用户列表页面查看/新增/修改/删除用户数据（即很多时候都是CRUD（增查改删）式权限控制）打印文档等等。。。</p>
 <h5 id="判断是否授权的方式"><a href="#判断是否授权的方式" class="headerlink" title="判断是否授权的方式"></a>判断是否授权的方式</h5><p>Shiro 支持三种方式的授权判断：</p>
 <p><strong>编程式</strong></p>
 <p>通过写if/else 授权代码块完成：</p>
@@ -403,7 +434,21 @@
 <li>将这些ID存到SimpleAuthorizationInfo中</li>
 <li>在自定义ShiroFilterFactoryBean中获取所有菜单列表,并将id加入到section中</li>
 <li>底层自动对比,哪些ID用户有,则允许访问,没有的话”authc”拦截</li>
+<li>Controller中查询用户拥有的菜单数据返回前段即可,此时没有权限的数据已经被拦截</li>
 </ol>
+<h4 id="易错集合"><a href="#易错集合" class="headerlink" title="易错集合"></a>易错集合</h4><h5 id="1-授权URL"><a href="#1-授权URL" class="headerlink" title="1.授权URL"></a>1.授权URL</h5><p>​    注意使用Shiro权限设置后的url如果需要访问,逻辑路径需要放在 <strong>前端</strong> 拼接,(后台对逻辑路径没有识别,也没有必要识别,不能将逻辑路径放在后台和数据库中)</p>
+<h5 id="2-权限顺序"><a href="#2-权限顺序" class="headerlink" title="2.权限顺序"></a>2.权限顺序</h5><p>​    运行时先执行<strong>MyRealm</strong>中的权限,然后拼接<strong>MyShiroFilterFactoryBean</strong>中的权限</p>
+<p>​    注意:限制范围较大的往后排,特别是全部拦截的/<strong> 如果需要的话尽量放在</strong>MyShiroFilterFactoryBean**中</p>
+<h3 id="8-Remember-me功能简述"><a href="#8-Remember-me功能简述" class="headerlink" title="8.Remember me功能简述"></a>8.Remember me功能简述</h3><p>Shiro的Remember Me可以很轻松的实现自动登录的功能,方便快捷</p>
+<h4 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">UsernamePasswordToken token = new UsernamePasswordToken(username, password);</span><br><span class="line">		Subject subject = SecurityUtils.getSubject();</span><br><span class="line">		if(loginForm.getRememberMe() != null &amp;&amp; &quot;Y&quot;.equals(loginForm.getRememberMe()))&#123;</span><br><span class="line">			token.setRememberMe(true);	</span><br><span class="line">		&#125;</span><br><span class="line">		subject.login(token);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/** = user</span><br></pre></td></tr></table></figure>
+<p>Remember Me只需要在登录时将token的RememberMe功能开启,本来的拦截级别为/ <strong> = authc 将拦截设置(降级)为</strong>user级别**即可使用</p>
+<p>Remember Me功能开启使用后,Shiro会生成一个叫<strong>RememberMe</strong>的Cookie保存在浏览器中,当subject.loginout退出或者过期后失效,改参数是base64加密的字符串如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">名称：	rememberMe</span><br><span class="line">内容：	6gYvaCGZaDXt1c0xwriXj/Uvz6g8OMT3VSaAK4WL0Fvqvkcm0nf3CfTwkWWTT4EjeSS/EoQjRfCPv4WKUXezQDvoNwVgFMtsLIeYMAfTd17ey5BrZQMxW+xU1lBSDoEM1yOy/i11ENh6eXjmYeQFv0yGbhchGdJWzk5W3MxJjv2SljlW4dkGxOSsol3mucoShzmcQ4VqiDjTcbVfZ7mxSHF/0M1JnXRphi8meDaIm9IwM4Hilgjmai+yzdVHFVDDHv/vsU/fZmjb+2tJnBiZ+jrDhl2Elt4qBDKxUKT05cDtXaUZWYQmP1bet2EqTfE8eiofa1+FO3iSTJmEocRLDLPWKSJ26bUWA8wUl/QdpH07Ymq1W0ho8EIdFhOsELxM66oMcj7a/8LVzypJXAXZdMFaNe8cBSN2dXpv4PwiktCs3J9P9vP4XrmYees5x27UmXNqYFk86xQhRjFdJsw5A9ctDKXzPYvJmWFouo3qT5hugX0uxWALCfWg8MHJnG9w7QgVKM8oy3Xy4Ut8lSvYlA==</span><br></pre></td></tr></table></figure>
+<p>Shiro的RememberMe设计时!=已经登录,因为该cookie被序列化后可以不同的浏览器之间访问,并且可能被黑客复制截取等,因此使用该功能的话尽量以非关键性资源为主,当牵扯到<strong>资金</strong>等关键资源时,选择再次登录即可</p>
+<p>开发时如果使用Session域对象,则自动登录后Session中不会再有数据,如果需要用到,那么需要重写isAccessAllowed 方法</p>
+<p><strong>详细参考自:<a href="https://blog.csdn.net/nsrainbow/article/details/36945267/" target="_blank" rel="noopener">https://blog.csdn.net/nsrainbow/article/details/36945267/</a></strong></p>
+<p><strong>(本次Remember Me尚未指定配置更改,待更新)</strong></p>
 
     </div>
 </article>
@@ -486,6 +531,30 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/14/Log日志整理/"></a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/14/服务器搭建/">服务器搭建(持续更新)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
                 </span>
             </li>
@@ -510,12 +579,6 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
                 </span>
             </li>
@@ -523,24 +586,6 @@
             <li class="list-group-item">
                 <span class="post-title">
                     <a href="/2018/07/06/FastDfs基础原理/">FastDFS 基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/04/Shiro基础原理/">Shiro基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/03/hello-world/">Hello World</a>
                 </span>
             </li>
             
@@ -562,13 +607,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
+                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
                 </span>
             </li>
             
@@ -586,13 +631,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
                 </span>
             </li>
             
@@ -604,13 +649,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
+                    <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
                 </span>
             </li>
             

@@ -10,7 +10,7 @@
     
     
     
-    <title>GitHub 博客快速搭建 | DonY15</title>
+    <title>Spring基础原理 | DonY15</title>
     <link href=”http://yoursite.com“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -224,19 +224,19 @@
        
 				<a href="/">DonY15</a>
         >
-        <span>GitHub 博客快速搭建</span>
+        <span>Spring基础原理</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
             </h1>
         </div>
         <div class="tag-article">
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2018-07-02
+                <i class="fa fa-calendar"></i> 2018-07-15
             </span>
             
             <span class="label label-gal">
@@ -250,11 +250,11 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                    <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2018-07-02
+                <i class="fa fa-calendar"></i> 2018-07-15
             </p>
             <p>
                 
@@ -265,45 +265,124 @@
         </center>
     </div>
     <div class="content-article">
-        <h3 id="GitHub-博客快速搭建"><a href="#GitHub-博客快速搭建" class="headerlink" title="GitHub 博客快速搭建"></a>GitHub 博客快速搭建</h3><p>[TOC]</p>
-<p><strong>环境:Win7</strong></p>
-<p><strong>搭建流程</strong></p>
-<p>Node.js | Hexo | Next(themes) </p>
-<p><strong>基础</strong></p>
+        <h2 id="Spring基础原理"><a href="#Spring基础原理" class="headerlink" title="Spring基础原理"></a>Spring基础原理</h2><p>[TOC]</p>
+<h3 id="1-Spring概念"><a href="#1-Spring概念" class="headerlink" title="1.Spring概念"></a>1.Spring概念</h3><p><strong>提供一个ioc容器来管理Bean,并通过AOP方式来增加Bean的功能</strong></p>
+<p>基于Spring-IoC和AOP来构建多层Java EE 项目,能构将项目内的组件进行解耦分离,大大提高了开发效率和维护效率</p>
+<p><strong>通过反射+XML实现的对象管理工厂(大容器)</strong></p>
+<p><strong>目的:</strong></p>
 <ol>
-<li>首先安装Node.js 注意<strong>Path指定位置</strong>(影响到balabala一些配置的存放的位置,默认C盘,建议改)</li>
-<li>Node.js安装好后,选择一个文件夹安装Hexo(此处为<strong>搭建Blog的位置</strong>)</li>
-<li>将GitHub账号的博客地址添加到Hexo的配置文件中(根目录 <strong>_config.yml</strong>),并将部署方式改为Git(老版本是GitHub方式)</li>
-<li>根据指令部署后即可完成基础的博客搭建,此时查看博客仓库是否上传了静态资源(如果上传了则代表搭建成功)</li>
-<li>短暂的延迟后进入博客网页即可看到搭建的博客</li>
-<li>写博客的方式–&gt;将编写的md文章放在posts下,然后 hexo g d 部署一下即可(每次方式用这个指令就可以上传文章了,文章会被自适应解析)</li>
+<li>解耦,简化开发</li>
+<li>AOP编程的支持</li>
+<li>声明事务的支持</li>
+<li>方便程序测试</li>
+<li>继承各种优秀框架</li>
+<li>降低Java EE API的使用难度</li>
 </ol>
-<p><strong>参考<a href="https://www.cnblogs.com/fengxiongZz/p/7707219.html" target="_blank" rel="noopener">https://www.cnblogs.com/fengxiongZz/p/7707219.html</a></strong></p>
-<hr>
-<p><strong>进阶</strong></p>
-<p>Hexo中的themes是主题设定的位置,可以选择主题,教程中选择Next的基础主题(没有追求可以凑合用( • ̀ω•́ )✧)</p>
-<p>themes中的(<strong>_config.yml</strong>)是主题的配置,里面可以根据提示做自己的简单配置,包括菜单的增减和修改,布局等等,如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># Directory</span><br><span class="line">source_dir: source</span><br><span class="line">public_dir: public</span><br><span class="line">tag_dir: tags</span><br><span class="line">archive_dir: archives</span><br><span class="line">category_dir: categories</span><br><span class="line">code_dir: downloads/code</span><br><span class="line">i18n_dir: :lang</span><br><span class="line">skip_render:</span><br></pre></td></tr></table></figure>
-<p>根据教程和注释完成自己的布局即可</p>
-<p><strong>参考<a href="http://www.cnblogs.com/fengxiongZz/p/7707568.html" target="_blank" rel="noopener">http://www.cnblogs.com/fengxiongZz/p/7707568.html</a></strong></p>
-<hr>
-<p><strong>进阶加强</strong></p>
-<p>完成这些想玩点花的话可以去官网或者GitHub找喜欢的themes修改使用,教程百度一大堆( • ̀ω•́ )✧</p>
-<p><strong>一大波官网主题:<a href="https://hexo.io/themes/" target="_blank" rel="noopener">https://hexo.io/themes/</a></strong></p>
-<p><strong>第三方的插件口头整合</strong></p>
+<h3 id="2-核心概念"><a href="#2-核心概念" class="headerlink" title="2.核心概念"></a>2.核心概念</h3><ol>
+<li>IoC: Inversion of Control 控制反转 (通过反射机制创建对象实例)</li>
+<li>DI: Dependency Injection  依赖注入(将bean之间的关系交给spring容器管理,我们可以在service注入dao层的实例,controller中注入service层实例)</li>
+<li>AOP: Aspect Oriented Programming  面向切面</li>
+</ol>
+<h3 id="3-Spring组成"><a href="#3-Spring组成" class="headerlink" title="3.Spring组成"></a>3.Spring组成</h3><p>Spring框架的功能大概由20多个模块组成,这些模块按组可以分为以下几部分</p>
+<p><strong>| 核心容器 | 数据访问/集成 | WEB | AOP | 设备 | 消息 | 测试 |</strong></p>
+<p>​    核心模块:Beans Core Context spEL对应项目初始化时需要的四个核心包<br><img src="https://i.imgur.com/4dxxIk6.png" alt="Spring架构"></p>
+<h3 id="4-Spring说明"><a href="#4-Spring说明" class="headerlink" title="4.Spring说明"></a>4.Spring说明</h3><ol>
+<li><strong>bean元素:需要spring管理的对象,是Spring中最基础的单位(包括数据源/SessionFactory/事务管理等)</strong></li>
+<li><strong>class属性: 需要spring管理对象的全类名</strong></li>
+<li><strong>name属性:给被管理者起个引用名,根据该引用名就可以使用该对象(bean对象的标识)</strong></li>
+<li>id属性:bean对象的唯一标识(和name的区别是整个spring中不可重复)</li>
+<li><strong>lazy-init:是否延时加载,默认false(开启后只对单例有效)</strong></li>
+<li>init-method:对象初始化方法</li>
+<li>destory:对象销毁方法</li>
+<li>scope:<strong>singleton</strong>(默认,适用实际开发的大部分情况)还是<strong>prototype</strong></li>
+</ol>
+<h4 id="1-Spring管理对象原理"><a href="#1-Spring管理对象原理" class="headerlink" title="1.Spring管理对象原理"></a>1.Spring管理对象原理</h4><h5 id="1-Spring容器"><a href="#1-Spring容器" class="headerlink" title="1.Spring容器"></a>1.Spring容器</h5><p>Spring要管理对象,就需要把对象加入到自己的容器中</p>
+<p><strong>Spring容器</strong>是Spring的核心,主要的责任便是<strong>管理Spring中java的组件</strong></p>
 <ol>
-<li>第三方登录(Github)</li>
-<li>评论功能</li>
-<li>站内搜索</li>
-<li>站内统计</li>
-<li>交互式背景</li>
-<li>网易云播放器插件</li>
-<li>将网站的所有图片通过url委托给第三方云图片服务器(七牛云存储10G免费)</li>
-<li>…</li>
+<li>对象加入到Spring容器的三种方法(依赖注入) <strong>|无参构造+setter注入|有参构造方法注入|动静态工厂注入|</strong></li>
+<li>使用bean对象时,实例化容器的两种方法<strong>|ClassPathXml..xml实例化|FileSystem…绝对路径实例化|</strong></li>
+<li>ApplicationContext容器实例化后,默认会实例化内部的所有bean,通过getBean即可获取bean对象的使用权</li>
 </ol>
-<hr>
-<p><strong>维护技巧</strong></p>
-<p>当不能保证在同一台电脑上传文章时,可以选择master分离的方式或者将博客部署在自己的远程服务器上</p>
+<h5 id="2-Spring容器与对象Bean"><a href="#2-Spring容器与对象Bean" class="headerlink" title="2.Spring容器与对象Bean"></a>2.Spring容器与对象Bean</h5><p>通常情况下,Bean是被动的接收Spring容器创建的实例,具有使用权,即Bean不对Spring进行访问</p>
+<p>如果想让Bean对Spring进行访问,则需要手动配置,让Bean实现<strong>BeanFactoryAware </strong>接口…</p>
+<p><strong>该操作非常不推荐,污染代码,使Bean和Spring耦合在一起,若非特别需要,否则不要用</strong></p>
+<h5 id="3-Spring容器中Bean的继承特性与Java中继承区别"><a href="#3-Spring容器中Bean的继承特性与Java中继承区别" class="headerlink" title="3.Spring容器中Bean的继承特性与Java中继承区别"></a>3.Spring容器中Bean的继承特性与Java中继承区别</h5><p>spring中可以使用抽象bean,即abstract 属性为true,抽象bean不能被实例化,作用是<strong>Spring中的继承</strong></p>
+<p><strong>spring中的继承:</strong></p>
+<p>主要用于bean的数量越来越多,许多属性配置冗余,此时可以使用继承</p>
+<p><strong>spring的继承无法继承如下属性:</strong></p>
+<ul>
+<li>depends-on,aotuwirwe,dependency-check,singleton,scope,lazy-iniyt这些属性总是子Bean定义，或采用默认值。 </li>
+</ul>
+<p><strong>Bean继承与java中继承的区别： </strong></p>
+<ul>
+<li>Spring中的子bean和父Bean可以是不同类型，但java中的继承则可保证子类是一种特殊的父类； </li>
+<li>Spring中的Bean的继承是实例之间的关系，因此只要表现在参数值的延续，而java中的继承是类之间的关系，主要表现为方法、属性之间的延续； </li>
+<li>Spring中的子Bean不可以作为父Bean使用，不具备多态性，java中的子类完全可以当成父类使用。 </li>
+</ul>
+<h5 id="4-Spring容器中Bean模式的生命周期"><a href="#4-Spring容器中Bean模式的生命周期" class="headerlink" title="4.Spring容器中Bean模式的生命周期"></a>4.Spring容器中Bean模式的生命周期</h5><p><strong>singleton：</strong> Spring容器能够准确的追踪其创建/使用/销毁</p>
+<p><strong>prototype：</strong>Spring容器仅负责其创建,无法追踪其使用和销毁,每次创建后都会委托给客户端,不再对其追踪 </p>
+<h5 id="5-强制初始化Bean-使用较少"><a href="#5-强制初始化Bean-使用较少" class="headerlink" title="5.强制初始化Bean(使用较少)"></a>5.强制初始化Bean(使用较少)</h5><p>Spring有一个默认的规则，总是先初始化主调Bean，然后在初始化依赖Bean。<br>为了指定Bean在目标Bean之前初始化，可以使用depends-on属性</p>
+<h5 id="6-自动装配"><a href="#6-自动装配" class="headerlink" title="6.自动装配"></a>6.自动装配</h5><ul>
+<li>Spring能自动装配Bean与Bean之间的依赖关系，即使无需使用ref显式指定依赖Bean。</li>
+<li>自动装配可以减少配置文件的工作量，但是降低了依赖关系的透明性和依赖性。</li>
+<li>可以根据指定属性值类型来缩小自动装配的范围(很少指定)</li>
+<li><strong>| no | byName | byType | constructor | autodetect | </strong></li>
+</ul>
+<h5 id="7-依赖检察-使用较少"><a href="#7-依赖检察-使用较少" class="headerlink" title="7.依赖检察(使用较少)"></a>7.依赖检察(使用较少)</h5><p>Spring提供一种依赖检查的功能，可以防止出现配置手误，或者其他情况的错误。<br>dependency-check=”all” 该属性值可以为<strong>| none | simple | objects | all | </strong></p>
+<h4 id="2-Spring核心机制-IoC-DI"><a href="#2-Spring核心机制-IoC-DI" class="headerlink" title="2.Spring核心机制:IoC/DI"></a>2.Spring核心机制:IoC/DI</h4><p>无论是<strong>IoC</strong>(控制反转) 还是<strong>DI</strong>(依赖注入),其含以上是互相包容的,在控制反转时便实现依赖注入</p>
+<ul>
+<li><strong>传统方法:</strong>当一个java实例(A)需要调用另一个java实例(B)时,需要在A中new一个B来构建</li>
+<li><strong>Spring管理中:</strong>B对象的创建交给了Spring来管理(控制反转) | 将B对象注入给A对象的过程称为(依赖注入)</li>
+</ul>
+<h4 id="4-Spring-AOP"><a href="#4-Spring-AOP" class="headerlink" title="4.Spring AOP"></a>4.Spring AOP</h4><h5 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h5><p> <strong>AOP</strong>（Aspect Oriented Programming），即面向切面编程，基于<strong>面向过程</strong></p>
+<p>是<strong>OOP</strong>（Object Oriented Programming，面向对象编程）的补充和完善。 </p>
+<p><strong>(OOP无法关注到程序的切入点,AOP具有更强大的切面控制力)</strong></p>
+<p>例如:</p>
+<ul>
+<li>面向对象的流程是用户注册信息,然后插入到数据库中<br>   面向切面的流程是用户注册信息,在插入数据库前进行控    制,在插入数据库后进行控制</li>
+</ul>
+<p><strong>AOP使用横切技术,把软件系统分成两部分</strong><br><strong>核心关注点</strong>,特点:纵向关系为主,建立对象层次结构<br><strong>横切关注点</strong>,特点:横向关系为主,分布在核心关注点的周围,能够切开封装对象,对内部重复的部分进行重新封装,降低耦合性,如权限认证、日志、事务,AOP可以分离系统中的关注点,达到更高效的开发和运行</p>
+<h5 id="2-五种横切方案"><a href="#2-五种横切方案" class="headerlink" title="2.五种横切方案"></a>2.五种横切方案</h5><ol>
+<li><p>前置通知</p>
+</li>
+<li><p>后置正常通知</p>
+</li>
+<li>后置异常通知</li>
+<li>后置始终通知</li>
+<li>环绕通知</li>
+</ol>
+<h5 id="3-八大核心概念"><a href="#3-八大核心概念" class="headerlink" title="3.八大核心概念"></a>3.八大核心概念</h5><ol>
+<li><p>Joinpoint 连接点<br> AOP执行程序的特定位置</p>
+</li>
+<li><p>PointCut 切点<br> AOP通过切点来确定特定的连接点位置</p>
+</li>
+<li><p>Advice 增强<br> 织入目标类连接点上的一段代码,可以描述程序,也可以确定方位,</p>
+<pre><code>只有通过切点信息和方位信息,才能确定特定连接点并执行增强逻辑
+</code></pre></li>
+<li><p>Target 目标对象<br> 增强逻辑的织入目标类</p>
+</li>
+<li><p>Introduction 引介<br> 特殊增强,给指定类添加属性和方法,也可以动态的添加接口的实现业务逻辑</p>
+</li>
+<li><p>weaving 织入</p>
+<p> 增强 添加到 目标类 的 连接点 的过程,将目标,增强和引介很好的结合在了一起,AOP常用的三种织入技术</p>
+<pre><code>编译期织入,这要求使用特殊的Java编译器.
+</code></pre><p> ​        类装载期织入,这要求使用特殊的类装载器.</p>
+<p> ​        动态代理织入,在运行期为目标类添加增强生成子类的方式.</p>
+<pre><code>Spring采用动态代理织入,而AspectJ采用编译期织入和类装载器织入.
+</code></pre></li>
+<li><p>Proxy  代理</p>
+<p> 目标被增强织入后生成一个新的代理类,该代理类可能和原类是一个接口,也可能是原类的子类,可以采用和原类相同的方法调用</p>
+</li>
+<li><p>Aspect 切面</p>
+<p> 由增强和切点组成, [既包含横切逻辑的定义,也包括连接点的定义] ,能够把这两种定义织入到指定连接点中</p>
+</li>
+</ol>
+<h5 id="4-AOP底层调用的两种代理机制"><a href="#4-AOP底层调用的两种代理机制" class="headerlink" title="4.AOP底层调用的两种代理机制"></a>4.AOP底层调用的两种代理机制</h5><ul>
+<li><strong>JDK动态代理:</strong>针对接口类产生代理</li>
+<li><strong>CGlib动态代理:</strong>针对没有实现接口的类产生代理,应用的是底层字节码增强技术,生成当前类的子类对象</li>
+</ul>
+<h3 id="5-Spring深入拓展"><a href="#5-Spring深入拓展" class="headerlink" title="5.Spring深入拓展"></a>5.Spring深入拓展</h3><h4 id="1-利用后处理器扩展Spring容器…"><a href="#1-利用后处理器扩展Spring容器…" class="headerlink" title="1.利用后处理器扩展Spring容器…"></a>1.利用后处理器扩展Spring容器…</h4><h4 id="2-Spring的“零配置”支持-注解"><a href="#2-Spring的“零配置”支持-注解" class="headerlink" title="2.Spring的“零配置”支持(注解)"></a>2.Spring的“零配置”支持(注解)</h4><pre><code>**| Component | Controller | Service | Repository | Scope | Resource | Autowired | Qualifier | JsonIgnore |**
+</code></pre><h4 id="3-资源访问…"><a href="#3-资源访问…" class="headerlink" title="3.资源访问…"></a>3.资源访问…</h4><p><strong>深入拓展传送门:<a href="https://www.cnblogs.com/shijiaoyun/p/7458341.html" target="_blank" rel="noopener">https://www.cnblogs.com/shijiaoyun/p/7458341.html</a></strong></p>
 
     </div>
 </article>
@@ -314,7 +393,7 @@
 <script>
 	if(!window.commentConfig) {
       window.commentConfig = {}
-      window.commentConfig.title = 'GitHub 博客快速搭建'
+      window.commentConfig.title = 'Spring基础原理'
     }
 </script>
 
@@ -462,12 +541,6 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2018/07/06/FastDfs基础原理/">FastDFS 基础原理</a>
                 </span>
             </li>
@@ -480,12 +553,6 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/14/Log日志整理/"></a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
                 </span>
             </li>
@@ -493,12 +560,6 @@
             <li class="list-group-item">
                 <span class="post-title">
                     <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
                 </span>
             </li>
             
@@ -520,6 +581,24 @@
                 </span>
             </li>
             
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/14/服务器搭建/">服务器搭建(持续更新)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/04/Shiro基础原理/">Shiro基础原理</a>
+                </span>
+            </li>
+            
         </ul>
     </div>
 </aside>
@@ -529,13 +608,13 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/2018/07/02/GitHub博客搭建/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2018/07/15/Spring基础原理/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/2018/07/02/GitHub博客搭建/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2018/07/15/Spring基础原理/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/2018/07/02/GitHub博客搭建/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/07/15/Spring基础原理/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -716,7 +795,7 @@ $(function(){
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     if(window.commentConfig) {
-      window.commentConfig.id = 'Mon Jul 02 2018 00:00:00 GMT+0800'
+      window.commentConfig.id = 'Sun Jul 15 2018 00:00:00 GMT+0800'
       window.commentConfig.owner = 'dony15'
       window.commentConfig.repo = 'reply.github.io'
       window.commentConfig.client_id = '3e620f638731b84942ed'
@@ -724,7 +803,7 @@ $(function(){
       window.commentConfig.redirect_uri = ''
     } else {
       window.commentConfig = {
-      	id: 'Mon Jul 02 2018 00:00:00 GMT+0800',
+      	id: 'Sun Jul 15 2018 00:00:00 GMT+0800',
         owner: 'dony15',
         repo: 'reply.github.io',
         client_id: '3e620f638731b84942ed',

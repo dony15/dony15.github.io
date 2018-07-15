@@ -10,7 +10,7 @@
     
     
     
-    <title>GitHub 博客快速搭建 | DonY15</title>
+    <title>服务器搭建(持续更新) | DonY15</title>
     <link href=”http://yoursite.com“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -224,19 +224,19 @@
        
 				<a href="/">DonY15</a>
         >
-        <span>GitHub 博客快速搭建</span>
+        <span>服务器搭建(持续更新)</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                <a href="/2018/07/14/服务器搭建/">服务器搭建(持续更新)</a>
             </h1>
         </div>
         <div class="tag-article">
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2018-07-02
+                <i class="fa fa-calendar"></i> 2018-07-14
             </span>
             
             <span class="label label-gal">
@@ -250,11 +250,11 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                    <a href="/2018/07/14/服务器搭建/">服务器搭建(持续更新)</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2018-07-02
+                <i class="fa fa-calendar"></i> 2018-07-14
             </p>
             <p>
                 
@@ -265,45 +265,36 @@
         </center>
     </div>
     <div class="content-article">
-        <h3 id="GitHub-博客快速搭建"><a href="#GitHub-博客快速搭建" class="headerlink" title="GitHub 博客快速搭建"></a>GitHub 博客快速搭建</h3><p>[TOC]</p>
-<p><strong>环境:Win7</strong></p>
-<p><strong>搭建流程</strong></p>
-<p>Node.js | Hexo | Next(themes) </p>
-<p><strong>基础</strong></p>
-<ol>
-<li>首先安装Node.js 注意<strong>Path指定位置</strong>(影响到balabala一些配置的存放的位置,默认C盘,建议改)</li>
-<li>Node.js安装好后,选择一个文件夹安装Hexo(此处为<strong>搭建Blog的位置</strong>)</li>
-<li>将GitHub账号的博客地址添加到Hexo的配置文件中(根目录 <strong>_config.yml</strong>),并将部署方式改为Git(老版本是GitHub方式)</li>
-<li>根据指令部署后即可完成基础的博客搭建,此时查看博客仓库是否上传了静态资源(如果上传了则代表搭建成功)</li>
-<li>短暂的延迟后进入博客网页即可看到搭建的博客</li>
-<li>写博客的方式–&gt;将编写的md文章放在posts下,然后 hexo g d 部署一下即可(每次方式用这个指令就可以上传文章了,文章会被自适应解析)</li>
-</ol>
-<p><strong>参考<a href="https://www.cnblogs.com/fengxiongZz/p/7707219.html" target="_blank" rel="noopener">https://www.cnblogs.com/fengxiongZz/p/7707219.html</a></strong></p>
-<hr>
-<p><strong>进阶</strong></p>
-<p>Hexo中的themes是主题设定的位置,可以选择主题,教程中选择Next的基础主题(没有追求可以凑合用( • ̀ω•́ )✧)</p>
-<p>themes中的(<strong>_config.yml</strong>)是主题的配置,里面可以根据提示做自己的简单配置,包括菜单的增减和修改,布局等等,如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># Directory</span><br><span class="line">source_dir: source</span><br><span class="line">public_dir: public</span><br><span class="line">tag_dir: tags</span><br><span class="line">archive_dir: archives</span><br><span class="line">category_dir: categories</span><br><span class="line">code_dir: downloads/code</span><br><span class="line">i18n_dir: :lang</span><br><span class="line">skip_render:</span><br></pre></td></tr></table></figure>
-<p>根据教程和注释完成自己的布局即可</p>
-<p><strong>参考<a href="http://www.cnblogs.com/fengxiongZz/p/7707568.html" target="_blank" rel="noopener">http://www.cnblogs.com/fengxiongZz/p/7707568.html</a></strong></p>
-<hr>
-<p><strong>进阶加强</strong></p>
-<p>完成这些想玩点花的话可以去官网或者GitHub找喜欢的themes修改使用,教程百度一大堆( • ̀ω•́ )✧</p>
-<p><strong>一大波官网主题:<a href="https://hexo.io/themes/" target="_blank" rel="noopener">https://hexo.io/themes/</a></strong></p>
-<p><strong>第三方的插件口头整合</strong></p>
-<ol>
-<li>第三方登录(Github)</li>
-<li>评论功能</li>
-<li>站内搜索</li>
-<li>站内统计</li>
-<li>交互式背景</li>
-<li>网易云播放器插件</li>
-<li>将网站的所有图片通过url委托给第三方云图片服务器(七牛云存储10G免费)</li>
-<li>…</li>
-</ol>
-<hr>
-<p><strong>维护技巧</strong></p>
-<p>当不能保证在同一台电脑上传文章时,可以选择master分离的方式或者将博客部署在自己的远程服务器上</p>
+        <h2 id="服务器搭建集合"><a href="#服务器搭建集合" class="headerlink" title="服务器搭建集合"></a>服务器搭建集合</h2><p>[TOC]</p>
+<h3 id="1-ShadowsocksR多用户一件脚本"><a href="#1-ShadowsocksR多用户一件脚本" class="headerlink" title="1.ShadowsocksR多用户一件脚本"></a>1.ShadowsocksR多用户一件脚本</h3><p><strong>系统要求:</strong>CentOS 6+ / Debian 6+ / Ubuntu 14.04 +</p>
+<p>脚本特点：</p>
+<p>所有步骤都可以通过 Shell 脚本中文交互 操作。</p>
+<ul>
+<li>支持 限制 用户速度</li>
+<li>支持 限制 用户设备数</li>
+<li>支持 限制 用户总流量</li>
+<li>支持 定时 流量清零</li>
+<li>支持 显示 当前连接IP</li>
+<li>支持 显示 SS/SSR连接+二维码</li>
+<li>支持 一键安装 BBR</li>
+<li>支持 一键安装 锐速</li>
+<li>支持 一键安装 LotServer</li>
+<li>支持 一键封禁 垃圾邮件(SMAP)/BT/PT</li>
+</ul>
+<p><strong>一键安装指令:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https://makeai.cn/bash/ssrmu.sh &amp;&amp; chmod +x ssrmu.sh &amp;&amp; bash ssrmu.sh</span><br></pre></td></tr></table></figure>
+<p><strong>文件位置</strong></p>
+<p><strong>安装目录：</strong>/usr/local/shadowsocksr</p>
+<p><strong>配置文件：</strong>/usr/local/shadowsocksr/user-config.json</p>
+<p><strong>数据文件：</strong>/usr/local/shadowsocksr/mudb.json</p>
+<ul>
+<li><strong>启动 ShadowsocksR：</strong>service ssrmu start</li>
+<li><strong>停止 ShadowsocksR：</strong>service ssrmu stop</li>
+<li><strong>重启 ShadowsocksR：</strong>service ssrmu restart</li>
+<li><strong>查看 ShadowsocksR状态：</strong>service ssrmu status</li>
+</ul>
+<p><strong>Linux中提示-bash: wget: command not found的解决方法</strong><br>    CentOS:yum install wget -y<br>    Debian/Ubuntu:apt-get install -y wget</p>
+<p><strong>详细传送门:<a href="https://www.bbaaz.com/thread-7-1-1.html" target="_blank" rel="noopener">https://www.bbaaz.com/thread-7-1-1.html</a></strong></p>
 
     </div>
 </article>
@@ -314,7 +305,7 @@
 <script>
 	if(!window.commentConfig) {
       window.commentConfig = {}
-      window.commentConfig.title = 'GitHub 博客快速搭建'
+      window.commentConfig.title = '服务器搭建(持续更新)'
     }
 </script>
 
@@ -462,25 +453,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/06/FastDfs基础原理/">FastDFS 基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/14/Log日志整理/"></a>
                 </span>
             </li>
             
@@ -520,6 +493,24 @@
                 </span>
             </li>
             
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/14/服务器搭建/">服务器搭建(持续更新)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/04/Shiro基础原理/">Shiro基础原理</a>
+                </span>
+            </li>
+            
         </ul>
     </div>
 </aside>
@@ -529,13 +520,13 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/2018/07/02/GitHub博客搭建/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2018/07/14/服务器搭建/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/2018/07/02/GitHub博客搭建/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2018/07/14/服务器搭建/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/2018/07/02/GitHub博客搭建/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/07/14/服务器搭建/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -716,7 +707,7 @@ $(function(){
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     if(window.commentConfig) {
-      window.commentConfig.id = 'Mon Jul 02 2018 00:00:00 GMT+0800'
+      window.commentConfig.id = 'Sat Jul 14 2018 00:00:00 GMT+0800'
       window.commentConfig.owner = 'dony15'
       window.commentConfig.repo = 'reply.github.io'
       window.commentConfig.client_id = '3e620f638731b84942ed'
@@ -724,7 +715,7 @@ $(function(){
       window.commentConfig.redirect_uri = ''
     } else {
       window.commentConfig = {
-      	id: 'Mon Jul 02 2018 00:00:00 GMT+0800',
+      	id: 'Sat Jul 14 2018 00:00:00 GMT+0800',
         owner: 'dony15',
         repo: 'reply.github.io',
         client_id: '3e620f638731b84942ed',
