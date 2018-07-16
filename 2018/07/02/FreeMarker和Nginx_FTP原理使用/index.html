@@ -157,11 +157,15 @@
                         
                         
                         <li>
-                            <a href="/categories/组件/">组件</a>
+                            <a href="/categories/Web基础/">Web基础</a>
                         </li>
                         
                         <li>
                             <a href="/categories/框架/">框架</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/组件/">组件</a>
                         </li>
                         
                         <li>
@@ -290,7 +294,22 @@
 <h5 id="2-使用-1"><a href="#2-使用-1" class="headerlink" title="2.使用"></a>2.使用</h5><p>FreeMarker生成静态页面后,可以通过FTP发送到服务器指定的位置存放</p>
 <h4 id="3-Nginx结合"><a href="#3-Nginx结合" class="headerlink" title="3.Nginx结合"></a>3.Nginx结合</h4><h5 id="1-介绍-2"><a href="#1-介绍-2" class="headerlink" title="1.介绍"></a>1.介绍</h5><p>Nginx是一个Http服务器,可以将服务器上的<strong>静态文件通过Http协议</strong>展现给客户端</p>
 <h5 id="2-使用-2"><a href="#2-使用-2" class="headerlink" title="2.使用"></a>2.使用</h5><p>Nginx将FreeMarker发送来的静态页面以url的方式发送到客户端完成一套静态部署</p>
+<p>修改服务器中Nginx的配置,将静态页面的位置改为一个逻辑路径,通过这个逻辑路径即可完成对静态资源的访问</p>
+<p>(注意,需要提前将样式copy进去)</p>
 <p><strong>Nginx传送门(待更新)</strong></p>
+<h4 id="4-开发使用"><a href="#4-开发使用" class="headerlink" title="4. 开发使用"></a>4. 开发使用</h4><p>将FreeMarker整合进SSM中<strong>广告位详情为例:</strong></p>
+<ol>
+<li>Common层中建立广告位实例</li>
+<li>dao层和业务逻辑层实现对广告位的增删改查,并且增加<strong>导出静态页功能</strong></li>
+<li><strong>导出静态页</strong>功能整合了<strong>FreeMarker/FTP连接</strong>的功能<ol>
+<li>将指定的数据拉到FreeMarker中生成模板,然后写出到磁盘中,</li>
+<li>再通过FTP工具,将本生成的模板上传到服务器中指定的位置存储</li>
+</ol>
+</li>
+<li>注意需要在服务器对应的位置提前将CSS/JS等静态资源导入</li>
+<li>配置Nginx的<strong>nginx.conf</strong>文件,改变指定用户,指定端口和静态资源的逻辑路径</li>
+<li>完成后通过访问地址栏<strong>服务器地址+逻辑路径+网页名</strong> 即可访问静态资源(主页默认80端口不需要写,其他端口需要在服务器地址栏后面:端口号)</li>
+</ol>
 
     </div>
 </article>
@@ -373,19 +392,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/14/Log日志整理/"></a>
+                    <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
                 </span>
             </li>
             
@@ -397,13 +410,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                    <a href="/2018/07/10/Ajax基础服务/">Ajax基础服务</a>
                 </span>
             </li>
             
@@ -415,13 +422,25 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
                 </span>
             </li>
             
@@ -449,19 +468,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/14/Log日志整理/"></a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                    <a href="/2018/07/06/Log日志整理/">Log日志整理</a>
                 </span>
             </li>
             
@@ -473,19 +486,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2018/07/03/hello-world/">Hello World</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                    <a href="/2018/07/08/实用工具类集合/">实用工具类集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
                 </span>
             </li>
             
@@ -497,7 +510,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
+                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
                 </span>
             </li>
             

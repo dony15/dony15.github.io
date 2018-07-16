@@ -157,11 +157,15 @@
                         
                         
                         <li>
-                            <a href="/categories/组件/">组件</a>
+                            <a href="/categories/Web基础/">Web基础</a>
                         </li>
                         
                         <li>
                             <a href="/categories/框架/">框架</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/组件/">组件</a>
                         </li>
                         
                         <li>
@@ -309,7 +313,33 @@
 <li>渲染具体的视图等；</li>
 <li>如果执行过程中遇到异常将交给HandlerExceptionResolver来解析。</li>
 </ol>
-<h4 id="4-DispatcherServlet核心代码"><a href="#4-DispatcherServlet核心代码" class="headerlink" title="4.DispatcherServlet核心代码"></a>4.DispatcherServlet核心代码</h4><h4 id="5-DispatcherServlet辅助类"><a href="#5-DispatcherServlet辅助类" class="headerlink" title="5.DispatcherServlet辅助类"></a>5.DispatcherServlet辅助类</h4><h4 id="传送门-https-xuzhongcn-github-io-top"><a href="#传送门-https-xuzhongcn-github-io-top" class="headerlink" title="传送门:https://xuzhongcn.github.io/#top"></a>传送门:<a href="https://xuzhongcn.github.io/#top" target="_blank" rel="noopener">https://xuzhongcn.github.io/#top</a></h4><h3 id="7-常用注解-实用重点"><a href="#7-常用注解-实用重点" class="headerlink" title="7.常用注解(实用重点)"></a>7.常用注解(实用重点)</h3><h4 id="1-RequestMapping-请求方式"><a href="#1-RequestMapping-请求方式" class="headerlink" title="1.@RequestMapping 请求方式"></a>1.@RequestMapping 请求方式</h4><h4 id="2-RequestParam-处理请求参数"><a href="#2-RequestParam-处理请求参数" class="headerlink" title="2.@RequestParam 处理请求参数"></a>2.@RequestParam 处理请求参数</h4><h4 id="3-PathVariable-路径传参"><a href="#3-PathVariable-路径传参" class="headerlink" title="3.@PathVariable 路径传参"></a>3.@PathVariable 路径传参</h4>
+<h4 id="4-DispatcherServlet核心代码"><a href="#4-DispatcherServlet核心代码" class="headerlink" title="4.DispatcherServlet核心代码"></a>4.DispatcherServlet核心代码</h4><h4 id="5-DispatcherServlet辅助类"><a href="#5-DispatcherServlet辅助类" class="headerlink" title="5.DispatcherServlet辅助类"></a>5.DispatcherServlet辅助类</h4><h4 id="传送门-https-xuzhongcn-github-io-top"><a href="#传送门-https-xuzhongcn-github-io-top" class="headerlink" title="传送门:https://xuzhongcn.github.io/#top"></a>传送门:<a href="https://xuzhongcn.github.io/#top" target="_blank" rel="noopener">https://xuzhongcn.github.io/#top</a></h4><h3 id="7-常用注解-实用重点"><a href="#7-常用注解-实用重点" class="headerlink" title="7.常用注解(实用重点)"></a>7.常用注解(实用重点)</h3><h4 id="1-RequestMapping-请求方式"><a href="#1-RequestMapping-请求方式" class="headerlink" title="1.@RequestMapping 请求方式"></a>1.@RequestMapping 请求方式</h4><p><strong>写在类或者方法上,表示请求该类或方法的路径</strong></p>
+<h5 id="1-value-method"><a href="#1-value-method" class="headerlink" title="1.value method"></a>1.value method</h5><p><strong>value: </strong>请求路径</p>
+<p>指定为普通具体值(如”/dologin”)</p>
+<p>指定为某一变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(value=&quot;/user/&#123;username&#125;&quot;, method=RequestMethod.GET)</span><br><span class="line">public String findOwner(@PathVariable String username, Model model) &#123;</span><br><span class="line">  User user=userService.selectUserByUsername(username);</span><br><span class="line">  model.addAttribute(&quot;user&quot;, user);  </span><br><span class="line">  return &quot;user&quot;; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>指定为含有正则表达式的变量(略)</p>
+<p><strong>method:</strong> 请求类型  GET、POST、PUT、DELETE等</p>
+<p>(待补充)</p>
+<h5 id="2-consumes-produces"><a href="#2-consumes-produces" class="headerlink" title="2.consumes produces"></a>2.consumes produces</h5><p><strong>consumes:</strong> 指定处理请求提交的内容类型（Content-Type），例如application/json, text/html; </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">@RequestMapping(value = &quot;/pets&quot;, method = RequestMethod.POST, consumes=&quot;application/json&quot;)</span><br><span class="line">public void addPet(@RequestBody Pet pet, Model model) &#123;    </span><br><span class="line">    // implementation omitted</span><br><span class="line">    //方法仅处理request Content-Type为“application/json”类型的请求。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>produces:</strong> 指定返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回； </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">@RequestMapping(value = &quot;/pets/&#123;petId&#125;&quot;, method = RequestMethod.GET, produces=&quot;application/json&quot;)</span><br><span class="line">@ResponseBody</span><br><span class="line">public Pet getPet(@PathVariable String petId, Model model) &#123;    </span><br><span class="line">    // implementation omitted</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仅处理request请求头header中包含了指定类型<strong>application/json</strong>的请求,同时暗示返回数据也是json</p>
+<h5 id="3-params-headers"><a href="#3-params-headers" class="headerlink" title="3.params headers"></a>3.params headers</h5><p><strong>params:</strong> 指定request中必须包含某些参数才可以调用该方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">@RequestMapping(&quot;/owners/&#123;ownerId&#125;&quot;)</span><br><span class="line">public class RelativePathUriTemplateController &#123;</span><br><span class="line"></span><br><span class="line">  @RequestMapping(value = &quot;/pets/&#123;petId&#125;&quot;, method = RequestMethod.GET, params=&quot;myParam=myValue&quot;)</span><br><span class="line">  public void findPet(@PathVariable String ownerId, @PathVariable String petId, Model model) &#123;    </span><br><span class="line">    // implementation omitted</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仅处理请求中包含了名为“myParam”，值为“myValue”的请求； </p>
+<p><strong>headers:</strong>指定的request中必须包含指定的header值才可以调用该方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">@RequestMapping(&quot;/owners/&#123;ownerId&#125;&quot;)</span><br><span class="line">public class RelativePathUriTemplateController &#123;</span><br><span class="line"></span><br><span class="line">@RequestMapping(value = &quot;/pets&quot;, method = RequestMethod.GET, headers=&quot;Referer=http://www.ifeng.com/&quot;)</span><br><span class="line">  public void findPet(@PathVariable String ownerId, @PathVariable String petId, Model model) &#123;    </span><br><span class="line">    // implementation omitted</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仅处理request的header中包含了指定“Refer”请求头和对应值为“<code>http://www.ifeng.com/</code>”的请求； </p>
+<h4 id="2-RequestParam-处理请求参数"><a href="#2-RequestParam-处理请求参数" class="headerlink" title="2.@RequestParam 处理请求参数"></a>2.@RequestParam 处理请求参数</h4><h4 id="3-PathVariable-路径传参"><a href="#3-PathVariable-路径传参" class="headerlink" title="3.@PathVariable 路径传参"></a>3.@PathVariable 路径传参</h4><h4 id="4-RequestBody-处理Json-xml请求"><a href="#4-RequestBody-处理Json-xml请求" class="headerlink" title="4.@RequestBody 处理Json/xml请求"></a>4.@RequestBody 处理Json/xml请求</h4><p><strong>requestBody</strong> 常用来处理不是默认类型application/x-www-form-urlcoded 的请求</p>
+<p>如application/json或者是application/xml等(一般处理json)</p>
+<p><strong>requestBody</strong>可以将请求体中的JSON字符串绑定到相应的bean上，也可以将其分别绑定到对应的字符串上 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">　@requestMapping(&quot;/login&quot;)</span><br><span class="line">　　　　public void login(@requestBody String userName,@requestBody String pwd)&#123;</span><br><span class="line">　　　　　　System.out.println(userName+&quot; ：&quot;+pwd);</span><br><span class="line">　　　　&#125;</span><br><span class="line">---------------</span><br><span class="line">　@requestMapping(&quot;/login&quot;)</span><br><span class="line">　　　　public void login(@requestBody User user)&#123;</span><br><span class="line">　　　　　　System.out.println(user);</span><br><span class="line">　　　　&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="5-ResponseBody-处理Json-xml-响应"><a href="#5-ResponseBody-处理Json-xml-响应" class="headerlink" title="5.@ResponseBody 处理Json/xml 响应"></a>5.@ResponseBody 处理Json/xml 响应</h4><p><strong>responseBody:</strong>用于将数据放到response的body体中响应到前端</p>
+<p><strong>注意:</strong>返回的数据不是html标签页面,而是json/xml数据</p>
+<h4 id="对于请求类型的适配原理"><a href="#对于请求类型的适配原理" class="headerlink" title="对于请求类型的适配原理"></a>对于请求类型的适配原理</h4><p><strong> 传送门:<a href="http://www.cnblogs.com/qq78292959/p/3760651.html" target="_blank" rel="noopener">http://www.cnblogs.com/qq78292959/p/3760651.html</a> </strong></p>
+
     </div>
 </article>
 
@@ -391,19 +421,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/14/Log日志整理/"></a>
+                    <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
                 </span>
             </li>
             
@@ -415,13 +439,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                    <a href="/2018/07/10/Ajax基础服务/">Ajax基础服务</a>
                 </span>
             </li>
             
@@ -433,13 +451,25 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
                 </span>
             </li>
             
@@ -473,19 +503,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/14/Log日志整理/"></a>
+                    <a href="/2018/06/04/Nginx基础原理/">Nginx基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
+                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
                 </span>
             </li>
             
@@ -497,7 +527,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
                 </span>
             </li>
             
@@ -509,19 +539,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                    <a href="/2018/07/14/服务器搭建/">服务器搭建(持续更新)</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
+                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/04/Shiro基础原理/">Shiro基础原理</a>
+                    <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
                 </span>
             </li>
             

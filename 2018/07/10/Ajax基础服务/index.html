@@ -10,7 +10,7 @@
     
     
     
-    <title>Zookeeper与Dubbo基础原理 | DonY15</title>
+    <title>Ajax基础服务 | DonY15</title>
     <link href=”http://yoursite.com“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -228,19 +228,19 @@
        
 				<a href="/">DonY15</a>
         >
-        <span>Zookeeper与Dubbo基础原理</span>
+        <span>Ajax基础服务</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
+                <a href="/2018/07/10/Ajax基础服务/">Ajax基础服务</a>
             </h1>
         </div>
         <div class="tag-article">
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2018-07-08
+                <i class="fa fa-calendar"></i> 2018-07-10
             </span>
             
             <span class="label label-gal">
@@ -254,11 +254,11 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
+                    <a href="/2018/07/10/Ajax基础服务/">Ajax基础服务</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2018-07-08
+                <i class="fa fa-calendar"></i> 2018-07-10
             </p>
             <p>
                 
@@ -269,73 +269,26 @@
         </center>
     </div>
     <div class="content-article">
-        <h3 id="Zookeeper与Dubbo基础原理"><a href="#Zookeeper与Dubbo基础原理" class="headerlink" title="Zookeeper与Dubbo基础原理"></a>Zookeeper与Dubbo基础原理</h3><p>[TOC]</p>
-<h4 id="Zookeeper-RPC框架"><a href="#Zookeeper-RPC框架" class="headerlink" title="Zookeeper(RPC框架)"></a>Zookeeper(RPC框架)</h4><p><strong>高效的分布式分布式应用协调服务,提供注册和负载均衡等–&gt;服务中心</strong></p>
-<ul>
-<li>zookeeper让调用者知道调用的哪台服务器地址,也是集群的管理者</li>
-<li>Zookeeper具有心跳检测机制,当服务器挂掉时可以让调用者知道,从而切换请求服务器</li>
-<li>Zookeeper具有高并发的横向扩展,在不改变代码的情况下对设备进行扩展</li>
-</ul>
-<p><strong>1.命名服务   2.配置管理   3.集群管理   4.分布式锁  5.队列管理</strong> </p>
-<p>命名服务:在zookeeper的文件系统里创建一个目录，即有唯一的path。在我们使用tborg无法确定上游程序的部署机器时即可与下游程序约定好path，通过path即能互相探索发现。 </p>
-<p>配置管理:程序分散部署在多台机器上难以管理,可以将每台设备的信息存储在Zookeeper的目录节点中,然后相关程序对该目录进行监控,如果配置信息发生变化,则Zookeeper会发布新的配置</p>
-<p>集群管理:(1)设备的加入(2)选举master(可以改变设备编号,编号第一位自动master(一种思路))</p>
-<p>分布式锁:zookeeper是一致性的文件系统,锁服务可以分为两类，(1)保持独占，(2)控制时序。  </p>
-<p>列队管理:</p>
+        <h2 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h2><p>…</p>
+<p>(暂时不想更…ಠ╭╮ಠ)</p>
+<h3 id="1-Ajax概念"><a href="#1-Ajax概念" class="headerlink" title="1.Ajax概念"></a>1.Ajax概念</h3><h3 id="2-Ajax组成-作用"><a href="#2-Ajax组成-作用" class="headerlink" title="2.Ajax组成/作用"></a>2.Ajax组成/作用</h3><h3 id="3-Ajax在JS-JQ中的使用"><a href="#3-Ajax在JS-JQ中的使用" class="headerlink" title="3.Ajax在JS/JQ中的使用"></a>3.Ajax在JS/JQ中的使用</h3><h3 id="4-Ajax跨域服务"><a href="#4-Ajax跨域服务" class="headerlink" title="4.Ajax跨域服务"></a>4.Ajax跨域服务</h3><p>ajax默认关闭跨域服务功能,有两种方案可以开启,一种是<strong>jsonp</strong>和<strong>callback</strong>前后端都修改</p>
+<h4 id="方案一-处理前后端"><a href="#方案一-处理前后端" class="headerlink" title="方案一(处理前后端)"></a>方案一(处理前后端)</h4><p><strong>前端</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.ajax(&#123;</span><br><span class="line">     type:&quot;get&quot;,    //请求方式</span><br><span class="line">    async:true,    //是否异步</span><br><span class="line">    url:&quot;http://www.domain.net/url&quot;,</span><br><span class="line">     dataType:&quot;jsonp&quot;,    //跨域json请求一定是jsonp,js默认发送callback(自动生成,也可指定的字符串)</span><br><span class="line">     data:&#123;&quot;query&quot;:&quot;civilnews&quot;&#125;, </span><br><span class="line">     ...</span><br></pre></td></tr></table></figure>
+<p><strong>后端</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(&quot;info.html&quot;)</span><br><span class="line">@ResponseBody</span><br><span class="line">public String check(String callback, HttpServletRequest request) &#123;</span><br><span class="line">    //从cookie中获取票据</span><br><span class="line">    String token = CookieUtils.getCookieValue(request, TOKEN_KEY);</span><br><span class="line">    //查询用户信息</span><br><span class="line">    TravelResult result = userService.getUserByToken(token);</span><br><span class="line">    return callback + &quot;(&quot; + JsonUtil.getJSON(result) + &quot;)&quot;; //返回callback拼接Json</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="方案二-后端拦截器处理"><a href="#方案二-后端拦截器处理" class="headerlink" title="方案二(后端拦截器处理)"></a>方案二(后端拦截器处理)</h4><p><strong>粗粒度</strong>拦截</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">package com.jgonet.filter;</span><br><span class="line"> </span><br><span class="line">import java.io.IOException;  </span><br><span class="line"> </span><br><span class="line">import javax.servlet.Filter;  </span><br><span class="line">import javax.servlet.FilterChain;  </span><br><span class="line">import javax.servlet.FilterConfig;  </span><br><span class="line">import javax.servlet.ServletException;  </span><br><span class="line">import javax.servlet.ServletRequest;  </span><br><span class="line">import javax.servlet.ServletResponse;  </span><br><span class="line">import javax.servlet.http.HttpServletResponse;  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">public class HeaderFilter implements Filter   </span><br><span class="line">&#123;   </span><br><span class="line">    public void doFilter(ServletRequest request, ServletResponse resp, FilterChain chain) throws IOException, ServletException  </span><br><span class="line">    &#123;  </span><br><span class="line">    HttpServletResponse response = (HttpServletResponse) resp; response.setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;); //解决跨域访问报错   </span><br><span class="line">    response.setHeader(&quot;Access-Control-Allow-Methods&quot;, &quot;POST, PUT, GET, OPTIONS, DELETE&quot;);   </span><br><span class="line">    response.setHeader(&quot;Access-Control-Max-Age&quot;, &quot;3600&quot;); //设置过期时间   </span><br><span class="line">    response.setHeader(&quot;Access-Control-Allow-Headers&quot;, &quot;Origin, X-Requested-With, Content-Type, Accept, client_id, uuid, Authorization&quot;);   </span><br><span class="line">    response.setHeader(&quot;Cache-Control&quot;, &quot;no-cache, no-store, must-revalidate&quot;); // 支持HTTP 1.1.   </span><br><span class="line">    response.setHeader(&quot;Pragma&quot;, &quot;no-cache&quot;); // 支持HTTP 1.0. response.setHeader(&quot;Expires&quot;, &quot;0&quot;);   </span><br><span class="line">    chain.doFilter(request, resp);   </span><br><span class="line">    &#125;   </span><br><span class="line">    public void init(FilterConfig filterConfig) &#123;&#125;   </span><br><span class="line">    public void destroy() &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>web.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;  </span><br><span class="line">     &lt;filter-name&gt;HeaderFilter&lt;/filter-name&gt;  </span><br><span class="line">     &lt;filter-class&gt;com.jgonet.filter.HeaderFilter&lt;/filter-class&gt;&lt;!--你过滤器的包 --&gt;  </span><br><span class="line">   &lt;/filter&gt;  </span><br><span class="line">   &lt;filter-mapping&gt;  </span><br><span class="line">     &lt;filter-name&gt;HeaderFilter&lt;/filter-name&gt;  </span><br><span class="line">     &lt;url-pattern&gt;/*&lt;/url-pattern&gt;&lt;!-- 你开放的接口前缀  --&gt;  </span><br><span class="line">   &lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="方案三-后端方法处理"><a href="#方案三-后端方法处理" class="headerlink" title="方案三(后端方法处理)"></a>方案三(后端方法处理)</h4><p>精确<strong>细粒度</strong>拦截时使用,普通拦截使用拦截即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">需要的方法设置响应头即可</span><br><span class="line">response.setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);</span><br><span class="line">response.setHeader(&quot;Access-Control-Allow-Methods&quot;, &quot;POST, PUT, GET, OPTIONS, DELETE&quot;);</span><br></pre></td></tr></table></figure>
+<h3 id="5-Ajax结合单点登录流程"><a href="#5-Ajax结合单点登录流程" class="headerlink" title="5.Ajax结合单点登录流程"></a>5.Ajax结合单点登录流程</h3><p><strong>SSO</strong>（single sign-on） </p>
 <ol>
-<li>同步队列，当一个队列的成员都聚齐时，这个队列才可用，否则一直等待所有成员到达。在约定目录下创建临时目录节点，监听节点数目是否是我们要求的数目。  </li>
-<li>队列按照 FIFO 方式进行入队和出队操作。和分布式锁服务中的控制时序场景基本原理一致，入列有编号，出列按编号。   </li>
+<li>登录查询账号密码,返回Token</li>
+<li>Token返回时存进Redis中一份(以JSESSION+xxx+token为Key, JsonUtil.getJSON(user)为value)</li>
+<li>将Token放进Cookie中,用户请求服务器时,服务器会将Cookie中的信息取出作为Key和Redis中的Key对比,来判断是否登录,从而返回前端状态即可</li>
 </ol>
-<h5 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h5><ol>
-<li>最终一致性：client不论连接到哪个Server，展示给它都是同一个视图，这是zookeeper<strong>最重要的性能</strong>。 </li>
-<li>可靠性：具有简单、健壮、良好的性能，如果消息被到一台服务器接受，那么它将被所有的服务器接受。 </li>
-<li>实时性：Zookeeper保证客户端将在一个时间间隔范围内获得服务器的更新信息，或者服务器失效的信息。但由于网络延时等原因，Zookeeper不能保证两个客户端能同时得到刚更新的数据，如果需要最新数据，应该在读数据之前调用sync()接口。  </li>
-<li>等待无关（wait-free）：慢的或者失效的client不得干预快速的client的请求，使得每个client都能有效的等待。  </li>
-<li>原子性：更新只能成功或者失败，没有中间状态。  </li>
-<li>顺序性：包括全局有序和偏序两种：全局有序是指如果在一台服务器上消息a在消息b前发布，则在所有Server上消息a都将在消息b前被发布；偏序是指如果一个消息b在消息a后被同一个发送者发布，a必将排在b前面。  </li>
-</ol>
-<h5 id="Zookeeper工作原理"><a href="#Zookeeper工作原理" class="headerlink" title="Zookeeper工作原理"></a>Zookeeper工作原理</h5><p>​    Zookeeper 的核心是<strong>原子广播</strong>，这个机制保证了各个Server之间的同步。实现这个机制的协议叫做<strong>Zab协议</strong>。Zab协议有两种模式，它们分别是<strong>恢复模式</strong>（选主）和<strong>广播模式</strong>（同步）。当服务启动或者在领导者崩溃后，Zab就进入了恢复模式，当领导者被选举出来，且大多数Server完成了和 leader的状态同步以后，恢复模式就结束了。状态同步保证了leader和Server具有相同的系统状态 </p>
-<p>​    为了保证事务的<strong>顺序一致性</strong>，zookeeper采用了递增的事务id号（zxid）来标识事务。所有的提议（proposal）都在被提出的时候加上了zxid。实现中zxid是一个64位的数字，它高32位是epoch用来标识leader关系是否改变，每次一个leader被选出来，它都会有一个新的epoch，标识当前属于那个leader的统治时期。低32位用于递增计数。 </p>
-<p><strong>(部分整理)</strong></p>
-<p><strong>原文:<a href="https://blog.csdn.net/xqb_756148978/article/details/52259381" target="_blank" rel="noopener">https://blog.csdn.net/xqb_756148978/article/details/52259381</a></strong></p>
-<h4 id="Dubbo-SOA基础框架"><a href="#Dubbo-SOA基础框架" class="headerlink" title="Dubbo(SOA基础框架)"></a>Dubbo(SOA基础框架)</h4><p><strong>管理中间层的框架,与注册中心搭配使用,如Zookeeper(最常用),使之具有Zookeeper负载均衡/资源同步等的特性</strong></p>
-<p><strong>单一应用架构</strong>(ORM)</p>
-<p> –&gt;<strong>垂直应用架构</strong>(MVC) 传统架构,难以应对高并发/高可用问题</p>
-<p>–&gt;<strong>分布式服务架构</strong>(RPC) 功能拆分,多台服务器做不同的功能,相当于节点,一个节点下可以有多态服务器做集群 </p>
-<p>–&gt;<strong>流动计算架构</strong>(SOA) 节点和节点通过SOA通信,将冗余的业务逻辑单独提取出来,分为表现层和业务层 缓存 数据库层…</p>
-<h5 id="核心部分"><a href="#核心部分" class="headerlink" title="核心部分"></a>核心部分</h5><ol>
-<li>远程通讯 </li>
-<li>集群容错 </li>
-<li>自动发现 </li>
-</ol>
-<h5 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h5><ol>
-<li><strong>透明化的远程方法调用</strong>，就像调用本地方法一样调用远程方法，只需简单配置，没有任何API侵入   </li>
-<li><strong>软负载均衡及容错机制</strong>，可在内网替代F5等硬件负载均衡器，降低成本，减少单点.</li>
-<li><strong>服务自动注册与发现</strong>，不再需要写死服务提供方地址，注册中心基于接口名查询服务提供者的IP地址，并且能够平滑添加或删除服务提供者。</li>
-</ol>
-<p>Dubbo采用全spring配置方式,透明化接入,应用,没有API入侵</p>
-<h5 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h5><p><img src="https://i.imgur.com/zNpr0bk.jpg" alt=""></p>
-<pre><code>Provider: 暴露服务的服务提供方。
-</code></pre><p>​       Consumer: 调用远程服务的服务消费方。</p>
-<p>​       Registry: 服务注册与发现的注册中心。</p>
-<p>​       Monitor: 统计服务的调用次调和调用时间的监控中心.</p>
-<p>​    Container]: 服务运行器。</p>
-<h5 id="调用关系说明："><a href="#调用关系说明：" class="headerlink" title="调用关系说明："></a>调用关系说明：</h5><ol start="0">
-<li><p>服务容器负责启动，加载，运行服务提供者。</p>
-</li>
-<li><p>服务提供者在启动时，向注册中心注册自己提供的服务。</p>
-</li>
-<li><p>服务消费者在启动时，向注册中心订阅自己所需的服务。</p>
-</li>
-<li><p>注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。</p>
-</li>
-<li><p>服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。</p>
-</li>
-<li><p>服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。</p>
-</li>
-</ol>
-<p><strong>收藏Dubbo架构详解<a href="http://shiyanjun.cn/archives/325.html" target="_blank" rel="noopener">http://shiyanjun.cn/archives/325.html</a></strong></p>
-
+<h3 id="6-Ajax常见问题"><a href="#6-Ajax常见问题" class="headerlink" title="6.Ajax常见问题"></a>6.Ajax常见问题</h3>
     </div>
 </article>
 
@@ -345,7 +298,7 @@
 <script>
 	if(!window.commentConfig) {
       window.commentConfig = {}
-      window.commentConfig.title = 'Zookeeper与Dubbo基础原理'
+      window.commentConfig.title = 'Ajax基础服务'
     }
 </script>
 
@@ -493,13 +446,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
+                    <a href="/2018/07/06/FastDfs基础原理/">FastDFS 基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/06/04/Nginx基础原理/">Nginx基础原理</a>
+                    <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
                 </span>
             </li>
             
@@ -511,7 +464,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                    <a href="/2018/07/06/Log日志整理/">Log日志整理</a>
                 </span>
             </li>
             
@@ -523,19 +476,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/03/hello-world/">Hello World</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
                 </span>
             </li>
             
@@ -547,7 +488,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/14/服务器搭建/">服务器搭建(持续更新)</a>
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/04/Shiro基础原理/">Shiro基础原理</a>
                 </span>
             </li>
             
@@ -560,13 +513,13 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/2018/07/08/Zookeeper基础原理/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2018/07/10/Ajax基础服务/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/2018/07/08/Zookeeper基础原理/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2018/07/10/Ajax基础服务/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/2018/07/08/Zookeeper基础原理/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/07/10/Ajax基础服务/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -747,7 +700,7 @@ $(function(){
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     if(window.commentConfig) {
-      window.commentConfig.id = 'Sun Jul 08 2018 00:00:00 GMT+0800'
+      window.commentConfig.id = 'Tue Jul 10 2018 00:00:00 GMT+0800'
       window.commentConfig.owner = 'dony15'
       window.commentConfig.repo = 'reply.github.io'
       window.commentConfig.client_id = '3e620f638731b84942ed'
@@ -755,7 +708,7 @@ $(function(){
       window.commentConfig.redirect_uri = ''
     } else {
       window.commentConfig = {
-      	id: 'Sun Jul 08 2018 00:00:00 GMT+0800',
+      	id: 'Tue Jul 10 2018 00:00:00 GMT+0800',
         owner: 'dony15',
         repo: 'reply.github.io',
         client_id: '3e620f638731b84942ed',
