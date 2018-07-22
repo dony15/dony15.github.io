@@ -161,7 +161,7 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/框架/">框架</a>
+                            <a href="/categories/搭建/">搭建</a>
                         </li>
                         
                         <li>
@@ -169,11 +169,19 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/搭建/">搭建</a>
+                            <a href="/categories/框架/">框架</a>
                         </li>
                         
                         <li>
                             <a href="/categories/Spring全家桶/">Spring全家桶</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IO/">IO</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SE基础/">SE基础</a>
                         </li>
                         
                         <li>
@@ -188,6 +196,10 @@
                             <a href="/categories/服务器/">服务器</a>
                         </li>
                         
+                        
+                        <li>
+                            <a href="/categories">...</a>
+                        </li>
                         
                         
                     </ul>
@@ -385,7 +397,11 @@
 <li><strong>JDK动态代理:</strong>针对接口类产生代理</li>
 <li><strong>CGlib动态代理:</strong>针对没有实现接口的类产生代理,应用的是底层字节码增强技术,生成当前类的子类对象</li>
 </ul>
-<h3 id="5-Spring深入拓展"><a href="#5-Spring深入拓展" class="headerlink" title="5.Spring深入拓展"></a>5.Spring深入拓展</h3><h4 id="1-利用后处理器扩展Spring容器…"><a href="#1-利用后处理器扩展Spring容器…" class="headerlink" title="1.利用后处理器扩展Spring容器…"></a>1.利用后处理器扩展Spring容器…</h4><h4 id="2-Spring的“零配置”支持-注解"><a href="#2-Spring的“零配置”支持-注解" class="headerlink" title="2.Spring的“零配置”支持(注解)"></a>2.Spring的“零配置”支持(注解)</h4><pre><code>**| Component | Controller | Service | Repository | Scope | Resource | Autowired | Qualifier | JsonIgnore |**
+<h3 id="5-Spring父子容器"><a href="#5-Spring父子容器" class="headerlink" title="5.Spring父子容器"></a>5.Spring父子容器</h3><p>Spring父容器(ContextLoaderListener)一般配置的是Dao层和Service层，而Spring子容器(DispatcherServlet)一般配置的是Controller层父子容器的访问关系是:</p>
+<p><strong>子容器可以访问父容器中的对象，但是父容器无法访问子容器中的对象。比如controller可以把Dao和Service注入进来，但是Dao和Service无法把Controller注进来。</strong> </p>
+<p><img src="https://i.imgur.com/1v6FUty.png" alt=""></p>
+<p> 我们在service配置扫描包的时候配置的扫描范围是”com.taotao.service”，如果我们配置成com.taotao，那么就会把com.taotao.controller也扫描到父容器中，这样父子容器中就都有controller层了，但是在<strong>父容器中扫进来controller是没有用的</strong>，我们在表现层访问的时候，访问的还是子容器的controller。同理，如果把子容器的扫描范围扩大，变为com.taotao，那么它便会把Dao和Service也扫描到子容器当中，这样当我们访问表现层的时候，访问的便是子容器中的Dao和Service，<strong>子容器中的Dao和Service是没有事务的</strong>，但是父容器中的Dao和Service是有事务的，这样就会导致虽然我们在父容器中配置了事务，但由于子容器扫描范围太大，而导致访问子容器中的Dao和Service没有事务的问题。 </p>
+<h3 id="6-Spring深入拓展"><a href="#6-Spring深入拓展" class="headerlink" title="6.Spring深入拓展"></a>6.Spring深入拓展</h3><h4 id="1-利用后处理器扩展Spring容器…"><a href="#1-利用后处理器扩展Spring容器…" class="headerlink" title="1.利用后处理器扩展Spring容器…"></a>1.利用后处理器扩展Spring容器…</h4><h4 id="2-Spring的“零配置”支持-注解"><a href="#2-Spring的“零配置”支持-注解" class="headerlink" title="2.Spring的“零配置”支持(注解)"></a>2.Spring的“零配置”支持(注解)</h4><pre><code>**| Component | Controller | Service | Repository | Scope | Resource | Autowired | Qualifier | JsonIgnore |**
 </code></pre><h4 id="3-资源访问…"><a href="#3-资源访问…" class="headerlink" title="3.资源访问…"></a>3.资源访问…</h4><p><strong>深入拓展传送门:<a href="https://www.cnblogs.com/shijiaoyun/p/7458341.html" target="_blank" rel="noopener">https://www.cnblogs.com/shijiaoyun/p/7458341.html</a></strong></p>
 
     </div>
@@ -469,7 +485,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
+                    <a href="/2018/07/20/java POI辅助框架/"></a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
                 </span>
             </li>
             
@@ -481,7 +509,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2018/07/14/服务器搭建/">服务器搭建(持续更新)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
                 </span>
             </li>
             
@@ -493,37 +533,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/实用工具类集合/">实用工具类集合</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/06/FastDfs基础原理/">FastDFS 基础原理</a>
+                    <a href="/2018/07/08/实用工具类集合/">实用工具类集合</a>
                 </span>
             </li>
             
@@ -545,25 +561,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/06/Log日志整理/">Log日志整理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
                 </span>
             </li>
             
@@ -575,25 +579,37 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
+                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
+                    <a href="/2018/07/14/服务器搭建/">服务器搭建(持续更新)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/06/FastDfs基础原理/">FastDFS 基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
                 </span>
             </li>
             

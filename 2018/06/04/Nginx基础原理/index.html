@@ -161,7 +161,7 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/框架/">框架</a>
+                            <a href="/categories/搭建/">搭建</a>
                         </li>
                         
                         <li>
@@ -169,11 +169,19 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/搭建/">搭建</a>
+                            <a href="/categories/框架/">框架</a>
                         </li>
                         
                         <li>
                             <a href="/categories/Spring全家桶/">Spring全家桶</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IO/">IO</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SE基础/">SE基础</a>
                         </li>
                         
                         <li>
@@ -188,6 +196,10 @@
                             <a href="/categories/服务器/">服务器</a>
                         </li>
                         
+                        
+                        <li>
+                            <a href="/categories">...</a>
+                        </li>
                         
                         
                     </ul>
@@ -271,6 +283,8 @@
     <div class="content-article">
         <h3 id="Nginx基础原理"><a href="#Nginx基础原理" class="headerlink" title="Nginx基础原理"></a>Nginx基础原理</h3><p>[TOC]</p>
 <h4 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h4><p>面向性能设计的<strong>Http服务器</strong>,内存占用少,稳定性高,也是轻量级的<strong>网页服务器/反向代理服务器/电子邮件代理服务器</strong>等</p>
+<p><strong>Nginx单独使用足以支撑5W的并发连接,可以作为负载均衡的入口,根据使用情况来分发给不同的tomcat</strong></p>
+<p><strong>百度、京东、新浪、网易、腾讯、淘宝等都在使用Nginx</strong></p>
 <h4 id="2-组成"><a href="#2-组成" class="headerlink" title="2.组成"></a>2.组成</h4><p>Nginx由<strong>内核</strong>和<strong>模块</strong>组成，其中，内核的设计非常微小和简洁，完成的工作也非常简单，仅仅通过查找配置文件将客户端请求映射到一个location block（<strong>location是Nginx配置中的一个指令，用于URL匹配</strong>），而在这个location中所配置的每个指令将会<strong>启动不同的模块</strong>去完成相应的工作。</p>
 <p><strong>Nginx的模块从结构上分为核心模块、基础模块和第三方模块：</strong></p>
 <p>​    核心模块：HTTP模块、EVENT模块和MAIL模块</p>
@@ -279,8 +293,8 @@
 <p>用户根据自己的需要开发的模块都属于第三方模块。正是有了这么多模块的支撑，Nginx的功能才会如此强大。</p>
 <p><strong>Nginx原理和优化:<a href="https://www.cnblogs.com/linguoguo/p/5511293.html(很棒的文章)" target="_blank" rel="noopener">https://www.cnblogs.com/linguoguo/p/5511293.html(很棒的文章)</a></strong></p>
 <h4 id="3-作用"><a href="#3-作用" class="headerlink" title="3.作用"></a>3.作用</h4><ol>
-<li>反向代理:位于原始服务器<strong>后面</strong>,客户端访问原始服务器后,原始服务器会去反向代理服务器获取需要的资源</li>
-<li>正向代理:位于客户端和原始服务器<strong>之间</strong>,客户端请求该代理服务器,该代理服务器再去访问原始服务器,响应原路返回</li>
+<li>反向代理:位于原始服务器<strong>后面</strong>,客户端访问原始服务器后,原始服务器会去反向代理服务器获取需要的资源(服务器端)</li>
+<li>正向代理:位于客户端和原始服务器<strong>之间</strong>,客户端请求该代理服务器,该代理服务器再去访问原始服务器,响应原路返回(客户端,局域网访问网络)</li>
 </ol>
 <p>正向代理的典型用途是为在防火墙内的局域网客户端提供访问Internet的途径。 </p>
 <p>正向代理还可以使用缓冲特性减少网络使用率。 </p>
@@ -290,8 +304,25 @@
 <li>负载均衡:Nginx最常用的功能之一,将工作分摊多个操作单元上执行,需要反向代理跳转到负载均衡</li>
 <li>HTTP服务器:Nginx本身就是静态资源服务器,Nginx可以很方便的实现<strong>动静分离</strong></li>
 </ol>
+<p><strong>动静分离:</strong> nginx还可以对数据进行压缩，对一些图片、html、css、js等文件进行缓存、从而实现动静分离等等优化功能，在网站做优化的时候非常的有用。 </p>
+<ul>
+<li>所谓的动静分离，可以理解为我们完全可以将动态的请求都交给tomcat处理，静态的请求都交给nginx来处理，这是非常容易做到的事情。 </li>
+</ul>
 <p><strong>Nginx基础功能和工作原理:<a href="https://blog.csdn.net/wy757510722/article/details/75267431(很棒的文章)" target="_blank" rel="noopener">https://blog.csdn.net/wy757510722/article/details/75267431(很棒的文章)</a></strong></p>
 <p>(待更新)</p>
+<h4 id="4-Nginx配置详细清单"><a href="#4-Nginx配置详细清单" class="headerlink" title="4.Nginx配置详细清单"></a>4.Nginx配置详细清单</h4><p><strong>端口版:<a href="http://www.cnblogs.com/dancesir/p/9253043.html" target="_blank" rel="noopener">http://www.cnblogs.com/dancesir/p/9253043.html</a></strong></p>
+<p><strong>集群搭建:<a href="https://blog.csdn.net/u012453843/article/details/69664821" target="_blank" rel="noopener">https://blog.csdn.net/u012453843/article/details/69664821</a></strong></p>
+<h4 id="5-Nginx负载均衡策略"><a href="#5-Nginx负载均衡策略" class="headerlink" title="5.Nginx负载均衡策略"></a>5.Nginx负载均衡策略</h4><p>对于单独的Nginx而言,通过Nginx服务器搭建Tomcat等服务器集群(可以设置权重)可以提高基础的并发</p>
+<h4 id="6-Keepalived结合Nginx实现高可用"><a href="#6-Keepalived结合Nginx实现高可用" class="headerlink" title="6.Keepalived结合Nginx实现高可用"></a>6.Keepalived结合Nginx实现高可用</h4><ol>
+<li>Keepalived绑定Nginx主从服务器的健康状态,<strong>备份服务器</strong>通过心跳机制检测主服务器是否ok(心跳包)</li>
+<li>Keepalived可以绑定vip(Virtual IP Address)动态绑定虚拟IP,在谁身上就用谁(一般发到主服务器)</li>
+<li>主服务器宕机的时候,备份服务器会和keepalived绑定(<strong>主服务器起来后重新获得vip</strong>)</li>
+</ol>
+<p><img src="https://i.imgur.com/ZHJPqzk.png" alt=""></p>
+<p><strong>Keepalived结合高可用使用:<a href="https://blog.csdn.net/u012453843/article/details/69668663" target="_blank" rel="noopener">https://blog.csdn.net/u012453843/article/details/69668663</a></strong></p>
+<h4 id="7-负载均衡策略"><a href="#7-负载均衡策略" class="headerlink" title="7.负载均衡策略"></a>7.负载均衡策略</h4><h5 id="当并发超过Nginx上限的处理-应用层"><a href="#当并发超过Nginx上限的处理-应用层" class="headerlink" title="当并发超过Nginx上限的处理(应用层)"></a>当并发超过Nginx上限的处理(应用层)</h5><h5 id="7-1-F5硬负载-4层分发"><a href="#7-1-F5硬负载-4层分发" class="headerlink" title="7-1.F5硬负载(4层分发)"></a>7-1.F5硬负载(4层分发)</h5><p><strong>(经费充足)如果并发超过5W,可以处理硬负载并发问题(从传输层开始处理,效果更好)</strong></p>
+<h5 id="7-2-LVS-Linux-Virtual-Server-4层分发"><a href="#7-2-LVS-Linux-Virtual-Server-4层分发" class="headerlink" title="7-2.LVS(Linux Virtual Server)(4层分发)"></a>7-2.LVS(Linux Virtual Server)(4层分发)</h5><p><strong>(经济实惠)实现硬负载60%的性能</strong></p>
+<h5 id="7-3-使用阿里云服务器均衡负载SLB"><a href="#7-3-使用阿里云服务器均衡负载SLB" class="headerlink" title="7-3.使用阿里云服务器均衡负载SLB"></a>7-3.使用阿里云服务器均衡负载SLB</h5><h4 id="8-Keepalived结合LVS实现高可用"><a href="#8-Keepalived结合LVS实现高可用" class="headerlink" title="8.Keepalived结合LVS实现高可用"></a>8.Keepalived结合LVS实现高可用</h4><p>(类似Keepalived和Nginx的高可用)</p>
 
     </div>
 </article>
@@ -374,7 +405,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
+                    <a href="/2018/07/20/java POI辅助框架/"></a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
                 </span>
             </li>
             
@@ -386,7 +429,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2018/07/14/服务器搭建/">服务器搭建(持续更新)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
                 </span>
             </li>
             
@@ -398,37 +453,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/实用工具类集合/">实用工具类集合</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/06/FastDfs基础原理/">FastDFS 基础原理</a>
+                    <a href="/2018/07/08/实用工具类集合/">实用工具类集合</a>
                 </span>
             </li>
             
@@ -450,13 +481,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
+                    <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
                 </span>
             </li>
             
@@ -468,25 +493,25 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
+                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                    <a href="/2018/07/20/java POI辅助框架/"></a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                    <a href="/2018/07/05/java基础SE-java优点/">javaSE-java优点</a>
                 </span>
             </li>
             
@@ -498,13 +523,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/Zookeeper基础原理/">Zookeeper与Dubbo基础原理</a>
+                    <a href="/2018/07/14/服务器搭建/">服务器搭建(持续更新)</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
                     <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/04/Shiro基础原理/">Shiro基础原理</a>
                 </span>
             </li>
             
