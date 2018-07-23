@@ -458,7 +458,17 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder &apos;USER_LIST&apos; in string value &quot;$&#123;USER_LIST&#125;&quot;</span><br></pre></td></tr></table></figure>
 <p>Spring容器采用反射扫描的发现机制，在探测到Spring容器中有一个org.springframework.beans.factory.config.PropertyPlaceholderConfigurer的Bean就会停止对剩余PropertyPlaceholderConfigurer的扫描（Spring 3.1已经使用PropertySourcesPlaceholderConfigurer替代PropertyPlaceholderConfigurer了）</p>
 <p>所以根据加载的顺序，配置的第二个property-placeholder就被没有被spring加载，我想引入的config-wxapp.properties就没有被引入，所以在使用@Value注入的时候占位符就解析不了…解决方法就是把2个property-placeholder注解配置合并在一起就好了 </p>
-<h4 id="4-redis事务"><a href="#4-redis事务" class="headerlink" title="4.redis事务"></a>4.redis事务</h4><h4 id="5-缓存穿透-缓存雪崩-热点key方案"><a href="#5-缓存穿透-缓存雪崩-热点key方案" class="headerlink" title="5.缓存穿透/缓存雪崩/热点key方案"></a>5.缓存穿透/缓存雪崩/热点key方案</h4><h4 id="6-假设redis只能缓存20W数据-如何保证2000W条数据的热点被使用"><a href="#6-假设redis只能缓存20W数据-如何保证2000W条数据的热点被使用" class="headerlink" title="6.假设redis只能缓存20W数据,如何保证2000W条数据的热点被使用"></a>6.假设redis只能缓存20W数据,如何保证2000W条数据的热点被使用</h4>
+<h4 id="4-redis事务"><a href="#4-redis事务" class="headerlink" title="4.redis事务"></a>4.redis事务</h4><h4 id="5-缓存穿透-缓存雪崩-热点key方案"><a href="#5-缓存穿透-缓存雪崩-热点key方案" class="headerlink" title="5.缓存穿透/缓存雪崩/热点key方案"></a>5.缓存穿透/缓存雪崩/热点key方案</h4><h4 id="6-假设redis只能缓存20W数据-如何保证2000W条数据的热点被使用"><a href="#6-假设redis只能缓存20W数据-如何保证2000W条数据的热点被使用" class="headerlink" title="6.假设redis只能缓存20W数据,如何保证2000W条数据的热点被使用"></a>6.假设redis只能缓存20W数据,如何保证2000W条数据的热点被使用</h4><p>MySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据 </p>
+<p><strong>相关知识：</strong>redis 内存数据集大小上升到一定大小的时候，就会施行数据淘汰策略。redis 提供 6种数据淘汰策略：  </p>
+<ol>
+<li>voltile-lru：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰 </li>
+<li>volatile-ttl：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰  </li>
+<li>volatile-random：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰  </li>
+<li>allkeys-lru：从数据集（server.db[i].dict）中挑选最近最少使用的数据淘汰  </li>
+<li>allkeys-random：从数据集（server.db[i].dict）中任意选择数据淘汰  </li>
+<li>no-enviction（驱逐）：禁止驱逐数据 </li>
+</ol>
+
     </div>
 </article>
 
@@ -540,7 +550,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/20/java POI辅助框架/"></a>
+                    <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/18/java POI辅助框架/">java POI辅助框架基础</a>
                 </span>
             </li>
             
@@ -588,13 +604,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/08/实用工具类集合/">实用工具类集合</a>
+                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
                 </span>
             </li>
             
@@ -616,19 +626,31 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/06/04/Nginx基础原理/">Nginx基础原理</a>
+                    <a href="/2018/07/06/Log日志整理/">Log日志整理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                    <a href="/2018/07/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
+                    <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
                 </span>
             </li>
             
@@ -640,7 +662,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                    <a href="/2018/07/08/实用工具类集合/">实用工具类集合</a>
                 </span>
             </li>
             
@@ -652,25 +674,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/FastDfs基础原理/">FastDFS 基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
+                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
                     <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/04/Shiro基础原理/">Shiro基础原理</a>
                 </span>
             </li>
             
