@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="宝全哥哥">
+    
+    
+    
+    
+    
+    
+    <title>Shiro基础原理 | DonY15</title>
+    <link href=”http://yoursite.com“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz',
+        appKey: 'nYP6CNjSvE1TUhTur6M4ldxz'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpg,preview7.jpg,preview8.jpg,preview9.jpg,preview10.jpg,preview11.jpg,preview12.jpg,preview13.jpg,preview14.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+		<!--统计-->
+			<!--<script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>-->
+		<!--<script>AV.initialize("Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz", "nYP6CNjSvE1TUhTur6M4ldxz");</script>-->
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-realtime@4.1.0/dist/realtime.browser.min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-live-query-min.js"></script>
+		
+		<script>
+		// 存储服务
+		var { Query, User } = AV;
+		AV.init('Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz', 'nYP6CNjSvE1TUhTur6M4ldxz');
+		// 实时消息服务
+		var { Realtime, TextMessage } = AV;
+		
+		</script>
+		
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="http://yoursite.com" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/categories" class="menuItem" style="left: 50%; top: 85%;">目录</a>
+            <a href="/message" class="menuItem" style="left: 19.6891%; top: 67.5%;">留言板</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <!--<a href="http://yoursite.com">-->
+						<a href="/">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">DonY15</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>目录
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/组件/">组件</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Web基础/">Web基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/搭建/">搭建</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/框架/">框架</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Spring全家桶/">Spring全家桶</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SE基础/">SE基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/初等数学/">初等数学</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/工具类/">工具类</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IO/">IO</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/服务器/">服务器</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/categories">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="">
+                    <a href="/tags">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-user"></i>留言板
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+       
+				<a href="/">DonY15</a>
+        >
+        <span>Shiro基础原理</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-06-04
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-06-04
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h2 id="Shiro基础原理"><a href="#Shiro基础原理" class="headerlink" title="Shiro基础原理"></a>Shiro基础原理</h2><p>[TOC]</p>
+<h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p><strong>shiro是apache的一个开源框架，实现 |认证|授权|为核心的一系列权限管理框架.</strong></p>
+<ul>
+<li>Web 应用程序一般做法通过表单提交用户名及密码达到认证目的。 </li>
+<li>“授权”即是否允许已认证用户访问受保护资源。 </li>
+</ul>
+<h3 id="2-对比"><a href="#2-对比" class="headerlink" title="2.对比"></a>2.对比</h3><p><strong>Shiro与Spring Security</strong></p>
+<ol>
+<li>简单性:shiro更加简单,更容易理解</li>
+<li>灵活性:shiro可以使用在 |Web|EJB|IoC| 等大部分的应用环境,而Spring Security必须和Spring一起集成使用</li>
+<li>拔插性:shiro干净的API(工具类集合)和设计模式(单例+工厂)使它可以方便的和许多其他框架整合,Spring Security则只能与Spring一起集成</li>
+</ol>
+<h3 id="3-组成"><a href="#3-组成" class="headerlink" title="3.组成"></a>3.组成</h3><p><img src="file:///C:/Users/Administrator/Documents/My%20Knowledge/temp/1b7bc2c3-9f2c-4ea2-8ed7-97820c205482/128/index_files/871676-20160722213407794-1894786938.png" alt="img"></p>
+<h4 id="1-三个核心组件"><a href="#1-三个核心组件" class="headerlink" title="1.三个核心组件"></a>1.三个核心组件</h4><ol>
+<li>Subject: 令牌与项目的登录关系,Shiro保证了项目整体的安全性,是<strong>Shiro对外API的核心</strong></li>
+<li>Security Manager:负责安全认证预授权等  <strong>Shiro的核心</strong> </li>
+<li>Realm:整个框架中<strong>必须</strong>由设计者自行实现的模块之一.并且Shiro支持多个<strong>Realm数据源</strong>,最为重要的一种实现方式—&gt;数据库查询,当需要多个数据库组合验证时,多个数据源的效果就体现出来</li>
+</ol>
+<hr>
+<h4 id="2-主要功能"><a href="#2-主要功能" class="headerlink" title="2.主要功能"></a>2.主要功能</h4><ol>
+<li>Authentication:    身份认证</li>
+<li>Authorization:  授权,权限验证</li>
+<li>Session Manager: 会话管理</li>
+<li>Cryptography:加密</li>
+<li>Web Support: web支持</li>
+<li>Caching:缓存</li>
+<li>Concurrency:多线程验证</li>
+<li>Testing:提供测试支持</li>
+<li>Run As:允许一个用户假装另一个用户访问</li>
+<li>Remember Me: 记住我</li>
+</ol>
+<h4 id="3-组件和内容流程分析"><a href="#3-组件和内容流程分析" class="headerlink" title="3.组件和内容流程分析"></a>3.组件和内容流程分析</h4><h5 id="1-subject"><a href="#1-subject" class="headerlink" title="1.subject"></a>1.subject</h5><p>外部API核心,存储用户数据和返回数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Subject currentUser = SecurityUtils.getSubject();</span><br></pre></td></tr></table></figure>
+<p><strong>获得Subject的方法,有了Subject才能和Shiro做深入的交互</strong></p>
+<h5 id="2-SessionManager"><a href="#2-SessionManager" class="headerlink" title="2.SessionManager"></a>2.SessionManager</h5><ol>
+<li><p>Shiro的Session提供了HttpSession常规的大部分功能,但是又有区别,即:Session不依赖于<strong>HTTP环境</strong>,可以在程序任何地方使用</p>
+</li>
+<li><p>Shiro的Session可以在任何的环境下使用<strong>相同的API</strong>,而且是<strong>自动启动SessionManager</strong></p>
+</li>
+</ol>
+<p>如果希望在*<em>当前与应用程序会话期间</em>,为用户提供内容,则可以设置Session</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Session session = currentUser.getSession();</span><br><span class="line">session.setAttribute( &quot;someKey&quot;, &quot;aValue&quot; );</span><br></pre></td></tr></table></figure>
+<h5 id="3-登录认证Authentication"><a href="#3-登录认证Authentication" class="headerlink" title="3.登录认证Authentication"></a>3.登录认证Authentication</h5><p>Shiro的认证功能,会根据Subject的信息进行判断,如果认证过,则直接进入/如果没认证,则需要先认证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if ( !currentUser.isAuthenticated() ) &#123;</span><br><span class="line">    //collect user principals and credentials in a gui specific manner</span><br><span class="line">    //such as username/password html form, X509 certificate, OpenID, etc.</span><br><span class="line">    //We&apos;ll use the username/password example here since it is the most common.</span><br><span class="line">    //(do you know what movie this is from? ;)</span><br><span class="line">    UsernamePasswordToken token = new UsernamePasswordToken(&quot;lonestarr&quot;, &quot;vespa&quot;);</span><br><span class="line">    //this is all you have to do to support &apos;remember me&apos; (no config - built in!):</span><br><span class="line">    token.setRememberMe(true);</span><br><span class="line">    currentUser.login(token);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>UsernamePasswordToken</strong>(username/password)</p>
+<p>以特定的方式收集用户的<strong>主体</strong>和<strong>凭证</strong></p>
+<p><strong>Remember Me</strong>  no config - built in!(true/false)</p>
+<p>Shiro内置功能,记住用户(详情待更新)</p>
+<p><strong>登录尝试失败的反馈–异常</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    currentUser.login( token );</span><br><span class="line">    //if no exception, that&apos;s it, we&apos;re done!</span><br><span class="line">&#125; catch ( UnknownAccountException uae ) &#123;</span><br><span class="line">    //username wasn&apos;t in the system, show them an error message?</span><br><span class="line">&#125; catch ( IncorrectCredentialsException ice ) &#123;</span><br><span class="line">    //password didn&apos;t match, try again?</span><br><span class="line">&#125; catch ( LockedAccountException lae ) &#123;</span><br><span class="line">    //account for that username is locked - can&apos;t login.  Show them a message?</span><br><span class="line">&#125;</span><br><span class="line">    ... more types exceptions to check if you want ...</span><br><span class="line">&#125; catch ( AuthenticationException ae ) &#123;</span><br><span class="line">    //unexpected condition - error?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Shiro中使用多种异常完善认证</strong></p>
+<ul>
+<li>将Subject的.login(token)进行捕获,从而的到许多种异常提醒,根据相应的异常判断用户登录的错误信息</li>
+<li>注意:Shiro有丰富的认证异常设定并支持自定义异常,在Realm中通过判断条件,抛出异常的方式,可以在Controller中接收需要的异常数据来完善程序的开发</li>
+</ul>
+<hr>
+<p><img src="file:///C:/Users/Administrator/Documents/My%20Knowledge/temp/b9f81ac7-ad34-4adc-b4c2-cb2f73a4f2dd/128/index_files/48cae49c-8924-4a4e-8efd-bdbf38f07c97.jpg" alt="img">    </p>
+<ol>
+<li><strong>注意:Shiro不会自己维护用户|权限;</strong></li>
+<li><strong>需要开发者去 设计|提供 ;</strong></li>
+<li><strong>然后通过接口注入给Shiro即可</strong></li>
+</ol>
+<h3 id="4-源码"><a href="#4-源码" class="headerlink" title="4.源码"></a>4.源码</h3><h4 id="Token认证"><a href="#Token认证" class="headerlink" title="Token认证"></a>Token认证</h4><p><strong>JdbcRealm</strong></p>
+<p>Shiro –&gt;JdbcRealm封装的固定sql</p>
+<p> [1.封装根据用户名查询密码的SQL语句]</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * The default query used to retrieve account data for the user.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">final</span> String DEFAULT_AUTHENTICATION_QUERY = <span class="string">"select password from users where username = ?"</span>;</span><br></pre></td></tr></table></figure>
+<pre><code>[2.盐加密&amp;&amp;authenticationQuery验证查询(判断)] 
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Sets the salt style.  See &#123;<span class="doctag">@link</span> #saltStyle&#125;.</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> saltStyle new SaltStyle to set.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSaltStyle</span><span class="params">(SaltStyle saltStyle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.saltStyle = saltStyle;</span><br><span class="line">        <span class="keyword">if</span> (saltStyle == SaltStyle.COLUMN &amp;&amp; authenticationQuery.equals(DEFAULT_AUTHENTICATION_QUERY)) &#123;</span><br><span class="line">            authenticationQuery = DEFAULT_SALTED_AUTHENTICATION_QUERY;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>  [3.发现源代码中使用预编译的原生JDBC,并根据索引查找对比,所以要求自定义语句时不能乱写,根据规则走] </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">PreparedStatement ps = null;</span><br><span class="line">        ResultSet rs = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            ps = conn.prepareStatement(authenticationQuery);</span><br><span class="line">            ps.setString(1, username);</span><br><span class="line"></span><br><span class="line">            // Execute query</span><br><span class="line">            rs = ps.executeQuery();</span><br><span class="line"></span><br><span class="line">            // Loop over results - although we are only expecting one result, since usernames should be unique</span><br><span class="line">            boolean foundResult = false;</span><br><span class="line">            while (rs.next()) &#123;</span><br><span class="line"></span><br><span class="line">                // Check to ensure only one row is processed</span><br><span class="line">                if (foundResult) &#123;</span><br><span class="line">                    throw new AuthenticationException(&quot;More than one user row found for user [&quot; + username + &quot;]. Usernames must be unique.&quot;);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                result[0] = rs.getString(1);     //索引查询</span><br><span class="line">                if (returningSeparatedSalt) &#123;</span><br><span class="line">                    result[1] = rs.getString(2);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                foundResult = true;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>new SimpleAuthenticationInfo()(存放唯一认证) 源码分析</strong></p>
+<p>principal: 整个Shiro中唯一的标识符,可以存用户名,也可以存ID</p>
+<p>credentials: 唯一标识符的密码</p>
+<p>realmName: 当前数据源的名字</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">SimpleAuthenticationInfo</span><span class="params">(Object principal, Object credentials, String realmName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.principals = <span class="keyword">new</span> SimplePrincipalCollection(principal, realmName);</span><br><span class="line">        <span class="keyword">this</span>.credentials = credentials;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="C:\Users\Administrator\Desktop\20180122131153906.png" alt="20180122131153906"></p>
+<p>使用了工厂模式来对SecurityManager进行生成和配置  </p>
+<p>生成过程是使用<strong>单例+工厂</strong> </p>
+<p>提供对外的<strong>工具类</strong>来使用，包含获取SecurityManager的方法和获取Subject的方法  </p>
+<p><img src="C:\Users\Administrator\Desktop\3.png" alt="3"></p>
+<p>(代码略)</p>
+<p>subject的使用是通过传入AuthenticationToken接口（注意是接口，其实扩展接口rememnverMeaut…和HostAutho…），</p>
+<p>该接口目前的实现类是UserPasswordToken，当然也可以自己扩展实现自定义的认证Token </p>
+<h4 id="测试加密算法"><a href="#测试加密算法" class="headerlink" title="测试加密算法"></a>测试加密算法</h4><p><strong>盐值加密如果几个人密码一样，那么加密后的密码则一致。这样不安全，要解决这个问题，可以在密码上加盐。一般会选择不重复的值作为盐值，例如 用户名。</strong>(部分代码)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造方法：</span></span><br><span class="line">        <span class="comment">//第一个参数：散列算法</span></span><br><span class="line">        <span class="comment">//第二个参数：明文，原始密码</span></span><br><span class="line">        <span class="comment">//第三个参数：盐，通过使用随机数</span></span><br><span class="line">        <span class="comment">//第四个参数：散列的次数，比如散列两次，相当 于md5(md5(''))</span></span><br><span class="line">        SimpleHash simpleHash = <span class="keyword">new</span> SimpleHash(<span class="string">"md5"</span>, source, salt, hashIterations);</span><br><span class="line">        String md5 =  simpleHash.toString();</span><br><span class="line">        System.out.println(md5);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">shiro-realm-md5.ini</span><br><span class="line">---------------------</span><br><span class="line">[main]</span><br><span class="line">定义凭证匹配器</span><br><span class="line">credentialsMatcher=org.apache.shiro.authc.credential.HashedCredentialsMatcher</span><br><span class="line">散列算法</span><br><span class="line">credentialsMatcher.hashAlgorithmName=md5</span><br><span class="line">散列次数</span><br><span class="line">credentialsMatcher.hashIterations=<span class="number">1024</span></span><br><span class="line">开启加盐（无需设置，realm中使用的SimpleAuthenticationInfo 是 SaltedAuthenticationInfo 接口的实现类，默认开启的加盐功能）</span><br><span class="line">credentialsMatcher.hashSalted=<span class="keyword">true</span></span><br><span class="line">自定义 realm</span><br><span class="line">customRealm=com.qfedu.shirodemo.realm.CustomRealmMd5</span><br><span class="line">customRealm.credentialsMatcher=$credentialsMatcher</span><br><span class="line">将realm设置到securityManager，相当 于spring中注入</span><br><span class="line">securityManager.realms=$customRealm</span><br></pre></td></tr></table></figure>
+<h4 id="授权流程原理"><a href="#授权流程原理" class="headerlink" title="授权流程原理"></a>授权流程原理</h4><p><strong>授权</strong></p>
+<p>授权，也叫访问控制，即在应用中控制谁能访问哪些资源（如访问页面/编辑数据/页面操作等）。在授权中需了解的几个关键对象：主体（Subject）、资源（Resource）、权限（Permission）、角色（Role）。</p>
+<p><strong>主体（Subject）</strong></p>
+<p>主体，即访问应用的用户，在Shiro中使用Subject代表该用户。用户只有授权后才允许访问相应的资源。</p>
+<p><strong>资源</strong></p>
+<p>在应用中用户可以访问的任何东西，比如JSP 页面、某些数据、某个业务方法等等都是资源。用户只要授权后才能访问。</p>
+<p><strong>角色</strong></p>
+<p>角色代表了操作集合，可以理解为权限的集合，一般情况下我们会赋予用户角色而不是权限，即这样用户可以拥有一组权限，赋予权限时比较方便。</p>
+<p>典型的如：项目经理、技术总监、CTO、开发工程师等都是角色，不同的角色拥有一组不同的权限。</p>
+<p><strong>权限</strong></p>
+<p>权限表示在应用中用户能不能访问某个资源，</p>
+<p>如：访问用户列表页面查看/新增/修改/删除用户数据（即很多时候都是CRUD（增查改删）式权限控制）打印文档等等。。。</p>
+<h5 id="判断是否授权的方式"><a href="#判断是否授权的方式" class="headerlink" title="判断是否授权的方式"></a>判断是否授权的方式</h5><p>Shiro 支持三种方式的授权判断：</p>
+<p><strong>编程式</strong></p>
+<p>通过写if/else 授权代码块完成：</p>
+<p>Subject subject = SecurityUtils.getSubject();</p>
+<p>if(subject.hasRole(“admin”)) {</p>
+<p>​      //有权限</p>
+<p>} else {</p>
+<p>​     //无权限</p>
+<p>}</p>
+<p><strong>注解式</strong></p>
+<p>通过在执行的Java方法上放置相应的注解完成：</p>
+<p>@RequiresRoles(“admin”)</p>
+<p>public void hello() {</p>
+<p>   //有权限</p>
+<p>}</p>
+<p>没有权限将抛出相应的异常；</p>
+<p><strong>JSP 标签</strong></p>
+<p>在JSP 页面通过相应的标签完成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;shiro:hasRole name=&quot;admin&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!— 有权限—&gt;</span><br><span class="line"></span><br><span class="line">&lt; /shiro:hasRole &gt;</span><br></pre></td></tr></table></figure>
+<h5 id="自定义realm授权"><a href="#自定义realm授权" class="headerlink" title="自定义realm授权"></a>自定义realm授权</h5><p><strong>从认证的realm拷贝，改变继承的抽象父类，添加新的方法</strong></p>
+<h3 id="5-程序分析"><a href="#5-程序分析" class="headerlink" title="5.程序分析"></a>5.程序分析</h3><p><strong>程序分析：从应用程序角度的来观察如何使用Shiro完成工作</strong> </p>
+<ol>
+<li>应用代码通过Subject来进行认证和授权，而Subject又委托给SecurityManager； </li>
+<li>我们需要给Shiro的SecurityManager注入Realm，从而让SecurityManager能得到合法的用户及其权限进行判断。</li>
+<li>可以看到：应用代码直接交互的对象是Subject，也就是说Shiro的对外API核心就是Subject； </li>
+</ol>
+<p><img src="file:///C:/Users/Administrator/Documents/My%20Knowledge/temp/e66c475a-c763-4097-85a0-b0219938fe7f/128/index_files/4a5f51ff-ef16-4a61-a834-9a9b06da850b.jpg" alt="img"></p>
+<p><strong>Shiro内部结构</strong></p>
+<p><img src="file:///C:/Users/Administrator/Documents/My%20Knowledge/temp/1b7bc2c3-9f2c-4ea2-8ed7-97820c205482/128/index_files/9b959a65-799d-396e-b5f5-b4fcfe88f53c.png" alt="img"></p>
+<p><strong>详细原理深入和运用:<a href="http://jinnianshilongnian.iteye.com/blog/2018398" target="_blank" rel="noopener">http://jinnianshilongnian.iteye.com/blog/2018398</a></strong></p>
+<h3 id="6-Shiro认证技巧整理"><a href="#6-Shiro认证技巧整理" class="headerlink" title="6.Shiro认证技巧整理"></a>6.Shiro认证技巧整理</h3><h4 id="工具类接口的使用"><a href="#工具类接口的使用" class="headerlink" title="工具类接口的使用"></a>工具类接口的使用</h4><p>建立一个工具类接口Constants,以常量字符串的方式,专门存放Shiro中自定义的<strong>标识符</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public interface Constants &#123;</span><br><span class="line">    // md5(用户密码+PASSWORD_SALT_KEY)保存到数据库中。</span><br><span class="line">    String PASSWORD_SALT_KEY = &quot;Shiro.admin.2017&quot;;</span><br><span class="line">    //Shiro的session中存放用户的key</span><br><span class="line">    String SESSION_USER_KEY = &quot;SESSION_USER_KEY&quot;;</span><br><span class="line">    //redis中存放的用户权限菜单的key</span><br><span class="line">    String SESSION_USER_MANU = &quot;SESSION_USER_MANU&quot;;</span><br><span class="line">    //Shiro存放的角色信息</span><br><span class="line">    String SESSION_USER_ROLE = &quot;SESSION_USER_ROLE&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>接口工具类的思路不仅限于Shiro,灵活的定义接口,将冗余和容易混淆的部分抽离出来统一管理,可以极大的提高开发和维护的效率</strong></p>
+<h4 id="认证优化技巧"><a href="#认证优化技巧" class="headerlink" title="认证优化技巧"></a>认证优化技巧</h4><p>Controller层登录方法中,接收到用户名和密码后先进行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Subject currentUser = SecurityUtils.getSubject();</span><br><span class="line">if (!currentUser.isAuthenticated()) &#123;</span><br><span class="line">    ...认证</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>直接获取subject,先进性判断该用户是否认证过,如果认证过则直接跳出即可</p>
+<p>如果没有认证过,再进入认证环节</p>
+<p>该逻辑可以减少服务器和数据库的压力,提高服务器的并发能力</p>
+<h4 id="shiro-xml-拦截器设置"><a href="#shiro-xml-拦截器设置" class="headerlink" title="..shiro.xml 拦截器设置"></a>..shiro.xml 拦截器设置</h4><p><strong>Shiro主过滤器本身功能十分强大,其强大之处就在于它支持任何基于URL路径表达式的、自定义的过滤器的执行</strong></p>
+<ul>
+<li>/login.html=anon 静态资源的方式屏蔽过滤器</li>
+<li>/**=authc 该路径下需要认证才能访问</li>
+<li>…</li>
+</ul>
+<p>过滤器的完整参考：</p>
+<p><a href="http://blog.csdn.net/jadyer/article/details/12172839" target="_blank" rel="noopener">http://blog.csdn.net/jadyer/article/details/12172839</a></p>
+<h4 id="登录认证使用原理"><a href="#登录认证使用原理" class="headerlink" title="登录认证使用原理"></a>登录认证使用原理</h4><p><strong>动态权限控制</strong></p>
+<p><strong>RBAC（Role-Based Access Control ）基于角色的访问控制</strong></p>
+<ol>
+<li>配置好环境和工具类</li>
+<li>自定义Realm和异常</li>
+<li>service中添加通过用户名查找用户信息</li>
+<li>在Controller层认证登录</li>
+<li><ul>
+<li>UsernamePasswordToken token = new UsernamePasswordToken(name, password);</li>
+<li>Subject subject = SecurityUtils.getSubject();</li>
+<li>ubject.login(token);</li>
+</ul>
+</li>
+<li>将真正的验证交给封装的底层–&gt;AuthenticationToken实现.(自定义Realm中)</li>
+<li>通过此时token的username去数据库查询用户信息</li>
+<li>用户信息存在,则存入SimpleAuthenticationInfo,否则  抛出用户对应的异常</li>
+</ol>
+<p><strong>Shiro的分布式认证结构(shiro认证将账号密码的比较环节封装到AuthenticationToken中)</strong></p>
+<p>​    Realm放在Controller中,在分布式中Controller使用Dubbo服务端接口,而dubbo接口通过service实现类来发布,这个角度看realm与dao隔层交互设计不太合理</p>
+<p>​    验证成功则返回SimpleAuthenticationInfo(存放唯一标识(id或者username),密码,Realm名</p>
+<h3 id="7-Shiro授权技巧整理"><a href="#7-Shiro授权技巧整理" class="headerlink" title="7.Shiro授权技巧整理"></a>7.Shiro授权技巧整理</h3><ol>
+<li>通过用户登录的唯一标识principals 查找到用户有哪些菜单权限(ID)</li>
+<li>将这些ID存到SimpleAuthorizationInfo中</li>
+<li>在自定义ShiroFilterFactoryBean中获取所有菜单列表,并将id加入到section中</li>
+<li>底层自动对比,哪些ID用户有,则允许访问,没有的话”authc”拦截</li>
+<li>Controller中查询用户拥有的菜单数据返回前段即可,此时没有权限的数据已经被拦截</li>
+</ol>
+<h4 id="易错集合"><a href="#易错集合" class="headerlink" title="易错集合"></a>易错集合</h4><h5 id="1-授权URL"><a href="#1-授权URL" class="headerlink" title="1.授权URL"></a>1.授权URL</h5><p>​    注意使用Shiro权限设置后的url如果需要访问,逻辑路径需要放在 <strong>前端</strong> 拼接,(后台对逻辑路径没有识别,也没有必要识别,不能将逻辑路径放在后台和数据库中)</p>
+<h5 id="2-权限顺序"><a href="#2-权限顺序" class="headerlink" title="2.权限顺序"></a>2.权限顺序</h5><p>​    运行时先执行<strong>MyRealm</strong>中的权限,然后拼接<strong>MyShiroFilterFactoryBean</strong>中的权限</p>
+<p>​    注意:限制范围较大的往后排,特别是全部拦截的/<strong> 如果需要的话尽量放在</strong>MyShiroFilterFactoryBean**中</p>
+<h3 id="8-Remember-me功能简述"><a href="#8-Remember-me功能简述" class="headerlink" title="8.Remember me功能简述"></a>8.Remember me功能简述</h3><p>Shiro的Remember Me可以很轻松的实现自动登录的功能,方便快捷</p>
+<h4 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">UsernamePasswordToken token = new UsernamePasswordToken(username, password);</span><br><span class="line">		Subject subject = SecurityUtils.getSubject();</span><br><span class="line">		if(loginForm.getRememberMe() != null &amp;&amp; &quot;Y&quot;.equals(loginForm.getRememberMe()))&#123;</span><br><span class="line">			token.setRememberMe(true);	</span><br><span class="line">		&#125;</span><br><span class="line">		subject.login(token);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/** = user</span><br></pre></td></tr></table></figure>
+<p>Remember Me只需要在登录时将token的RememberMe功能开启,本来的拦截级别为/ <strong> = authc 将拦截设置(降级)为</strong>user级别**即可使用</p>
+<p>Remember Me功能开启使用后,Shiro会生成一个叫<strong>RememberMe</strong>的Cookie保存在浏览器中,当subject.loginout退出或者过期后失效,改参数是base64加密的字符串如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">名称：	rememberMe</span><br><span class="line">内容：	6gYvaCGZaDXt1c0xwriXj/Uvz6g8OMT3VSaAK4WL0Fvqvkcm0nf3CfTwkWWTT4EjeSS/EoQjRfCPv4WKUXezQDvoNwVgFMtsLIeYMAfTd17ey5BrZQMxW+xU1lBSDoEM1yOy/i11ENh6eXjmYeQFv0yGbhchGdJWzk5W3MxJjv2SljlW4dkGxOSsol3mucoShzmcQ4VqiDjTcbVfZ7mxSHF/0M1JnXRphi8meDaIm9IwM4Hilgjmai+yzdVHFVDDHv/vsU/fZmjb+2tJnBiZ+jrDhl2Elt4qBDKxUKT05cDtXaUZWYQmP1bet2EqTfE8eiofa1+FO3iSTJmEocRLDLPWKSJ26bUWA8wUl/QdpH07Ymq1W0ho8EIdFhOsELxM66oMcj7a/8LVzypJXAXZdMFaNe8cBSN2dXpv4PwiktCs3J9P9vP4XrmYees5x27UmXNqYFk86xQhRjFdJsw5A9ctDKXzPYvJmWFouo3qT5hugX0uxWALCfWg8MHJnG9w7QgVKM8oy3Xy4Ut8lSvYlA==</span><br></pre></td></tr></table></figure>
+<p>Shiro的RememberMe设计时!=已经登录,因为该cookie被序列化后可以不同的浏览器之间访问,并且可能被黑客复制截取等,因此使用该功能的话尽量以非关键性资源为主,当牵扯到<strong>资金</strong>等关键资源时,选择再次登录即可</p>
+<p>开发时如果使用Session域对象,则自动登录后Session中不会再有数据,如果需要用到,那么需要重写isAccessAllowed 方法</p>
+<p><strong>详细参考自:<a href="https://blog.csdn.net/nsrainbow/article/details/36945267/" target="_blank" rel="noopener">https://blog.csdn.net/nsrainbow/article/details/36945267/</a></strong></p>
+<p><strong>(本次Remember Me尚未指定配置更改,待更新)</strong></p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'Shiro基础原理'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            宝全哥哥
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/03/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/07/06/Log日志整理/">Log日志整理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/12/02/javaSE-数据类型/">javaSE-数据类型</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/02/06/javaSE-继承/">JAVAEE-继承</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/03/23/javaSE-集合/">javaSE-集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/08/基础排序 组合/">基础排序 组合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/12/06/FastDfs基础原理/">FastDFS 基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/09/15/Struts2基础/">Struts2基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                <li class="">
+                    <a href="/2018/06/04/Shiro基础原理/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                <li class="">
+                    <a href="/2018/06/04/Shiro基础原理/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                <li class="">
+                    <a href="/2018/06/04/Shiro基础原理/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+</div>
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://kdays.net/days/" target="_blank">KDays Forum</a>
+    </li>
+    
+    <li>
+        <a href="http://www.gal123.com/" target="_blank">绅士导航♂</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">萌导航</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/dony15" target="_blank">Github</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 宝全哥哥 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+
+<!--page counter part统计-->
+<script>
+function addCount (Counter) {
+        url=$('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query=new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url",url);
+        query.find({
+            success: function(results){
+                if(results.length>0)
+                {
+                    var counter=results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                }
+                else
+                {
+                    var newcounter=new Counter();
+                    newcounter.set("title",title);
+                    newcounter.set("url",url);
+                    newcounter.set("time",1);
+                    newcounter.save(null,{
+                        success: function(newcounter){
+                        //alert('New object created');
+                        },
+                        error: function(newcounter,error){
+                        alert('Failed to create');
+                        }
+                        });
+                }
+            },
+            error: function(error){
+                //find null is not a error
+                alert('Error:'+error.code+" "+error.message);
+            }
+        });
+}
+$(function(){
+        var Counter=AV.Object.extend("Counter");
+        //only increse visit counting when intering a page
+        if ($('.article-title').length == 1)
+           addCount(Counter);
+        var query=new AV.Query(Counter);
+        query.descending("time");
+        // the sum of popular posts
+        query.limit(10); 
+        query.find({
+            success: function(results){
+                    for(var i=0;i<results.length;i++)    
+                    {
+                        var counter=results[i];
+                        title=counter.get("title");
+                        url=counter.get("url");
+                        time=counter.get("time");
+                        // add to the popularlist widget
+                        showcontent=title+" ("+time+")";
+                        //notice the "" in href
+                        $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
+                    }
+                },
+            error: function(error){
+                alert("Error:"+error.code+" "+error.message);
+            }
+            }
+        )
+        });
+</script>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '8'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Mon Jun 04 2018 00:00:00 GMT+0800'
+      window.commentConfig.owner = 'dony15'
+      window.commentConfig.repo = 'reply.github.io'
+      window.commentConfig.client_id = '3e620f638731b84942ed'
+      window.commentConfig.client_secret = '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e'
+      window.commentConfig.redirect_uri = ''
+    } else {
+      window.commentConfig = {
+      	id: 'Mon Jun 04 2018 00:00:00 GMT+0800',
+        owner: 'dony15',
+        repo: 'reply.github.io',
+        client_id: '3e620f638731b84942ed',
+        client_secret: '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e',
+        redirect_uri: ''
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

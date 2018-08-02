@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="宝全哥哥">
+    
+    
+    
+    
+    
+    
+    <title>Spring基础原理 | DonY15</title>
+    <link href=”http://yoursite.com“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz',
+        appKey: 'nYP6CNjSvE1TUhTur6M4ldxz'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpg,preview7.jpg,preview8.jpg,preview9.jpg,preview10.jpg,preview11.jpg,preview12.jpg,preview13.jpg,preview14.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+		<!--统计-->
+			<!--<script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>-->
+		<!--<script>AV.initialize("Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz", "nYP6CNjSvE1TUhTur6M4ldxz");</script>-->
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-realtime@4.1.0/dist/realtime.browser.min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-live-query-min.js"></script>
+		
+		<script>
+		// 存储服务
+		var { Query, User } = AV;
+		AV.init('Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz', 'nYP6CNjSvE1TUhTur6M4ldxz');
+		// 实时消息服务
+		var { Realtime, TextMessage } = AV;
+		
+		</script>
+		
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="http://yoursite.com" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/categories" class="menuItem" style="left: 50%; top: 85%;">目录</a>
+            <a href="/message" class="menuItem" style="left: 19.6891%; top: 67.5%;">留言板</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <!--<a href="http://yoursite.com">-->
+						<a href="/">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">DonY15</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>目录
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/组件/">组件</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Web基础/">Web基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/搭建/">搭建</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/框架/">框架</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Spring全家桶/">Spring全家桶</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SE基础/">SE基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/初等数学/">初等数学</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/工具类/">工具类</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IO/">IO</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/服务器/">服务器</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/categories">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="">
+                    <a href="/tags">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-user"></i>留言板
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+       
+				<a href="/">DonY15</a>
+        >
+        <span>Spring基础原理</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2018/04/15/Spring基础原理/">Spring基础原理</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-04-15
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2018/04/15/Spring基础原理/">Spring基础原理</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-04-15
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h2 id="Spring基础原理"><a href="#Spring基础原理" class="headerlink" title="Spring基础原理"></a>Spring基础原理</h2><p>[TOC]</p>
+<h3 id="1-Spring概念"><a href="#1-Spring概念" class="headerlink" title="1.Spring概念"></a>1.Spring概念</h3><p><strong>提供一个ioc容器来管理Bean,并通过AOP方式来增加Bean的功能</strong></p>
+<p>基于Spring-IoC和AOP来构建多层Java EE 项目,能构将项目内的组件进行解耦分离,大大提高了开发效率和维护效率</p>
+<p><strong>通过反射+XML实现的对象管理工厂(大容器)</strong></p>
+<p><strong>目的:</strong></p>
+<ol>
+<li>解耦,简化开发</li>
+<li>AOP编程的支持</li>
+<li>声明事务的支持</li>
+<li>方便程序测试</li>
+<li>继承各种优秀框架</li>
+<li>降低Java EE API的使用难度</li>
+</ol>
+<h3 id="2-核心概念"><a href="#2-核心概念" class="headerlink" title="2.核心概念"></a>2.核心概念</h3><ol>
+<li>IoC: Inversion of Control 控制反转 (通过反射机制创建对象实例)</li>
+<li>DI: Dependency Injection  依赖注入(将bean之间的关系交给spring容器管理,我们可以在service注入dao层的实例,controller中注入service层实例)</li>
+<li>AOP: Aspect Oriented Programming  面向切面(通过JDK动态代理和CGlib动态代理实现)</li>
+</ol>
+<h3 id="3-Spring组成"><a href="#3-Spring组成" class="headerlink" title="3.Spring组成"></a>3.Spring组成</h3><p>Spring框架的功能大概由20多个模块组成,这些模块按组可以分为以下几部分</p>
+<p><strong>| 核心容器 | 数据访问/集成 | WEB | AOP | 设备 | 消息 | 测试 |</strong></p>
+<p>​    核心模块:Beans Core Context spEL对应项目初始化时需要的四个核心包<br><img src="https://i.imgur.com/4dxxIk6.png" alt="Spring架构"></p>
+<h3 id="4-Spring说明"><a href="#4-Spring说明" class="headerlink" title="4.Spring说明"></a>4.Spring说明</h3><ol>
+<li><strong>bean元素:需要spring管理的对象,是Spring中最基础的单位(包括数据源/SessionFactory/事务管理等)</strong></li>
+<li><strong>class属性: 需要spring管理对象的全类名</strong></li>
+<li><strong>name属性:给被管理者起个引用名,根据该引用名就可以使用该对象(bean对象的标识)</strong></li>
+<li>id属性:bean对象的唯一标识(和name的区别是整个spring中不可重复)</li>
+<li><strong>lazy-init:是否延时加载,默认false(开启后只对单例有效)</strong></li>
+<li>init-method:对象初始化方法</li>
+<li>destory:对象销毁方法</li>
+<li>scope:<strong>singleton</strong>(默认,适用实际开发的大部分情况)还是<strong>prototype</strong></li>
+</ol>
+<h4 id="1-Spring管理对象原理"><a href="#1-Spring管理对象原理" class="headerlink" title="1.Spring管理对象原理"></a>1.Spring管理对象原理</h4><h5 id="1-Spring容器"><a href="#1-Spring容器" class="headerlink" title="1.Spring容器"></a>1.Spring容器</h5><p>Spring要管理对象,就需要把对象加入到自己的容器中</p>
+<p><strong>Spring容器</strong>是Spring的核心,主要的责任便是<strong>管理Spring中java的组件</strong></p>
+<ol>
+<li>对象加入到Spring容器的三种方法(依赖注入) <strong>|无参构造+setter注入|有参构造方法注入|动静态工厂注入|</strong></li>
+<li>使用bean对象时,实例化容器的两种方法<strong>|ClassPathXml..xml实例化|FileSystem…绝对路径实例化|</strong></li>
+<li>ApplicationContext容器实例化后,默认会实例化内部的所有bean,通过getBean即可获取bean对象的使用权</li>
+</ol>
+<h5 id="2-Spring容器与对象Bean"><a href="#2-Spring容器与对象Bean" class="headerlink" title="2.Spring容器与对象Bean"></a>2.Spring容器与对象Bean</h5><p>通常情况下,Bean是被动的接收Spring容器创建的实例,具有使用权,即Bean不对Spring进行访问</p>
+<p>如果想让Bean对Spring进行访问,则需要手动配置,让Bean实现<strong>BeanFactoryAware </strong>接口…</p>
+<p><strong>该操作非常不推荐,污染代码,使Bean和Spring耦合在一起,若非特别需要,否则不要用</strong></p>
+<h5 id="3-Spring容器中Bean的继承特性与Java中继承区别"><a href="#3-Spring容器中Bean的继承特性与Java中继承区别" class="headerlink" title="3.Spring容器中Bean的继承特性与Java中继承区别"></a>3.Spring容器中Bean的继承特性与Java中继承区别</h5><p>spring中可以使用抽象bean,即abstract 属性为true,抽象bean不能被实例化,作用是<strong>Spring中的继承</strong></p>
+<p><strong>spring中的继承:</strong></p>
+<p>主要用于bean的数量越来越多,许多属性配置冗余,此时可以使用继承</p>
+<p><strong>spring的继承无法继承如下属性:</strong></p>
+<ul>
+<li>depends-on,aotuwirwe,dependency-check,singleton,scope,lazy-iniyt这些属性总是子Bean定义，或采用默认值。 </li>
+</ul>
+<p><strong>Bean继承与java中继承的区别： </strong></p>
+<ul>
+<li>Spring中的子bean和父Bean可以是不同类型，但java中的继承则可保证子类是一种特殊的父类； </li>
+<li>Spring中的Bean的继承是实例之间的关系，因此只要表现在参数值的延续，而java中的继承是类之间的关系，主要表现为方法、属性之间的延续； </li>
+<li>Spring中的子Bean不可以作为父Bean使用，不具备多态性，java中的子类完全可以当成父类使用。 </li>
+</ul>
+<h5 id="4-Spring容器中Bean模式的生命周期"><a href="#4-Spring容器中Bean模式的生命周期" class="headerlink" title="4.Spring容器中Bean模式的生命周期"></a>4.Spring容器中Bean模式的生命周期</h5><p><strong>singleton：</strong> Spring容器能够准确的追踪其创建/使用/销毁</p>
+<p><strong>prototype：</strong>Spring容器仅负责其创建,无法追踪其使用和销毁,每次创建后都会委托给客户端,不再对其追踪 </p>
+<h5 id="5-强制初始化Bean-使用较少"><a href="#5-强制初始化Bean-使用较少" class="headerlink" title="5.强制初始化Bean(使用较少)"></a>5.强制初始化Bean(使用较少)</h5><p>Spring有一个默认的规则，总是先初始化主调Bean，然后在初始化依赖Bean。<br>为了指定Bean在目标Bean之前初始化，可以使用depends-on属性</p>
+<h5 id="6-自动装配"><a href="#6-自动装配" class="headerlink" title="6.自动装配"></a>6.自动装配</h5><ul>
+<li>Spring能自动装配Bean与Bean之间的依赖关系，即使无需使用ref显式指定依赖Bean。</li>
+<li>自动装配可以减少配置文件的工作量，但是降低了依赖关系的透明性和依赖性。</li>
+<li>可以根据指定属性值类型来缩小自动装配的范围(很少指定)</li>
+<li><strong>| no | byName | byType | constructor | autodetect | </strong></li>
+</ul>
+<h5 id="7-依赖检察-使用较少"><a href="#7-依赖检察-使用较少" class="headerlink" title="7.依赖检察(使用较少)"></a>7.依赖检察(使用较少)</h5><p>Spring提供一种依赖检查的功能，可以防止出现配置手误，或者其他情况的错误。<br>dependency-check=”all” 该属性值可以为<strong>| none | simple | objects | all | </strong></p>
+<h4 id="2-Spring核心机制-IoC-DI"><a href="#2-Spring核心机制-IoC-DI" class="headerlink" title="2.Spring核心机制:IoC/DI"></a>2.Spring核心机制:IoC/DI</h4><p>无论是<strong>IoC</strong>(控制反转) 还是<strong>DI</strong>(依赖注入),其含以上是互相包容的,在控制反转时便实现依赖注入</p>
+<ul>
+<li><strong>传统方法:</strong>当一个java实例(A)需要调用另一个java实例(B)时,需要在A中new一个B来构建</li>
+<li><strong>Spring管理中:</strong>B对象的创建交给了Spring来管理(控制反转) | 将B对象注入给A对象的过程称为(依赖注入)</li>
+</ul>
+<h4 id="4-Spring-AOP"><a href="#4-Spring-AOP" class="headerlink" title="4.Spring AOP"></a>4.Spring AOP</h4><h5 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h5><p> <strong>AOP</strong>（Aspect Oriented Programming），即面向切面编程，基于<strong>面向过程</strong></p>
+<p>是<strong>OOP</strong>（Object Oriented Programming，面向对象编程）的补充和完善。 </p>
+<p><strong>(OOP无法关注到程序的切入点,AOP具有更强大的切面控制力)</strong></p>
+<p>例如:</p>
+<ul>
+<li>面向对象的流程是用户注册信息,然后插入到数据库中<br>   面向切面的流程是用户注册信息,在插入数据库前进行控    制,在插入数据库后进行控制</li>
+</ul>
+<p><strong>AOP使用横切技术,把软件系统分成两部分</strong><br><strong>核心关注点</strong>,特点:纵向关系为主,建立对象层次结构<br><strong>横切关注点</strong>,特点:横向关系为主,分布在核心关注点的周围,能够切开封装对象,对内部重复的部分进行重新封装,降低耦合性,如权限认证、日志、事务,AOP可以分离系统中的关注点,达到更高效的开发和运行</p>
+<h5 id="2-五种横切方案"><a href="#2-五种横切方案" class="headerlink" title="2.五种横切方案"></a>2.五种横切方案</h5><ol>
+<li><p>前置通知</p>
+</li>
+<li><p>后置正常通知</p>
+</li>
+<li>后置异常通知</li>
+<li>后置始终通知</li>
+<li>环绕通知</li>
+</ol>
+<h5 id="3-八大核心概念"><a href="#3-八大核心概念" class="headerlink" title="3.八大核心概念"></a>3.八大核心概念</h5><ol>
+<li><p>Joinpoint 连接点<br> AOP执行程序的特定位置</p>
+</li>
+<li><p>PointCut 切点<br> AOP通过切点来确定特定的连接点位置</p>
+</li>
+<li><p>Advice 增强<br> 织入目标类连接点上的一段代码,可以描述程序,也可以确定方位,</p>
+<pre><code>只有通过切点信息和方位信息,才能确定特定连接点并执行增强逻辑
+</code></pre></li>
+<li><p>Target 目标对象<br> 增强逻辑的织入目标类</p>
+</li>
+<li><p>Introduction 引介<br> 特殊增强,给指定类添加属性和方法,也可以动态的添加接口的实现业务逻辑</p>
+</li>
+<li><p>weaving 织入</p>
+<p> 增强 添加到 目标类 的 连接点 的过程,将目标,增强和引介很好的结合在了一起,AOP常用的三种织入技术</p>
+<pre><code>编译期织入,这要求使用特殊的Java编译器.
+</code></pre><p> ​        类装载期织入,这要求使用特殊的类装载器.</p>
+<p> ​        动态代理织入,在运行期为目标类添加增强生成子类的方式.</p>
+<pre><code>Spring采用动态代理织入,而AspectJ采用编译期织入和类装载器织入.
+</code></pre></li>
+<li><p>Proxy  代理</p>
+<p> 目标被增强织入后生成一个新的代理类,该代理类可能和原类是一个接口,也可能是原类的子类,可以采用和原类相同的方法调用</p>
+</li>
+<li><p>Aspect 切面</p>
+<p> 由增强和切点组成, [既包含横切逻辑的定义,也包括连接点的定义] ,能够把这两种定义织入到指定连接点中</p>
+</li>
+</ol>
+<h5 id="4-AOP底层调用的两种代理机制"><a href="#4-AOP底层调用的两种代理机制" class="headerlink" title="4.AOP底层调用的两种代理机制"></a>4.AOP底层调用的两种代理机制</h5><ul>
+<li><strong>JDK动态代理:</strong>针对接口类产生代理</li>
+<li><strong>CGlib动态代理:</strong>针对没有实现接口的类产生代理,应用的是底层字节码增强技术,生成当前类的子类对象</li>
+</ul>
+<h3 id="5-Spring父子容器"><a href="#5-Spring父子容器" class="headerlink" title="5.Spring父子容器"></a>5.Spring父子容器</h3><p>Spring父容器(ContextLoaderListener)一般配置的是Dao层和Service层，而Spring子容器(DispatcherServlet)一般配置的是Controller层父子容器的访问关系是:</p>
+<p><strong>子容器可以访问父容器中的对象，但是父容器无法访问子容器中的对象。比如controller可以把Dao和Service注入进来，但是Dao和Service无法把Controller注进来。</strong> </p>
+<p><img src="https://i.imgur.com/1v6FUty.png" alt=""></p>
+<p> 我们在service配置扫描包的时候配置的扫描范围是”com.taotao.service”，如果我们配置成com.taotao，那么就会把com.taotao.controller也扫描到父容器中，这样父子容器中就都有controller层了，但是在<strong>父容器中扫进来controller是没有用的</strong>，我们在表现层访问的时候，访问的还是子容器的controller。同理，如果把子容器的扫描范围扩大，变为com.taotao，那么它便会把Dao和Service也扫描到子容器当中，这样当我们访问表现层的时候，访问的便是子容器中的Dao和Service，<strong>子容器中的Dao和Service是没有事务的</strong>，但是父容器中的Dao和Service是有事务的，这样就会导致虽然我们在父容器中配置了事务，但由于子容器扫描范围太大，而导致访问子容器中的Dao和Service没有事务的问题。 </p>
+<h3 id="6-Spring深入拓展"><a href="#6-Spring深入拓展" class="headerlink" title="6.Spring深入拓展"></a>6.Spring深入拓展</h3><h4 id="1-利用后处理器扩展Spring容器…"><a href="#1-利用后处理器扩展Spring容器…" class="headerlink" title="1.利用后处理器扩展Spring容器…"></a>1.利用后处理器扩展Spring容器…</h4><h4 id="2-Spring的“零配置”支持-注解"><a href="#2-Spring的“零配置”支持-注解" class="headerlink" title="2.Spring的“零配置”支持(注解)"></a>2.Spring的“零配置”支持(注解)</h4><pre><code>**| Component | Controller | Service | Repository | Scope | Resource | Autowired | Qualifier | JsonIgnore |**
+</code></pre><h4 id="3-资源访问…"><a href="#3-资源访问…" class="headerlink" title="3.资源访问…"></a>3.资源访问…</h4><p><strong>深入拓展传送门:<a href="https://www.cnblogs.com/shijiaoyun/p/7458341.html" target="_blank" rel="noopener">https://www.cnblogs.com/shijiaoyun/p/7458341.html</a></strong></p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'Spring基础原理'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            宝全哥哥
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/12/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/07/10/Ajax基础服务/">Ajax基础服务</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/07/06/Log日志整理/">Log日志整理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/02/04/Nginx基础原理/">Nginx基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/04/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/03/23/javaSE-集合/">javaSE-集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/12/06/FastDfs基础原理/">FastDFS 基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/04/15/Spring基础原理/">Spring基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/04/Redis基础原理/">Redis基础原理</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                <li class="">
+                    <a href="/2018/04/15/Spring基础原理/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                <li class="">
+                    <a href="/2018/04/15/Spring基础原理/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                <li class="">
+                    <a href="/2018/04/15/Spring基础原理/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+</div>
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://kdays.net/days/" target="_blank">KDays Forum</a>
+    </li>
+    
+    <li>
+        <a href="http://www.gal123.com/" target="_blank">绅士导航♂</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">萌导航</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/dony15" target="_blank">Github</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 宝全哥哥 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+
+<!--page counter part统计-->
+<script>
+function addCount (Counter) {
+        url=$('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query=new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url",url);
+        query.find({
+            success: function(results){
+                if(results.length>0)
+                {
+                    var counter=results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                }
+                else
+                {
+                    var newcounter=new Counter();
+                    newcounter.set("title",title);
+                    newcounter.set("url",url);
+                    newcounter.set("time",1);
+                    newcounter.save(null,{
+                        success: function(newcounter){
+                        //alert('New object created');
+                        },
+                        error: function(newcounter,error){
+                        alert('Failed to create');
+                        }
+                        });
+                }
+            },
+            error: function(error){
+                //find null is not a error
+                alert('Error:'+error.code+" "+error.message);
+            }
+        });
+}
+$(function(){
+        var Counter=AV.Object.extend("Counter");
+        //only increse visit counting when intering a page
+        if ($('.article-title').length == 1)
+           addCount(Counter);
+        var query=new AV.Query(Counter);
+        query.descending("time");
+        // the sum of popular posts
+        query.limit(10); 
+        query.find({
+            success: function(results){
+                    for(var i=0;i<results.length;i++)    
+                    {
+                        var counter=results[i];
+                        title=counter.get("title");
+                        url=counter.get("url");
+                        time=counter.get("time");
+                        // add to the popularlist widget
+                        showcontent=title+" ("+time+")";
+                        //notice the "" in href
+                        $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
+                    }
+                },
+            error: function(error){
+                alert("Error:"+error.code+" "+error.message);
+            }
+            }
+        )
+        });
+</script>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '8'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Sun Apr 15 2018 00:00:00 GMT+0800'
+      window.commentConfig.owner = 'dony15'
+      window.commentConfig.repo = 'reply.github.io'
+      window.commentConfig.client_id = '3e620f638731b84942ed'
+      window.commentConfig.client_secret = '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e'
+      window.commentConfig.redirect_uri = ''
+    } else {
+      window.commentConfig = {
+      	id: 'Sun Apr 15 2018 00:00:00 GMT+0800',
+        owner: 'dony15',
+        repo: 'reply.github.io',
+        client_id: '3e620f638731b84942ed',
+        client_secret: '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e',
+        redirect_uri: ''
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

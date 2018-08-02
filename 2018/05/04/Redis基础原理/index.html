@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="宝全哥哥">
+    
+    
+    
+    
+    
+    
+    <title>Redis基础原理 | DonY15</title>
+    <link href=”http://yoursite.com“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz',
+        appKey: 'nYP6CNjSvE1TUhTur6M4ldxz'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpg,preview7.jpg,preview8.jpg,preview9.jpg,preview10.jpg,preview11.jpg,preview12.jpg,preview13.jpg,preview14.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+		<!--统计-->
+			<!--<script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>-->
+		<!--<script>AV.initialize("Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz", "nYP6CNjSvE1TUhTur6M4ldxz");</script>-->
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-realtime@4.1.0/dist/realtime.browser.min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-live-query-min.js"></script>
+		
+		<script>
+		// 存储服务
+		var { Query, User } = AV;
+		AV.init('Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz', 'nYP6CNjSvE1TUhTur6M4ldxz');
+		// 实时消息服务
+		var { Realtime, TextMessage } = AV;
+		
+		</script>
+		
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="http://yoursite.com" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/categories" class="menuItem" style="left: 50%; top: 85%;">目录</a>
+            <a href="/message" class="menuItem" style="left: 19.6891%; top: 67.5%;">留言板</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <!--<a href="http://yoursite.com">-->
+						<a href="/">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">DonY15</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>目录
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/组件/">组件</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Web基础/">Web基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/搭建/">搭建</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/框架/">框架</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Spring全家桶/">Spring全家桶</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SE基础/">SE基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/初等数学/">初等数学</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/工具类/">工具类</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IO/">IO</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/服务器/">服务器</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/categories">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="">
+                    <a href="/tags">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-user"></i>留言板
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+       
+				<a href="/">DonY15</a>
+        >
+        <span>Redis基础原理</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2018/05/04/Redis基础原理/">Redis基础原理</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-05-04
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2018/05/04/Redis基础原理/">Redis基础原理</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-05-04
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h3 id="Redis基础原理"><a href="#Redis基础原理" class="headerlink" title="Redis基础原理"></a>Redis基础原理</h3><p>[TOC]</p>
+<h4 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h4><p><strong>NoSQL</strong></p>
+<p>非关系型数据库,Redis是非关系型数据库中的<strong>键值存储数据库</strong></p>
+<p><strong>应用</strong></p>
+<p>处理高并发/海量数据的访问,内容缓存/内容持久化</p>
+<p>同样具有分布式的内存对象缓存的系统还有<strong>MemCache</strong> (不能数据持久化)</p>
+<p><strong>简介传送门:</strong><a href="https://blog.csdn.net/sinat_33994744/article/details/56514901" target="_blank" rel="noopener">https://blog.csdn.net/sinat_33994744/article/details/56514901</a></p>
+<p><strong>优点</strong></p>
+<ol>
+<li>快速查询,支持横向扩充(集群)和纵向扩充(加强设备)</li>
+<li>丰富的数据类型String，list，set，sorted set，hash</li>
+<li>一主多从,读写分离</li>
+<li>哨兵机制,检测选举</li>
+<li>集群机制,多主多从,数据高可用,分布式存储</li>
+<li>保存在内存中,速度很快 读11W/s | 写8W/s</li>
+</ol>
+<p><strong>缺点</strong></p>
+<p>​    存储缺少结构化(难以构建关系型理数据库模型)</p>
+<h4 id="2-数据类型"><a href="#2-数据类型" class="headerlink" title="2.数据类型"></a>2.数据类型</h4><h5 id="String"><a href="#String" class="headerlink" title="String"></a>String</h5><p>最简单的KV存储,value可以是String也可以是数字等</p>
+<p><strong>场景</strong></p>
+<p>kv字符串结构等,非常普遍</p>
+<p><strong>指令</strong></p>
+<p>​        <strong>SET key value</strong>                   设置key=value </p>
+<p>​        <strong>GET key</strong>                         或者键key对应的值 </p>
+<p>​    GETRANGE key start end          得到字符串的子字符串存放在一个键 </p>
+<p>​    GETSET key value                设置键的字符串值，并返回旧值 </p>
+<p>​    GETBIT key offset               返回存储在键位值的字符串值的偏移 </p>
+<p>​    MGET key1 [key2..]              得到所有的给定键的值 </p>
+<p>​    SETBIT key offset value         设置或清除该位在存储在键的字符串值偏移 </p>
+<p>​    SETEX key seconds value         键到期时设置值 </p>
+<p>​    SETNX key value                 设置键的值，只有当该键不存在 </p>
+<p>​    SETRANGE key offset value       覆盖字符串的一部分从指定键的偏移 </p>
+<p>​    STRLEN key                      得到存储在键的值的长度 </p>
+<p>​    MSET key value [key value…]   设置多个键和多个值 </p>
+<p>​    MSETNX key value [key value…] 设置多个键多个值，只有在当没有按键的存在时 </p>
+<p>​    PSETEX key milliseconds value   设置键的毫秒值和到期时间 </p>
+<p>​        <strong>INCR key</strong>                       增加键的整数值一次          </p>
+<p>​        <strong>incr key 让Redis统计网站访问量,速度快,减少并发问题,生成主键</strong></p>
+<p>​    INCRBY key increment            由给定的数量递增键的整数值 </p>
+<p>​    INCRBYFLOAT key increment       由给定的数量递增键的浮点值</p>
+<p>​    DECR key                        递减键一次的整数值 </p>
+<p>​    DECRBY key decrement            由给定数目递减键的整数值 </p>
+<p>​    APPEND key value                追加值到一个键 </p>
+<p>​    ——–操作管理———-</p>
+<ul>
+<li><strong>KEYS *</strong>            查看所有的Key</li>
+<li><strong>DEL key</strong>                         如果存在删除键 </li>
+<li>DUMP key                        返回存储在指定键的值的序列化版本 </li>
+<li><strong>EXISTS key</strong>                      此命令检查该键是否存在 </li>
+<li><strong>EXPIRE key seconds</strong>              指定键的过期时间 <strong>常用</strong></li>
+<li>EXPIREAT key timestamp          指定的键过期时间。在这里，时间是在Unix时间戳格式 </li>
+<li><strong>PEXPIRE key milliseconds</strong>        设置键以毫秒为单位到期 </li>
+<li>PEXPIREAT key milliseconds-timestamp        设置键在Unix时间戳指定为毫秒到期 </li>
+<li>KEYS pattern                    查找与指定模式匹配的所有键 </li>
+<li>MOVE key db                     移动键到另一个数据库 </li>
+<li><strong>PERSIST key</strong>                     移除过期的键 <strong>常用,让key持久化</strong></li>
+<li>PTTL key                        以毫秒为单位获取剩余时间的到期键。 </li>
+<li><strong>TTL key</strong>                         获取键到期的剩余时间。  <strong>正数是有过期时间,-1是持久化,-2是不存在</strong></li>
+<li>RANDOMKEY                       从Redis返回随机键 </li>
+<li>RENAME key newkey               更改键的名称 </li>
+<li>RENAMENX key newkey             重命名键，如果新的键不存在 </li>
+<li>TYPE key                        返回存储在键的数据类型的值。 </li>
+</ul>
+<h5 id="List-列表"><a href="#List-列表" class="headerlink" title="List(列表)"></a>List(列表)</h5><p>字符串列表,非常重要的Redis类型,本质是双向链表,支持反向查询和遍历,更加方便,但是会额外增加内存开销(存储双向链表),redis内部的<strong>发送缓冲队列</strong>使用的就是List结构</p>
+<p><strong>一般用来做排队处理的工作(队列)一个一个左边加,一个一个右边取</strong></p>
+<p><strong>场景</strong></p>
+<p>如twitter的关注列表和粉丝列表,实现轻量级的消息队列等</p>
+<p><strong>指令</strong></p>
+<ul>
+<li>BLPOP<br>BLPOP key1 [key2 ] timeout 取出并获取列表中的第一个元素，或阻塞，直到有可用</li>
+<li>BRPOP<br>BRPOP key1 [key2 ] timeout 取出并获取列表中的最后一个元素，或阻塞，直到有可用</li>
+<li>BRPOPLPUSH<br>BRPOPLPUSH source destination timeout 从列表中弹出一个值，它推到另一个列表并返回它;或阻塞，直到有可用</li>
+<li>LINDEX<br>LINDEX key index 从一个列表其索引获取对应的元素</li>
+<li>LINSERT<br>LINSERT key BEFORE|AFTER pivot value 在列表中的其他元素之后或之前插入一个元素</li>
+<li>LLEN<br>LLEN key 获取列表的长度</li>
+<li><strong>LPOP</strong><br>LPOP key 获取并取出列表中的第一个元素,并移除</li>
+<li><strong>LPUSH</strong><br>LPUSH key value1 value2  [value3] <strong>在value3左边加上一个或多个值的列表</strong></li>
+<li>LPUSHX<br>LPUSHX key value 在前面加上一个值列表，仅当列表中存在</li>
+<li><strong>LRANGE</strong><br>LRANGE key 0  -1 (其中0和-1的集合代表<strong>查看全部</strong>)从一个列表获取各种元素</li>
+<li>LREM<br>LREM key count value 从列表中删除元素</li>
+<li>LSET<br>LSET key index value 在列表中的索引设置一个元素的值</li>
+<li>LTRIM<br>LTRIM key start stop 修剪列表到指定的范围内</li>
+<li><strong>RPOP</strong><br>RPOP key 取出并获取列表中的最后一个元素,并移除</li>
+<li>RPOPLPUSH<br>RPOPLPUSH source destination 删除最后一个元素的列表，将其附加到另一个列表并返回它</li>
+<li><strong>RPUSH</strong><br>RPUSH key value1 value2  [value3] 在<strong>value3右边</strong>添加一个或多个值到列表</li>
+<li>RPUSHX<br>RPUSHX key value 添加一个值列表，仅当列表中存在</li>
+</ul>
+<h5 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h5><p>Redis Hash对应Value内部实际就是一个HashMap，实际这里会有2种不同实现，这个Hash的成员比较少时Redis为了节省内存会采用类似一维数组的方式来紧凑存储，而不会采用真正的HashMap结构，对应的value redisObject的encoding为zipmap,当成员数量增大时会自动转成真正的HashMap,此时encoding为ht。 </p>
+<p><strong>场景</strong></p>
+<p>可以方便的存储用户信息,用户ID为Key,用户信息序列化为value存储</p>
+<p><strong>注意</strong></p>
+<p>不能设定Hash的key中指定field的过期时间(只有key的过期时间)</p>
+<p><strong>指令</strong></p>
+<ul>
+<li>HDEL<br><strong>HDEL key field[field…]</strong> 删除对象的一个或几个属性域，不存在的属性将被忽略</li>
+<li>HEXISTS<br>HEXISTS key field 查看对象是否存在该属性域</li>
+<li>HGET<br><strong>HGET key field</strong> 获取对象中该field属性域的值</li>
+<li>HGETALL<br><strong>HGETALL key</strong> 获取对象的所有属性域和值</li>
+<li>HSET<br><strong>HSET key field value</strong> 设置对象指定字段的值</li>
+<li>HMSET<br><strong>HMSET key field value [field value …]</strong> 同时设置对象中一个或多个字段的值</li>
+<li>HSETNX<br><strong>HSETNX key field value</strong> 只在对象不存在指定的字段时才设置字段的值</li>
+<li>HINCRBY<br>HINCRBY key field value 将该对象中指定域的值增加给定的value，原子自增操作，只能是integer的属性值可以使用</li>
+<li>HINCRBYFLOAT<br>HINCRBYFLOAT key field increment 将该对象中指定域的值增加给定的浮点数</li>
+<li>HKEYS<br>HKEYS key 获取对象的所有属性字段</li>
+<li>HVALS<br>HVALS key 获取对象的所有属性值</li>
+<li>HLEN<br>HLEN key 获取对象的所有属性字段的总数</li>
+<li>HMGET<br>HMGET key field[field…] 获取对象的一个或多个指定字段的值</li>
+<li>HSTRLEN<br>HSTRLEN key field 返回对象指定field的value的字符串长度，如果该对象或者field不存在，返回0.</li>
+<li>HSCAN<br>HSCAN key cursor [MATCH pattern][COUNT count] 类似SCAN命令</li>
+<li>HKEYS</li>
+<li><strong>HKeys key</strong>  查看key中所有的field</li>
+<li>HVALS</li>
+<li><strong>Hvals key</strong>   查看key中所有field<strong>的</strong>对应的值</li>
+<li>HGETALL</li>
+<li><strong>HgetAll key</strong>  查看key中所有的<strong>field</strong>和<strong>value</strong></li>
+</ul>
+<h5 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h5><p>存储数据不重复,set 的内部实现是一个 value永远为null的HashMap，实际就是通过计算hash的方式来快速排重的，这也是set能提供判断一个成员是否在集合内的原因。 </p>
+<p><strong>用来去重</strong></p>
+<p><strong>场景</strong></p>
+<p>set和list的功能类似,但是set加载的列表自动排重,当你需要存储一个列表数据，又不希望出现重复数据时，set是一个很好的选择，并且set提供了判断某个成员是否在一个set集合内的重要接口，这个也是list所不能提供的。 </p>
+<p>在微博应用中，每个用户关注的人存在一个集合中，就很容易实现求两个人的共同好友功能。 </p>
+<p><strong>指令</strong></p>
+<ul>
+<li><strong>SADD</strong><br>SADD key member [member …] 添加一个或者多个元素到集合(set)里</li>
+<li>SACRD<br>SCARD key 获取集合里面的元素数量</li>
+<li>SDIFF<br>SDIFF key [key …] 获得队列不存在的元素</li>
+<li>SDIFFSTORE<br>SDIFFSTORE destination key [key …] 获得队列不存在的元素，并存储在一个关键的结果集</li>
+<li>SINTERSTORE<br>SINTERSTORE destination key [key …] 获得两个集合的交集，并存储在一个集合中</li>
+<li>SISMEMBER<br>SISMEMBER key member 确定一个给定的值是一个集合的成员</li>
+<li><strong>SMEMBERS</strong><br>SMEMBERS key 获取集合里面的所有key</li>
+<li>SMOVE<br>SMOVE source destination member 移动集合里面的一个key到另一个集合</li>
+<li>SPOP<br>SPOP key [count] 获取并删除一个集合里面的元素</li>
+<li>SRANDMEMBER<br>SRANDMEMBER key [count] 从集合里面随机获取一个元素</li>
+<li><strong>SREM</strong><br>SREM key member [member …] 从集合里删除一个或多个元素，不存在的元素会被忽略</li>
+<li>SUNIONSTORE<br>SUNIONSTORE destination key [key …] 合并set元素，并将结果存入新的set里面</li>
+<li>SSCAN<br>SSCAN key cursor [MATCH pattern][COUNT count] 迭代set里面的元素</li>
+</ul>
+<p><strong>Set中key的各种关系筛选</strong>,可以两个也可以多个</p>
+<p>设置</p>
+<p>Sadd seta  a b c d e</p>
+<p>Sadd setb  c d e f g</p>
+<ul>
+<li><strong>SDIFF 差集</strong></li>
+<li>Sdiff seta  setb  结果   a b</li>
+<li>Sdiff setb  seta  结果   f  g</li>
+<li><strong>SINTER 交集</strong><br>SINTER seta  [setb  …] 获得两个集合的交集  结果 c d e</li>
+<li><strong>SUNION 并集</strong></li>
+<li>Sunion  seta  setb  结果  a b c d e f g</li>
+</ul>
+<h5 id="Sorted-Set"><a href="#Sorted-Set" class="headerlink" title="Sorted Set"></a>Sorted Set</h5><p>set的有序版,由HaspMap和跳跃表组成,兼顾list和set 有序去重,但是处理两方面<strong>sorted性能消耗大</strong></p>
+<p><strong>场景</strong></p>
+<p>用户的积分排行榜需求就可以通过有序集合实现。还有上面介绍的使用List实现轻量级的消息队列，其实也可以通过Sorted Set实现有优先级或按权重的队列。 </p>
+<p><strong>指令</strong></p>
+<ul>
+<li><strong>ZADD</strong><br>ZADD key score1 member1 [score2 member2] 添加一个或多个成员到有序集合，或者如果它已经存在更新其分数</li>
+<li>ZCARD<br>ZCARD key 得到的有序集合成员的数量</li>
+<li>ZCOUNT<br>ZCOUNT key min max 计算一个有序集合成员与给定值范围内的分数</li>
+<li>ZINCRBY<br>ZINCRBY key increment member 在有序集合增加成员的分数</li>
+<li>ZINTERSTORE<br>ZINTERSTORE destination numkeys key [key …] 多重交叉排序集合，并存储生成一个新的键有序集合。</li>
+<li>ZLEXCOUNT<br>ZLEXCOUNT key min max 计算一个给定的字典范围之间的有序集合成员的数量</li>
+<li><strong>ZRANGE</strong><br>ZRANGE key start stop [WITHSCORES] 由索引返回一个成员范围的有序集合（从低到高）<strong>0 -1 取全部</strong></li>
+<li>ZRANGEBYLEX<br>ZRANGEBYLEX key min max [LIMIT offset count]返回一个成员范围的有序集合（由字典范围）</li>
+<li>ZRANGEBYSCORE<br>ZRANGEBYSCORE key min max [WITHSCORES][LIMIT] 返回有序集key中，所有 score 值介于 min 和 max 之间(包括等于 min 或 max )的成员，有序集成员按 score 值递增(从小到大)次序排列</li>
+<li>ZRANK<br>ZRANK key member 确定成员的索引中有序集合</li>
+<li>ZREM<br>ZREM key member [member …] 从有序集合中删除一个或多个成员，不存在的成员将被忽略</li>
+<li>ZREMRANGEBYLEX<br>ZREMRANGEBYLEX key min max 删除所有成员在给定的字典范围之间的有序集合</li>
+<li>ZREMRANGEBYRANK<br>ZREMRANGEBYRANK key start stop 在给定的索引之内删除所有成员的有序集合</li>
+<li>ZREMRANGEBYSCORE<br>ZREMRANGEBYSCORE key min max 在给定的分数之内删除所有成员的有序集合</li>
+<li>ZREVRANGE<br>ZREVRANGE key start stop [WITHSCORES] 返回一个成员范围的有序集合，通过索引，以分数排序，从高分到低分</li>
+<li>ZREVRANGEBYSCORE<br>ZREVRANGEBYSCORE key max min [WITHSCORES] 返回一个成员范围的有序集合，以socre排序从高到低</li>
+<li>ZREVRANK Zrevrank<br>ZREVRANK key member 确定一个有序集合成员的索引，以分数排序，从高分到低分</li>
+<li>ZSCORE<br>ZSCORE key member 获取给定成员相关联的分数在一个有序集合</li>
+<li>ZUNIONSTORE<br>ZUNIONSTORE destination numkeys key [key …] 添加多个集排序，所得排序集合存储在一个新的键</li>
+<li>ZSCAN<br>ZSCAN key cursor [MATCH pattern] [COUNT count] 增量迭代排序元素集和相关的分数</li>
+</ul>
+<p>**Redis过期策略:<a href="https://www.jb51.net/article/103236.htm" target="_blank" rel="noopener">https://www.jb51.net/article/103236.htm</a></p>
+<h4 id="3-Redis运用"><a href="#3-Redis运用" class="headerlink" title="3.Redis运用"></a>3.Redis运用</h4><p><strong>Redis使用策略设计模式来开发(接口+实现类,方便切换单机和集群版)</strong></p>
+<p><strong>文件夹格式</strong></p>
+<p>key中如果存在 :  那么该符号将被<strong>额外</strong>解析为文件夹层级</p>
+<p>如 ITEM_INFO:TEST:BASE</p>
+<p><strong>被解析为ITEM_INFO文件夹下–&gt;TEST子文件夹下的key  ITEM_INFO:TEST:BASE</strong></p>
+<p>实际开发中,经常会用到集合(list读取较快)来存储缓存数据,但是Redis只支持List<string>,不能直接支持List<object>,因此需要制作工具类来转换Json类型读写</object></string></p>
+<ol>
+<li>导入POM</li>
+<li>导入JsonUtils工具类(将Object/List &lt;Object &gt;转化为字符串)</li>
+<li>导入Redis工具类接口/实现接口</li>
+<li>导入配置文件spring-redis/redis.properties</li>
+<li>service中注入使用即可</li>
+</ol>
+<p><strong>注意spring的加载机制:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder &apos;USER_LIST&apos; in string value &quot;$&#123;USER_LIST&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>Spring容器采用反射扫描的发现机制，在探测到Spring容器中有一个org.springframework.beans.factory.config.PropertyPlaceholderConfigurer的Bean就会停止对剩余PropertyPlaceholderConfigurer的扫描（Spring 3.1已经使用PropertySourcesPlaceholderConfigurer替代PropertyPlaceholderConfigurer了）</p>
+<p>所以根据加载的顺序，配置的第二个property-placeholder就被没有被spring加载，我想引入的config-wxapp.properties就没有被引入，所以在使用@Value注入的时候占位符就解析不了…解决方法就是把2个property-placeholder注解配置合并在一起就好了 </p>
+<h4 id="4-redis事务"><a href="#4-redis事务" class="headerlink" title="4.redis事务"></a>4.redis事务</h4><h4 id="5-Redis持久化方案"><a href="#5-Redis持久化方案" class="headerlink" title="5.Redis持久化方案"></a>5.Redis持久化方案</h4><p><strong>Redis 的所有数据都是保存在内存中</strong></p>
+<p>数据的完整性和速度要有取舍,如果追求完整性,用关系型数据库如MySQL.追求速度用Redis等.</p>
+<p><strong>Rdb</strong>: 快照形式,定期把内存中<strong>当前的数据</strong>保存到磁盘中,Redis<strong>默认开启</strong>的持久化方案</p>
+<p>在配置文件redis.config中存在,可以修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">####################SHAPSHOTTING#####################</span><br><span class="line">Save the DB on disk</span><br><span class="line">默认</span><br><span class="line">save 900 1	15分钟内1个key变化了,则15分钟保存一次</span><br><span class="line">save 300 10  5分钟内10个key变化了,则5分钟保存一次</span><br><span class="line">save 60 10000 1分钟10000个key变化了,则1分钟保存一次</span><br></pre></td></tr></table></figure>
+<p><strong>aof</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">appendonly no  默认不开启,另一套持久化方案(频繁操作磁盘,会每秒钟保存一次,慢)</span><br><span class="line">如果觉得rdb丢数据可能性高,那么可以开启aof模式,将增删改命令保存到指定文件(恢复时运行一下就好)</span><br><span class="line">当前目录会生成一个appendonly.aof,运行它就可以恢复</span><br></pre></td></tr></table></figure>
+<p>Rdb和aof如果有必要可以同时开启</p>
+<h4 id="6-Redis集群"><a href="#6-Redis集群" class="headerlink" title="6.Redis集群"></a>6.Redis集群</h4><h5 id="Redis-cluster-最少三个"><a href="#Redis-cluster-最少三个" class="headerlink" title="Redis-cluster (最少三个)"></a><strong>Redis-cluster</strong> (最少三个)</h5><ol>
+<li><strong>集群所有节点相互通信,ping-pong,只要连接集群任意一个节点即可连接到集群</strong></li>
+<li><strong>主从节点内容相同(同步缓存,高可用),主节点之间内容不同</strong></li>
+</ol>
+<h5 id="增强Redis高可用–哨兵机制-投票"><a href="#增强Redis高可用–哨兵机制-投票" class="headerlink" title="增强Redis高可用–哨兵机制(投票)"></a><strong>增强Redis高可用–哨兵机制(投票)</strong></h5><p>超过半数即生效</p>
+<h5 id="slot-槽"><a href="#slot-槽" class="headerlink" title="slot(槽)"></a>slot(槽)</h5><p>为了<strong>保证Redis负载均衡</strong>,使用slot来维护</p>
+<p>将所有的<strong>物理节点映射到[0-16383]个槽上</strong></p>
+<p>根据算法,分配数据到不同的槽上(<strong>槽和数据数量没关系,只和服务器分配有关系</strong>)</p>
+<h4 id="7-缓存穿透-缓存雪崩-热点key方案"><a href="#7-缓存穿透-缓存雪崩-热点key方案" class="headerlink" title="7.缓存穿透/缓存雪崩/热点key方案"></a>7.缓存穿透/缓存雪崩/热点key方案</h4><h4 id="8-假设redis只能缓存20W数据-如何保证2000W条数据的热点被使用"><a href="#8-假设redis只能缓存20W数据-如何保证2000W条数据的热点被使用" class="headerlink" title="8.假设redis只能缓存20W数据,如何保证2000W条数据的热点被使用"></a>8.假设redis只能缓存20W数据,如何保证2000W条数据的热点被使用</h4><p>MySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据 </p>
+<p><strong>相关知识：</strong>redis 内存数据集大小上升到一定大小的时候，就会施行数据淘汰策略。redis 提供 6种数据淘汰策略：  </p>
+<ol>
+<li><strong>voltile-lru</strong>：从已设置过期时间的数据集（server.db[i].expires）中挑选<strong>最近最少使用</strong>的数据淘汰 </li>
+<li><strong>volatile-ttl</strong>：从已设置过期时间的数据集（server.db[i].expires）中挑选<strong>将要过期</strong>的数据淘汰  </li>
+<li><strong>volatile-random</strong>：从已设置过期时间的数据集（server.db[i].expires）中<strong>任意选择</strong>数据淘汰  </li>
+<li><strong>allkeys-lru</strong>：从数据集（<strong>server.db[i].dict</strong>）中挑选<strong>最近最少使用</strong>的数据淘汰  </li>
+<li><strong>allkeys-random</strong>：从数据集（<strong>server.db[i].dict</strong>）中<strong>任意选择</strong>数据淘汰  </li>
+<li><strong>no-enviction</strong>（驱逐）：<strong>禁止驱逐数据</strong> </li>
+</ol>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'Redis基础原理'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            宝全哥哥
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/12/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/07/06/Log日志整理/">Log日志整理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/02/04/Nginx基础原理/">Nginx基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/09/18/java POI辅助框架/">java POI辅助框架基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/04/Redis基础原理/">Redis基础原理</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                <li class="">
+                    <a href="/2018/05/04/Redis基础原理/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                <li class="">
+                    <a href="/2018/05/04/Redis基础原理/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                <li class="">
+                    <a href="/2018/05/04/Redis基础原理/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+</div>
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://kdays.net/days/" target="_blank">KDays Forum</a>
+    </li>
+    
+    <li>
+        <a href="http://www.gal123.com/" target="_blank">绅士导航♂</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">萌导航</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/dony15" target="_blank">Github</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 宝全哥哥 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+
+<!--page counter part统计-->
+<script>
+function addCount (Counter) {
+        url=$('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query=new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url",url);
+        query.find({
+            success: function(results){
+                if(results.length>0)
+                {
+                    var counter=results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                }
+                else
+                {
+                    var newcounter=new Counter();
+                    newcounter.set("title",title);
+                    newcounter.set("url",url);
+                    newcounter.set("time",1);
+                    newcounter.save(null,{
+                        success: function(newcounter){
+                        //alert('New object created');
+                        },
+                        error: function(newcounter,error){
+                        alert('Failed to create');
+                        }
+                        });
+                }
+            },
+            error: function(error){
+                //find null is not a error
+                alert('Error:'+error.code+" "+error.message);
+            }
+        });
+}
+$(function(){
+        var Counter=AV.Object.extend("Counter");
+        //only increse visit counting when intering a page
+        if ($('.article-title').length == 1)
+           addCount(Counter);
+        var query=new AV.Query(Counter);
+        query.descending("time");
+        // the sum of popular posts
+        query.limit(10); 
+        query.find({
+            success: function(results){
+                    for(var i=0;i<results.length;i++)    
+                    {
+                        var counter=results[i];
+                        title=counter.get("title");
+                        url=counter.get("url");
+                        time=counter.get("time");
+                        // add to the popularlist widget
+                        showcontent=title+" ("+time+")";
+                        //notice the "" in href
+                        $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
+                    }
+                },
+            error: function(error){
+                alert("Error:"+error.code+" "+error.message);
+            }
+            }
+        )
+        });
+</script>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '8'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri May 04 2018 00:00:00 GMT+0800'
+      window.commentConfig.owner = 'dony15'
+      window.commentConfig.repo = 'reply.github.io'
+      window.commentConfig.client_id = '3e620f638731b84942ed'
+      window.commentConfig.client_secret = '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e'
+      window.commentConfig.redirect_uri = ''
+    } else {
+      window.commentConfig = {
+      	id: 'Fri May 04 2018 00:00:00 GMT+0800',
+        owner: 'dony15',
+        repo: 'reply.github.io',
+        client_id: '3e620f638731b84942ed',
+        client_secret: '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e',
+        redirect_uri: ''
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

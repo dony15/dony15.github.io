@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="宝全哥哥">
+    
+    
+    
+    
+    
+    
+    <title>Struts2基础 | DonY15</title>
+    <link href=”http://yoursite.com“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz',
+        appKey: 'nYP6CNjSvE1TUhTur6M4ldxz'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpg,preview7.jpg,preview8.jpg,preview9.jpg,preview10.jpg,preview11.jpg,preview12.jpg,preview13.jpg,preview14.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+		<!--统计-->
+			<!--<script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>-->
+		<!--<script>AV.initialize("Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz", "nYP6CNjSvE1TUhTur6M4ldxz");</script>-->
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-realtime@4.1.0/dist/realtime.browser.min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-live-query-min.js"></script>
+		
+		<script>
+		// 存储服务
+		var { Query, User } = AV;
+		AV.init('Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz', 'nYP6CNjSvE1TUhTur6M4ldxz');
+		// 实时消息服务
+		var { Realtime, TextMessage } = AV;
+		
+		</script>
+		
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="http://yoursite.com" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/categories" class="menuItem" style="left: 50%; top: 85%;">目录</a>
+            <a href="/message" class="menuItem" style="left: 19.6891%; top: 67.5%;">留言板</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <!--<a href="http://yoursite.com">-->
+						<a href="/">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">DonY15</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>目录
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/组件/">组件</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Web基础/">Web基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/搭建/">搭建</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/框架/">框架</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Spring全家桶/">Spring全家桶</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SE基础/">SE基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/初等数学/">初等数学</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/工具类/">工具类</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IO/">IO</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/服务器/">服务器</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/categories">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="">
+                    <a href="/tags">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-user"></i>留言板
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+       
+				<a href="/">DonY15</a>
+        >
+        <span>Struts2基础</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2017/09/15/Struts2基础/">Struts2基础</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2017-09-15
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2017/09/15/Struts2基础/">Struts2基础</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2017-09-15
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h2 id="Struts2基础"><a href="#Struts2基础" class="headerlink" title="Struts2基础"></a>Struts2基础</h2><p>[TOC]</p>
+<h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><h4 id="1-1-概念"><a href="#1-1-概念" class="headerlink" title="1-1.概念"></a>1-1.概念</h4><p>轻量级的MVC框架，主要解决了请求分发的问题，重心在控制层和表现层。低侵入性，与业务代码的耦合度很低。Struts2实现了MVC，并提供了一系列API，采用模式化方式简化业务开发过程。 </p>
+<h4 id="1-2-对比Servlet"><a href="#1-2-对比Servlet" class="headerlink" title="1-2.对比Servlet"></a>1-2.对比Servlet</h4><p>　优点：业务代码解耦，提高开发效率</p>
+<p>　缺点：执行效率偏低，需要使用反射、解析XML等技术手段，结构复杂</p>
+<h4 id="1-3-不同MVC框架实现"><a href="#1-3-不同MVC框架实现" class="headerlink" title="1-3.不同MVC框架实现"></a>1-3.不同MVC框架实现</h4><p><strong>Servlet</strong></p>
+<p><img src="https://i.imgur.com/xzBLCCs.png" alt=""></p>
+<p><strong>Spring</strong></p>
+<p><img src="https://i.imgur.com/Iu5XDOK.png" alt=""></p>
+<p>​    此处Servlet应该为<strong>DispatcherServlet</strong> Spring前端控制器</p>
+<p><strong>Struts2</strong><br><img src="https://i.imgur.com/LVbBfmF.png" alt=""></p>
+<h3 id="2-Struts2使用"><a href="#2-Struts2使用" class="headerlink" title="2.Struts2使用"></a>2.Struts2使用</h3><h4 id="2-1-导入jar"><a href="#2-1-导入jar" class="headerlink" title="2-1.导入jar"></a>2-1.导入jar</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.struts&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;struts2-core&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.5.13&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-web-xml中配置前端控制器Filter"><a href="#2-2-web-xml中配置前端控制器Filter" class="headerlink" title="2-2.web.xml中配置前端控制器Filter"></a>2-2.web.xml中配置前端控制器Filter</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--Struts2核心过滤器--&gt;</span><br><span class="line">&lt;filter&gt;</span><br><span class="line">    &lt;filter-name&gt;Struts2&lt;/filter-name&gt;</span><br><span class="line">    &lt;filter-class&gt;org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter&lt;/filter-class&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">    &lt;filter-name&gt;Struts2&lt;/filter-name&gt;</span><br><span class="line">    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-创建struts-xml（格式可以参考核心包根路径下的DTD文件，struts-default-xml）"><a href="#2-3-创建struts-xml（格式可以参考核心包根路径下的DTD文件，struts-default-xml）" class="headerlink" title="2-3.创建struts.xml（格式可以参考核心包根路径下的DTD文件，struts-default.xml）"></a>2-3.创建struts.xml（格式可以参考核心包根路径下的DTD文件，struts-default.xml）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;struts&gt;</span><br><span class="line">    &lt;!--</span><br><span class="line">        package：包，用于对Action进行封装</span><br><span class="line">        name：包名，根元素下可以有多个包，彼此不能重名</span><br><span class="line">        extends：继承，用于指定继承的包，相当于将继承包下的配置信息复制到当前包</span><br><span class="line">        namespace：命名空间，用于规定Action的访问路径，必须“/”开头    --&gt;</span><br><span class="line">    &lt;package name=&quot;test01&quot; namespace=&quot;/test01&quot; extends=&quot;struts-default&quot;&gt;</span><br><span class="line">        &lt;!--action：业务控制器，用于注册业务控制器组件</span><br><span class="line">            name：action名称，用于规定Action的访问路径</span><br><span class="line">            class：业务控制器组件，用于指定业务控制器对应的类</span><br><span class="line">            method：方法，用于指定访问当前action时要调用的方法</span><br><span class="line">            *请求URL：http://ip:port/projectName/namespace/ActionName.action</span><br><span class="line">        --&gt;</span><br><span class="line">        &lt;action name=&quot;hello&quot; class=&quot;test01.konrad.action.HelloAction&quot; method=&quot;execute&quot;&gt;</span><br><span class="line">            &lt;!--result：输出组件，用于转发、重定向、直接输出</span><br><span class="line">                name：名称，一个action下可以有多个result，彼此不能重名</span><br><span class="line">                默认值转发，元素内设置转发的页面</span><br><span class="line">            --&gt;</span><br><span class="line">            &lt;result name=&quot;success&quot;&gt;</span><br><span class="line">                /hello.jsp</span><br><span class="line">            &lt;/result&gt;</span><br><span class="line">        &lt;/action&gt;</span><br><span class="line">    &lt;/package&gt;</span><br><span class="line">&lt;/struts&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2-4-编写Action前端控制器"><a href="#2-4-编写Action前端控制器" class="headerlink" title="2-4.编写Action前端控制器"></a>2-4.编写Action前端控制器</h4><ol>
+<li>定义需要的属性,并完善getter and setter</li>
+<li>方法public修饰</li>
+<li>返回值类型String(返回值与struts.xml-&gt;action-&gt;result的name属性匹配，即根据此返回值找到对应result) </li>
+<li>参数列表为空</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">package action;</span><br><span class="line"></span><br><span class="line">import com.opensymphony.xwork2.Action;</span><br><span class="line"></span><br><span class="line">public class HelloWorldAction implements Action &#123;</span><br><span class="line">    //请求中传递的参数和返回给页面的值都定义成属性</span><br><span class="line">    //必须要给属性写getter/setter方法</span><br><span class="line">    private String username;</span><br><span class="line">    private String message;</span><br><span class="line"></span><br><span class="line">    //getter/setter略，自己一定要写</span><br><span class="line">    @Override</span><br><span class="line">    public String execute() throws Exception &#123;</span><br><span class="line">        //查看请求中传递的参数</span><br><span class="line">        System.out.println(username);</span><br><span class="line">        //改变这个message,会自动传递给页面</span><br><span class="line">        message = &quot;hello:&quot; + username;</span><br><span class="line">        //SUCCESS是Action中的常量,值是success</span><br><span class="line">        return SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-5-创建JSP页面"><a href="#2-5-创建JSP页面" class="headerlink" title="2-5.创建JSP页面"></a>2-5.创建JSP页面</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="3-参数传递"><a href="#3-参数传递" class="headerlink" title="3.参数传递"></a>3.参数传递</h3><h4 id="3-1-基本属性注入Action（页面，Action）"><a href="#3-1-基本属性注入Action（页面，Action）" class="headerlink" title="3-1.基本属性注入Action（页面，Action）"></a>3-1.基本属性注入Action（页面，Action）</h4><p><img src="https://i.imgur.com/Bjasblb.png" alt=""></p>
+<h4 id="3-2-域模型-对象注入Action（页面，Action）"><a href="#3-2-域模型-对象注入Action（页面，Action）" class="headerlink" title="3-2.域模型/对象注入Action（页面，Action）"></a>3-2.域模型/对象注入Action（页面，Action）</h4><p><img src="https://i.imgur.com/rbcysxL.png" alt=""></p>
+<h4 id="3-3-页面取Action数据"><a href="#3-3-页面取Action数据" class="headerlink" title="3-3.页面取Action数据"></a>3-3.页面取Action数据</h4><h5 id="1-EL表达式"><a href="#1-EL表达式" class="headerlink" title="1.EL表达式"></a>1.EL表达式</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;$&#123;user.name&#125;&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="2-OGNL"><a href="#2-OGNL" class="headerlink" title="2.OGNL"></a>2.OGNL</h5><h3 id="4-OGNL"><a href="#4-OGNL" class="headerlink" title="4.OGNL"></a>4.OGNL</h3><h4 id="4-1-概念"><a href="#4-1-概念" class="headerlink" title="4-1.概念"></a>4-1.概念</h4><p>Object Graph Navigation Language，是一门功能强大的表达式语言，类似于EL(JSTL表达式语言)。Strut2默认采用OGNL表达式访问Action的数据，实际上是通过ValueStack对象来访问Action。</p>
+<h4 id="4-2-用法"><a href="#4-2-用法" class="headerlink" title="4-2.用法"></a>4-2.用法</h4><p>在Struts2中，OGNL表达式要结合Struts2标签来访问数据</p>
+<p><strong>EL：${user.userName} &lt;==&gt; OGNL：&lt;s:property value=”user.userName”&gt;</strong></p>
+<ol>
+<li>访问基本属性　　&lt;s:property value=”属性名”/&gt;</li>
+<li>访问实体对象　　&lt;s:property value=”对象名.属性名”/&gt;</li>
+<li>访问数组/集合　　&lt;s:property value=”someArray[1]”/&gt; | &lt;s:property value=”someList[1]”/&gt;</li>
+<li>访问Map　　&lt;s:property value=”someMap.key” /&gt;</li>
+<li>运算　　&lt;s:property value=”‘My name is’ + name” /&gt;</li>
+<li>调用方法　　&lt;s:property value=”name.toUpperCase()” /&gt;</li>
+<li>创建集合　　&lt;s:property value=”{‘a’,’b’,’c’}” /&gt; ArrayList</li>
+<li>创建Map　　&lt;s:property value=”#{‘mm’:’MM’,’nn’:’NN’}” /&gt; LinkedHashMap</li>
+</ol>
+<h3 id="5-ValueStack"><a href="#5-ValueStack" class="headerlink" title="5.ValueStack"></a>5.<strong>ValueStack</strong></h3><h4 id="5-1-概念"><a href="#5-1-概念" class="headerlink" title="5-1.概念"></a>5-1.概念</h4><p>是Struts2中，Action向页面传递数据的媒介，封装了Action的数据，并允许JSP通过OGNL来对其访问 </p>
+<h4 id="5-2-原理"><a href="#5-2-原理" class="headerlink" title="5-2.原理"></a>5-2.原理</h4><p><img src="https://i.imgur.com/zTQBvw9.png" alt=""></p>
+<h4 id="5-3-访问ValueStack"><a href="#5-3-访问ValueStack" class="headerlink" title="5-3.访问ValueStack"></a>5-3.访问ValueStack</h4><p>　　　　1.通过&lt;s:debug&gt;观察其结构</p>
+<p>　　　　2.输出栈顶：&lt;s:property /&gt;</p>
+<p>　　　　3.访问Context对象：</p>
+<p>　　　　　　- OGNL表达式以”#”开头</p>
+<p>　　　　　　- 以key来访问context对象的值，即”#key”得到context中某属性值</p>
+<p>　　　　4.迭代集合　</p>
+<p><img src="https://i.imgur.com/g2oDPPa.png" alt=""></p>
+<p><img src="https://i.imgur.com/ojC4b3e.png" alt=""></p>
+<p>　　    </p>
+<p>5.按数字迭代 </p>
+<p><img src="https://i.imgur.com/6d9MggB.png" alt=""></p>
+<p><img src="https://i.imgur.com/QyBNY39.png" alt=""></p>
+<h4 id="5-4-ValueStack栈顶的变化"><a href="#5-4-ValueStack栈顶的变化" class="headerlink" title="5-4.ValueStack栈顶的变化"></a>5-4.ValueStack栈顶的变化</h4><p>　　　　- 默认情况下栈顶为Action</p>
+<p>　　　　- 循环过程中，栈顶为循环变量（集合迭代时，循环变量是集合中的对象，即栈顶为实体对象，可以以实体对象为root来写OGNL表达式；数字迭代时，循环变量是数字，不能以数字为实体对象，需要通过var声明变量名，以”#变量名”来引用，此情况下，是从context对象中取出值）</p>
+<p>　　　　- 循环结束后，栈顶变回Action</p>
+<h4 id="5-5-EL表达式访问ValueStack"><a href="#5-5-EL表达式访问ValueStack" class="headerlink" title="5-5.EL表达式访问ValueStack"></a>5-5.EL表达式访问ValueStack</h4><p>　　　　a）EL也是从ValueStack中取的值</p>
+<p>　　　　b）EL默认的取值范围是page，request，session，application</p>
+<p>　　　　c）Struts2重写的request的getAttribute方法，先试图从原始request中取值，如果没取到再从ValueStack中取值</p>
+<h3 id="6-Action基本原理"><a href="#6-Action基本原理" class="headerlink" title="6.Action基本原理"></a><strong>6.Action基本原理</strong></h3><h4 id="6-1-大核心组件"><a href="#6-1-大核心组件" class="headerlink" title="6-1.大核心组件"></a>6-1.大核心组件</h4><p><img src="https://images2015.cnblogs.com/blog/1100875/201702/1100875-20170221212406585-854435094.png" alt="img"></p>
+<p>FC：前端控制器，负责统一的分发请求</p>
+<p>　　Action：业务控制器，负责处理某一类业务</p>
+<p>　　ValueStack：Action与JSP数据交互的媒介</p>
+<p>　　Interceptor：拦截器，负责扩展Action，处理Action的共通事务</p>
+<p>　　Result：负责输出的组件</p>
+<p>　　Tags：标签，负责显示数据、生成框体</p>
+<h4 id="6-2-获取Session的方式"><a href="#6-2-获取Session的方式" class="headerlink" title="6-2.获取Session的方式"></a>6-2.获取Session的方式</h4><p>　　　　a）ActionContext</p>
+<p>　　　　　　- ActionContext.getContext().getSesion()，返回Map&lt;String, Object&gt;</p>
+<p>　　　　b）ServletActionContext</p>
+<p>　　　　　　- ServletActionContext.getRequest().getSession()，返回HttpSession</p>
+<p>　　　　c）SessionAware（推荐使用）</p>
+<p>　　　　　　- 让Action实现SessionAware接口</p>
+<p>　　　　　　- 实现setSession(Map&lt;String, Object&gt; session)方法，Struts2会在实例化Action后调用方法，通过方法参数将Session对象注入进来</p>
+<p>　　　　　　- 定义成员变量，接收注入进来的Session对象</p>
+<h3 id="7-Result原理"><a href="#7-Result原理" class="headerlink" title="7.Result原理"></a>7.<strong>Result原理</strong></h3><h4 id="7-1-介绍"><a href="#7-1-介绍" class="headerlink" title="7-1.介绍"></a>7-1.介绍</h4><p>用于做输出的组件，用于向页面输出一些内容，转发、重定向可以理解为特殊方式的输出。每一个Result实际上是一个类，这些类都实现了共同的接口Result。Struts2预置了10种类型的Result，定义在strtus-default.xml</p>
+<h4 id="7-2-Result类型"><a href="#7-2-Result类型" class="headerlink" title="7-2.Result类型"></a>7-2.Result类型</h4><p>a）dispatcher：用于转发的result，可以将请求转发给JSP，这种类型的Result对应的类为ServletDispacherResult，通过default=”true”指定该Result为Struts2默认的Result类型。</p>
+<p>b）stream：用于向页面输出二进制数据，此种类型的Result可以将二进制数据输出到请求发起端，对应类为StreamResult</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;result name=&quot;success&quot; type=&quot;stream&quot;&gt;</span><br><span class="line">　　&lt;!--codeStream 为定义在Action的输入流InputStream --&gt;</span><br><span class="line">    &lt;param name=&quot;inputName&quot;&gt;codeStream&lt;/param&gt;</span><br><span class="line">&lt;/result&gt;</span><br></pre></td></tr></table></figure>
+<p>c）redirectAction：用于将请求重定向给另外一个Action，对应类为ServletActionRedirectResult </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;result name=&quot;login&quot; type=&quot;redirectAction&quot;&gt;</span><br><span class="line">    &lt;!--若重定向的Action与当前Action在同一个namespace下，可以省略namespace--&gt;</span><br><span class="line">    &lt;param name=&quot;namespace&quot;&gt;</span><br><span class="line">    /命名空间</span><br><span class="line">    &lt;/param&gt;</span><br><span class="line">    &lt;param name=&quot;actionName&quot;&gt;</span><br><span class="line">    action名</span><br><span class="line">    &lt;/param&gt;</span><br><span class="line">&lt;/result&gt;</span><br></pre></td></tr></table></figure>
+<p>d）json：用于向页面输出json格式的数据，可以将json字符串输出到请求发起端。对应类为JSONResult </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;result name=&quot;success&quot; type=&quot;json&quot;&gt;</span><br><span class="line">    &lt;!--输出一个Action属性</span><br><span class="line">    指定属性为基本类型，则直接返回该属性值</span><br><span class="line">    如果指定属性为实体对象，则返回格式&#123;&quot;code&quot;:&quot;as1&quot;,&quot;name&quot;:&quot;hk&quot;&#125;</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;param name=&quot;root&quot;&gt;属性名&lt;/param&gt;</span><br><span class="line">    &lt;!--输出多个Action属性--&gt;</span><br><span class="line">    &lt;param name=&quot;includeProperties&quot;&gt;属性名1,属性名2...&lt;/param&gt;</span><br><span class="line">    &lt;!--输出所有属性，不需要param标签--&gt;</span><br><span class="line">   </span><br><span class="line">&lt;/result&gt;</span><br></pre></td></tr></table></figure>
+<p>　<strong>json需要导包，修改package继承关系为json-default </strong></p>
+<h3 id="8-UI标签"><a href="#8-UI标签" class="headerlink" title="8.UI标签"></a>8.<strong>UI标签</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1.表单　　&lt;s:form action=&quot;&quot; method=&quot;&quot; theme=&quot;simple&quot; &gt;&lt;/s:form&gt;</span><br><span class="line"></span><br><span class="line">　　2.文本框　　&lt;s:textfield name=&quot;userName&quot; /&gt;</span><br><span class="line"></span><br><span class="line">　　3.布尔框　　&lt;s:checkbox name=&quot;marry&quot; /&gt;</span><br><span class="line"></span><br><span class="line">　　4.单选框　　&lt;s:radio name=&quot;sex&quot; list=&quot;#&#123;&apos;M&apos;:&apos;男&apos;,&apos;F&apos;:&apos;女&apos;&#125;&quot;/&gt; 静态初始化</span><br><span class="line"></span><br><span class="line">　　　　　　　　&lt;s:radio name=&quot;favoriteCities&quot; list=&quot;cities&quot; listKey=&quot;cityCode&quot; listValue=&quot;cityName&quot; /&gt; 动态初始化</span><br><span class="line"></span><br><span class="line">　　5.多选框　　&lt;s:checkboxlist name=&quot;travelCities&quot; list=&quot;#&#123;&apos;01&apos;:&apos;北京&apos;,&apos;02&apos;:&apos;上海&apos;,&apos;03&apos;:&apos;广州&apos;&#125;&quot; /&gt; 静态初始化</span><br><span class="line"></span><br><span class="line">　　　　　　　　&lt;s:checkboxlist name=&quot;travelCities&quot; list=&quot;cities&quot; listKey=&quot;cityCode&quot; listValue=&quot;cityName&quot; /&gt; 动态初始化</span><br><span class="line"></span><br><span class="line">　　6.下拉选　　&lt;s:select name=&quot;home&quot; list=&quot;#&#123;&apos;01&apos;:&apos;北京&apos;,&apos;02&apos;:&apos;上海&apos;,&apos;03&apos;:&apos;广州&apos;&#125;&quot; /&gt; 静态初始化</span><br><span class="line"></span><br><span class="line">　　　　　　　　&lt;s:select name=&quot;home&quot; list=&quot;cities&quot; listKey=&quot;cityCode&quot; listValue=&quot;cityName&quot; /&gt; 动态初始化</span><br></pre></td></tr></table></figure>
+<h3 id="9-拦截器"><a href="#9-拦截器" class="headerlink" title="9.拦截器"></a>9.<strong>拦截器</strong></h3><h4 id="9-1-用途"><a href="#9-1-用途" class="headerlink" title="9-1.用途"></a>9-1.用途</h4><p>拦截器适合封装一些通用处理，便于重复利用。例如请求参数传递给Action属性，日志的记录，权限检查，事务处理等。拦截器是通过配置方式调用，因此使用方法比较灵活，便于维护和扩展。 </p>
+<h4 id="9-2-使用步骤"><a href="#9-2-使用步骤" class="headerlink" title="9-2.使用步骤"></a>9-2.使用步骤</h4><h5 id="1-创建拦截器组件"><a href="#1-创建拦截器组件" class="headerlink" title="1.创建拦截器组件"></a>1.创建拦截器组件</h5><p>（创建一个类，实现Interceptor接口，并实现intercept方法;也可以继承MethodFilterInterceptor，这种方式可以使action中某个方法不进行拦截）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public String intercept(ActionInvocation invocation)&#123;</span><br><span class="line">   //拦截器--前部分处理</span><br><span class="line">   invocation.invoke();</span><br><span class="line">   //拦截器--后续处理      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-注册拦截器"><a href="#2-注册拦截器" class="headerlink" title="2.注册拦截器"></a>2.注册拦截器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;package&gt;</span><br><span class="line">    &lt;interceptors&gt;</span><br><span class="line">        &lt;interceptor name=&quot;别名&quot; class=&quot;实现类&quot;/&gt;</span><br><span class="line">        &lt;!--其他拦截器--&gt;</span><br><span class="line">    &lt;/interceptors&gt;</span><br><span class="line">&lt;/package&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="3-引用拦截器"><a href="#3-引用拦截器" class="headerlink" title="3.引用拦截器"></a>3.引用拦截器</h5><p>（哪个Action希望被拦截器扩展，需要在此action配置下，引用拦截器） </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;action&gt;</span><br><span class="line">　　 &lt;!--手动的使用一次系统默认的拦截器--&gt;</span><br><span class="line">　　 &lt;interceptor-ref name=&quot;defaultStack&quot;/&gt;</span><br><span class="line">    &lt;interceptor-ref name=&quot;拦截器别名&quot;/&gt;</span><br><span class="line">    &lt;!--可以写多个--&gt;</span><br><span class="line">　　 &lt;!--可以使用excludeMethods参数属性，设置不过滤的方法--&gt;</span><br><span class="line">&lt;/action&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="4-拦截器栈"><a href="#4-拦截器栈" class="headerlink" title="4.拦截器栈"></a>4.拦截器栈</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;interceptor-stack name=&quot;myStack&quot;&gt;</span><br><span class="line">    &lt;interceptor-ref name=&quot;拦截器别名1&quot;/&gt;</span><br><span class="line">    &lt;interceptor-ref name=&quot;拦截器别名2&quot;/&gt;</span><br><span class="line">&lt;/interceptor-stack&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="5-FileUpload拦截器"><a href="#5-FileUpload拦截器" class="headerlink" title="5.FileUpload拦截器"></a>5.FileUpload拦截器</h5><p>a）原理：首先FileUpload拦截器将表单中提交的文件，以临时文件的形式保存到服务器临时路径下。之后FileUpload拦截器将该临时文件对象注入给Action，Action自主处理该临时文件。最后FileUpload拦截器删除临时文件。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">b）使用步骤</span><br><span class="line">导包 commons-io.jar</span><br><span class="line"></span><br><span class="line">Action：定义File类型属性(如some)，接受拦截器注入的临时文件对象。若想要获取原始文件名，要定义String类型属性，属性名为File类型属性+FileName(如someFileName)</span><br><span class="line"></span><br><span class="line">表单设置：method=&quot;post&quot;， enctype=&quot;multipart/form-data&quot;</span><br><span class="line">　　　　</span><br><span class="line">      </span><br><span class="line">c）设置限制（Struts2文件上传默认最大值为2097152B,即2M）</span><br><span class="line">在struts.xml中重置默认限制值　　&lt;constant name=&quot;struts.multipart.maxSize&quot; value=&quot;5000000&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="10-数据校验"><a href="#10-数据校验" class="headerlink" title="10.数据校验"></a>10.数据校验</h3><p>Action类继承ActionSupport，ActionSupport中有一个validate方法进行数据校验</p>
+<h3 id="11-国际化"><a href="#11-国际化" class="headerlink" title="11.   国际化"></a>11.   国际化</h3><h3 id="12-返回JSON"><a href="#12-返回JSON" class="headerlink" title="12.返回JSON"></a>12.返回JSON</h3><h4 id="12-1-导入jar包"><a href="#12-1-导入jar包" class="headerlink" title="12-1.导入jar包"></a>12-1.导入jar包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.struts&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;struts2-json-plugin&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.5.13&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="12-2-Action类"><a href="#12-2-Action类" class="headerlink" title="12-2.Action类"></a>12-2.Action类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class JsonAction extends ActionSupport &#123;</span><br><span class="line">    private Map&lt;String, Object&gt; resultMap;</span><br><span class="line">    //getter/setter略</span><br><span class="line">    public String getJson() &#123;</span><br><span class="line">        resultMap=new HashMap&lt;&gt;();</span><br><span class="line">        resultMap.put(&quot;key1&quot;,123);</span><br><span class="line">        resultMap.put(&quot;key2&quot;,&quot;abc&quot;);</span><br><span class="line">        return SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="12-3-xml中继承"><a href="#12-3-xml中继承" class="headerlink" title="12-3.xml中继承"></a>12-3.xml中继承</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;package name=&quot;default&quot; namespace=&quot;/&quot; extends=&quot;struts-default,json-default&quot;&gt;</span><br><span class="line">    &lt;action name=&quot;json&quot; class=&quot;action.JsonAction&quot; method=&quot;getJson&quot;&gt;</span><br><span class="line">        &lt;result type=&quot;json&quot;&gt;</span><br><span class="line">            &lt;param name=&quot;root&quot;&gt;resultMap&lt;/param&gt;</span><br><span class="line">        &lt;/result&gt;</span><br><span class="line">    &lt;/action&gt;</span><br></pre></td></tr></table></figure>
+<p>…查询文档吧(눈‸눈)写不动了,下次更新</p>
+<h3 id="古老的传送门"><a href="#古老的传送门" class="headerlink" title="古老的传送门"></a>古老的传送门</h3><p><strong>SSH传送门:<a href="http://www.cnblogs.com/konrad/p/6901273.html" target="_blank" rel="noopener">http://www.cnblogs.com/konrad/p/6901273.html</a></strong></p>
+<p><strong>hibernate知识点梳理:<a href="http://www.cnblogs.com/konrad/p/6391962.html" target="_blank" rel="noopener">http://www.cnblogs.com/konrad/p/6391962.html</a></strong></p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'Struts2基础'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            宝全哥哥
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/03/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/07/06/Log日志整理/">Log日志整理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/09/18/java POI辅助框架/">java POI辅助框架基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/12/02/javaSE-数据类型/">javaSE-数据类型</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/07/05/java基础SE-java优点/">javaSE-java优点</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/08/基础排序 组合/">基础排序 组合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                <li class="">
+                    <a href="/2017/09/15/Struts2基础/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                <li class="">
+                    <a href="/2017/09/15/Struts2基础/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                <li class="">
+                    <a href="/2017/09/15/Struts2基础/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+</div>
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://kdays.net/days/" target="_blank">KDays Forum</a>
+    </li>
+    
+    <li>
+        <a href="http://www.gal123.com/" target="_blank">绅士导航♂</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">萌导航</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/dony15" target="_blank">Github</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 宝全哥哥 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+
+<!--page counter part统计-->
+<script>
+function addCount (Counter) {
+        url=$('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query=new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url",url);
+        query.find({
+            success: function(results){
+                if(results.length>0)
+                {
+                    var counter=results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                }
+                else
+                {
+                    var newcounter=new Counter();
+                    newcounter.set("title",title);
+                    newcounter.set("url",url);
+                    newcounter.set("time",1);
+                    newcounter.save(null,{
+                        success: function(newcounter){
+                        //alert('New object created');
+                        },
+                        error: function(newcounter,error){
+                        alert('Failed to create');
+                        }
+                        });
+                }
+            },
+            error: function(error){
+                //find null is not a error
+                alert('Error:'+error.code+" "+error.message);
+            }
+        });
+}
+$(function(){
+        var Counter=AV.Object.extend("Counter");
+        //only increse visit counting when intering a page
+        if ($('.article-title').length == 1)
+           addCount(Counter);
+        var query=new AV.Query(Counter);
+        query.descending("time");
+        // the sum of popular posts
+        query.limit(10); 
+        query.find({
+            success: function(results){
+                    for(var i=0;i<results.length;i++)    
+                    {
+                        var counter=results[i];
+                        title=counter.get("title");
+                        url=counter.get("url");
+                        time=counter.get("time");
+                        // add to the popularlist widget
+                        showcontent=title+" ("+time+")";
+                        //notice the "" in href
+                        $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
+                    }
+                },
+            error: function(error){
+                alert("Error:"+error.code+" "+error.message);
+            }
+            }
+        )
+        });
+</script>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '8'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri Sep 15 2017 00:00:00 GMT+0800'
+      window.commentConfig.owner = 'dony15'
+      window.commentConfig.repo = 'reply.github.io'
+      window.commentConfig.client_id = '3e620f638731b84942ed'
+      window.commentConfig.client_secret = '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e'
+      window.commentConfig.redirect_uri = ''
+    } else {
+      window.commentConfig = {
+      	id: 'Fri Sep 15 2017 00:00:00 GMT+0800',
+        owner: 'dony15',
+        repo: 'reply.github.io',
+        client_id: '3e620f638731b84942ed',
+        client_secret: '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e',
+        redirect_uri: ''
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

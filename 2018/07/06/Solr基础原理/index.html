@@ -157,6 +157,10 @@
                         
                         
                         <li>
+                            <a href="/categories/组件/">组件</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/Web基础/">Web基础</a>
                         </li>
                         
@@ -165,19 +169,11 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/组件/">组件</a>
-                        </li>
-                        
-                        <li>
                             <a href="/categories/框架/">框架</a>
                         </li>
                         
                         <li>
                             <a href="/categories/Spring全家桶/">Spring全家桶</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/IO/">IO</a>
                         </li>
                         
                         <li>
@@ -190,6 +186,10 @@
                         
                         <li>
                             <a href="/categories/工具类/">工具类</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IO/">IO</a>
                         </li>
                         
                         <li>
@@ -286,8 +286,18 @@
 <p>​    solr的索引库,可以理解为数据库,需要手动创建(文件夹),core可以根据需要建立多个索引库,索引库的内容可以在后台看到也可以在core中看到</p>
 <p><strong>2.solrhome</strong></p>
 <p>​    solr的配置目录,solr服务器所有的配置文件存放的目录(<strong>core创建在solrhome中</strong>)</p>
-<p><strong>3.collection</strong></p>
-<p>​    solr的逻辑索引(逻辑意义上的完整索引),由多个shard的组成,每个shard又由一个leadereplica和多个replica,每个replica都是物理索引,即每个replica都对应着一个core,collection本质是可以跨越多个核的索引,包含冗余的索引.</p>
+<h5 id="3-collection一个完整的索引库-逻辑结构"><a href="#3-collection一个完整的索引库-逻辑结构" class="headerlink" title="3.collection一个完整的索引库,逻辑结构"></a><strong>3.collection</strong>一个完整的索引库,<strong>逻辑结构</strong></h5><p><strong>1.高并发,高可用</strong></p>
+<ul>
+<li>solr的逻辑索引(逻辑意义上的完整索引),由多个<strong>shard片</strong>的组成<strong>负载均衡</strong></li>
+<li>每个shard可以分成多份Core,<strong>每份相同,主(leadereplica)从(replica)同步,高可用</strong></li>
+<li>collection本质是可以跨越多个核的索引,包含冗余的索引.</li>
+</ul>
+<p><strong>2.海量存储</strong></p>
+<ul>
+<li>当存储空间不够时,只需要<strong>横向扩充shard片</strong>就可以</li>
+</ul>
+<h5 id="4-SolrCloud-物理结构"><a href="#4-SolrCloud-物理结构" class="headerlink" title="4.SolrCloud,物理结构"></a>4.SolrCloud,物理结构</h5><p>一个SolrCloud集群,包含多个Solr服务器,每个Solr服务器包含多个Core(索引库)</p>
+<p><img src="https://i.imgur.com/53JsCkq.png" alt=""></p>
 <p><strong>参考<a href="https://blog.csdn.net/zhousenshan/article/details/51799567" target="_blank" rel="noopener">https://blog.csdn.net/zhousenshan/article/details/51799567</a></strong></p>
 <h4 id="2-配置详解"><a href="#2-配置详解" class="headerlink" title="2.配置详解"></a>2.配置详解</h4><h5 id="1-配置中文分词"><a href="#1-配置中文分词" class="headerlink" title="1.配置中文分词"></a>1.配置中文分词</h5><ol>
 <li><fieldtype name="text_ik" class="solr.TextField">   <!-- text_ik 中文分词包的引用名 --></fieldtype></li>
@@ -463,37 +473,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/18/java POI辅助框架/">java POI辅助框架基础</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/15/Spring基础原理/">Spring基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/14/服务器搭建/">服务器搭建(持续更新)</a>
                 </span>
             </li>
             
@@ -505,13 +485,43 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/10/Ajax基础服务/">Ajax基础服务</a>
+                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/基础排序 组合/">基础排序 组合</a>
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
                 </span>
             </li>
             
@@ -533,19 +543,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/10/Ajax基础服务/">Ajax基础服务</a>
+                    <a href="/2017/12/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                    <a href="/2017/03/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
                 </span>
             </li>
             
@@ -557,37 +567,37 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/02/java-IO/">java-IO</a>
+                    <a href="/2017/04/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/实用工具类集合/">实用工具类集合</a>
+                    <a href="/2017/09/18/java POI辅助框架/">java POI辅助框架基础</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/FastDfs基础原理/">FastDFS 基础原理</a>
+                    <a href="/2017/07/05/java基础SE-java优点/">javaSE-java优点</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/04/Redis基础原理/">Redis基础原理</a>
+                    <a href="/2017/12/06/FastDfs基础原理/">FastDFS 基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
+                    <a href="/2017/09/15/Struts2基础/">Struts2基础</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
+                    <a href="/2018/05/04/Redis基础原理/">Redis基础原理</a>
                 </span>
             </li>
             
