@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-24T10:34:11.787Z</updated>
+  <updated>2018-08-05T06:37:09.301Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>volatile基础</title>
+    <link href="http://yoursite.com/2018/08/05/volatile%E5%9F%BA%E7%A1%80/"/>
+    <id>http://yoursite.com/2018/08/05/volatile基础/</id>
+    <published>2018-08-04T16:00:00.000Z</published>
+    <updated>2018-08-05T06:37:09.301Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="volatile基础"><a href="#volatile基础" class="headerlink" title="volatile基础"></a>volatile基础</h2><p>[TOC]</p><h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h3><p>轻量级同步机制,与synchronized重量级锁不同,不会引起线程的上下文切换,但是需要注意两个问题:</p><ol><li>非复合类操作 如 <strong>count++</strong></li><li>不在其他变量的不变式中包含 如<strong>常量和条件</strong>(后续再深入理解不变式)</li></ol><p>阻止指令重排</p><h3 id="2-内存可见性"><a href="#2-内存可见性" class="headerlink" title="2.内存可见性"></a>2.内存可见性</h3><p>volatile是轻量级的同步机制,相比于synchronized重量级锁来说 ,能够节省更大的消耗,虽然在总体能力上不如synchronized安全,但是在一定场合也具有自己的优势,合理的利用volatile能够让程序更高效的运行</p><p>volatile修饰的属性对整个内存来说是可见的,即:每个线程获取到的该数据都是最新的(此处内存分配属逻辑模拟)</p><ul><li>A线程(工作内存)→</li><li>​                    } 主内存空间 </li><li>B线程(工作内存)→</li></ul><p>对线程来说,正常的共享资源会从主内存中copy到自己的工作内存中,这里如同内存和硬盘的区别,可以更加快速的使用copy的资源,但是此时的工作内存对于其他线程是不可见的,因此很容易因为并发产生数据异常</p><p>当使用volatile时,该共享资源每次更新都会被同步到主内存空间中,对于其他线程来说,该数据始终是最新的,因此可以一定程度的解决并发的问题,但是有一些情况volatile无法直接实现,如<strong>非复合类操作</strong></p><h3 id="3-解决count-原子性问题"><a href="#3-解决count-原子性问题" class="headerlink" title="3.解决count++原子性问题"></a>3.解决count++原子性问题</h3><p>count++之类的非符合类操作,volatile无法保证他的原子性问题,使共享资源无法实时同步,进而引发并发问题</p><p>复合类操作过程:</p><ol><li>读取</li><li>运算</li><li>赋值</li></ol><p>因为volatile本身只是轻量级的同步机制,并非锁机制,当复合类操作的过程中可能有其他线程继续操作该资源,从而导致并发问题</p><p><strong>解决:循环CAS 方案(待研究)</strong></p><h3 id="4-阻止指令重排"><a href="#4-阻止指令重排" class="headerlink" title="4.阻止指令重排"></a>4.阻止指令重排</h3><p>指令重排是java优化程序性能的一种手段(提供并行度),但是重排也有一定的规则:</p><p>指令重排不会对<strong>存在依赖关系</strong>的数据进行操作</p><p>​    如a=1;b=a</p><p>指令重排不会对单线程下的结果进行操作</p><p>​    如a=1;b=2;c=a+b;</p><p>被volatile修饰的变量,在编译时,会插入内存屏障来阻止处理器等对数据的指令重排,阻止指令重排规则:</p><ol><li>第一个是volatile读操作时,无论第二个是什么操作,都会阻止指令重排</li><li>第二个是volatile写操作时,无论第一个是什么操作,都会阻止指令重排</li><li>第一个是volatile写操作,得个是volatile读操作时,都会阻止指令重排</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;volatile基础&quot;&gt;&lt;a href=&quot;#volatile基础&quot; class=&quot;headerlink&quot; title=&quot;volatile基础&quot;&gt;&lt;/a&gt;volatile基础&lt;/h2&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h3 id=&quot;1-概念&quot;&gt;&lt;a href=&quot;#1-概念
+      
+    
+    </summary>
+    
+      <category term="SE基础" scheme="http://yoursite.com/categories/SE%E5%9F%BA%E7%A1%80/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Spring Cloud基础使用</title>
@@ -352,9 +376,9 @@
     <link href="http://yoursite.com/2018/03/23/javaSE-%E9%9B%86%E5%90%88/"/>
     <id>http://yoursite.com/2018/03/23/javaSE-集合/</id>
     <published>2018-03-22T16:00:00.000Z</published>
-    <updated>2018-07-24T00:05:39.749Z</updated>
+    <updated>2018-08-05T10:47:04.578Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="JavaSE-集合基础"><a href="#JavaSE-集合基础" class="headerlink" title="JavaSE-集合基础"></a>JavaSE-集合基础</h2><p>[TOC]</p><h3 id="1-集合的并发问题"><a href="#1-集合的并发问题" class="headerlink" title="1.集合的并发问题"></a>1.集合的并发问题</h3><p> <strong>Java快速失败与安全失败迭代器 : </strong></p><p><strong>java迭代器提供了遍历集合对象的功能</strong>，集合返回的迭代器有快速失败型的也有安全失败型的，快速失败迭代器在迭代时如果集合类被修改，立即抛出ConcurrentModificationException异常，而安全失败迭代器不会抛出异常，因为它是在集合类的克隆对象上操作的。  </p><p><strong>java快速失败迭代器 : </strong>大多数集合类返回的快速失败迭代器在<strong>遍历时不允许结构性修改</strong>（结构性修改指添加，删除和更新一个元素）<strong>当遍历的同时被结构性修改，</strong>会改变modCount的值, <strong>就会抛出ConcurrentModificationException异常</strong>，而当集合是被迭代器自带的方法（如remove()）修改时，不会抛出异常。 </p><p><strong>java安全失败迭代器 :</strong> 安全失败迭代器在迭代中被修改，不会抛出任何异常，因为它是<strong>在集合的克隆对象迭代</strong>的，所以<strong>任何对原集合对象的结构性修改都会被迭代器忽略</strong>，但是这类迭代器有一些缺点，其一是它<strong>不能保证你迭代时获取的是最新数据</strong>，因为迭代器创建之后对集合的任何修改都不会在该迭代器中更新，还有一个缺点就是<strong>创建克隆对象在时间和内存上都会增加一些负担</strong>。 </p><p><strong>集合对并发问题集成了一个并发包ConcurrentModificationException</strong></p><h3 id="2-java中的同步容器"><a href="#2-java中的同步容器" class="headerlink" title="2.java中的同步容器"></a>2.java中的同步容器</h3><p>在java中,同步容器主要包括2类</p><ol><li>Vector | Stack | HashTable</li><li><strong>Collections</strong>类中提供的静态工厂方法创建的类</li></ol><p><strong>Vector</strong>实现了List接口,Vector实际上是一个数组,和ArrayList类似,但是Vector中的方法都是synchronized线程同步,即进行了同步措施.</p><p><strong>Stack</strong>继承了Vector,也是一个同步容器,它的方法也是synchronized线程同步</p><p><strong>HashTable</strong>实现Map接口,他和HashMap很相似,但是HashTable中使用synchronized线程同步,而HashMap是不安全的</p><hr><p><strong>Collections</strong>类是一个工具提供类，注意，它和Collection不同，</p><p><strong>Collection</strong>是一个顶层的接口。</p><p>在Collections类中提供了大量的方法，比如对集合或者容器进行排序、查找等操作。最重要的是，在它里面提供了几个<strong>静态工厂方法来创建同步容器类</strong></p><hr>]]></content>
+    <content type="html"><![CDATA[<h2 id="JavaSE-集合基础"><a href="#JavaSE-集合基础" class="headerlink" title="JavaSE-集合基础"></a>JavaSE-集合基础</h2><p>[TOC]</p><h3 id="1-集合的并发问题"><a href="#1-集合的并发问题" class="headerlink" title="1.集合的并发问题"></a>1.集合的并发问题</h3><p> <strong>Java快速失败与安全失败迭代器 : </strong></p><p><strong>java迭代器提供了遍历集合对象的功能</strong>，集合返回的迭代器有快速失败型的也有安全失败型的，快速失败迭代器在迭代时如果集合类被修改，立即抛出ConcurrentModificationException异常，而安全失败迭代器不会抛出异常，因为它是在集合类的克隆对象上操作的。  </p><p><strong>java快速失败迭代器 : </strong>大多数集合类返回的快速失败迭代器在<strong>遍历时不允许结构性修改</strong>（结构性修改指添加，删除和更新一个元素）<strong>当遍历的同时被结构性修改，</strong>会改变modCount的值, <strong>就会抛出ConcurrentModificationException异常</strong>，而当集合是被迭代器自带的方法（如remove()）修改时，不会抛出异常。 </p><p><strong>java安全失败迭代器 :</strong> 安全失败迭代器在迭代中被修改，不会抛出任何异常，因为它是<strong>在集合的克隆对象迭代</strong>的，所以<strong>任何对原集合对象的结构性修改都会被迭代器忽略</strong>，但是这类迭代器有一些缺点，其一是它<strong>不能保证你迭代时获取的是最新数据</strong>，因为迭代器创建之后对集合的任何修改都不会在该迭代器中更新，还有一个缺点就是<strong>创建克隆对象在时间和内存上都会增加一些负担</strong>。 </p><p><strong>集合对并发问题集成了一个并发包ConcurrentModificationException</strong></p><h3 id="2-java中的同步容器"><a href="#2-java中的同步容器" class="headerlink" title="2.java中的同步容器"></a>2.java中的同步容器</h3><p>在java中,同步容器主要包括2类</p><ol><li>Vector | Stack | HashTable</li><li><strong>Collections</strong>类中提供的静态工厂方法创建的类</li></ol><p><strong>Vector</strong>实现了List接口,Vector实际上是一个数组,和ArrayList类似,但是Vector中的方法都是synchronized线程同步,即进行了同步措施.</p><p><strong>Stack</strong>继承了Vector,也是一个同步容器,它的方法也是synchronized线程同步</p><p><strong>HashTable</strong>实现Map接口,他和HashMap很相似,但是HashTable中使用synchronized线程同步,而HashMap是不安全的</p><hr><p><strong>Collections</strong>类是一个工具提供类，注意，它和Collection不同，</p><p><strong>Collection</strong>是一个顶层的接口。</p><p>在Collections类中提供了大量的方法，比如对集合或者容器进行排序、查找等操作。最重要的是，在它里面提供了几个<strong>静态工厂方法来创建同步容器类</strong></p><hr><h3 id="3-单项链表的增删"><a href="#3-单项链表的增删" class="headerlink" title="3.单项链表的增删"></a>3.单项链表的增删</h3><p>链表的增删原理需要注意,重点<strong>因为存储空间并非连续存在,不能在改变链表结构时使其断开,否则将难以再次找到到原来的标记</strong></p><p><img src="https://i.imgur.com/KCi2UAD.png" alt=""></p><p><strong>增加</strong></p><ol><li>a的next改为a1的next</li><li>a1的next改为a</li></ol><p><strong>删除</strong></p><ol><li>a1的next改为a2的next</li><li>a2的值赋给e</li><li>释放a2</li></ol><h3 id="4-ArrayList相关"><a href="#4-ArrayList相关" class="headerlink" title="4.ArrayList相关"></a>4.ArrayList相关</h3><h4 id="4-1-ArrayList线程安全问题"><a href="#4-1-ArrayList线程安全问题" class="headerlink" title="4-1.ArrayList线程安全问题"></a>4-1.ArrayList线程安全问题</h4><p>ArrayList本身是线程不安全的,如果在多线程情况下使用可以考虑一下两种方案</p><ol><li>Collections.synchronizedList(List list)方法返回一个线程安全的ArrayList类</li><li>concurrent并发包下的CopyOneWriteArrayList类</li></ol><h4 id="4-2-ArrayList实现的部分接口"><a href="#4-2-ArrayList实现的部分接口" class="headerlink" title="4-2.ArrayList实现的部分接口"></a>4-2.ArrayList实现的部分接口</h4><p>ArrayList实现了List接口,继承了AbstractList (维持集合结构的本身需求)</p><p>ArrayList实现了Serialization接口,可以序列化传输</p><p>ArrayList实现了RandomAccess接口,支持快速随机访问(实际上通过下标实现快速随机访问)</p><p> ArrayList实现了Cloneable接口,可以被克隆</p><h4 id="4-3-扩容的选择"><a href="#4-3-扩容的选择" class="headerlink" title="4-3.扩容的选择"></a>4-3.扩容的选择</h4><p>集合中的结构都支持自动扩容</p><p>如ArrayList的扩容机制是<strong>1.5</strong>倍(1.6和1.7的区别(16/15))</p><p>ArrayList可以指定初始大小也可以默认(10个单位),使用时可以根据业务需求,通过构造设置初始容量,</p><ul><li>这里考虑的因素是集合自动扩容对性能的一个损耗,如果提前知道集合内元素的大概数量,那么初始容量可以设置大一些,从而减少自动扩容的损耗</li><li>也可以通过ensureCapacity方法来指定扩容的长度(使用场景了解较少)</li></ul><h4 id="4-4-数组的底层实现"><a href="#4-4-数组的底层实现" class="headerlink" title="4-4.数组的底层实现"></a>4-4.数组的底层实现</h4><p><strong>数组的引用+下标*数组数据类型的大小—&gt;获得该元素的数据内容</strong></p>]]></content>
     
     <summary type="html">
     
@@ -461,29 +485,6 @@
     </summary>
     
       <category term="组件" scheme="http://yoursite.com/categories/%E7%BB%84%E4%BB%B6/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>javaSE-数据类型</title>
-    <link href="http://yoursite.com/2017/12/02/javaSE-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
-    <id>http://yoursite.com/2017/12/02/javaSE-数据类型/</id>
-    <published>2017-12-01T16:00:00.000Z</published>
-    <updated>2018-07-29T13:35:08.766Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="javaSE-数据类型"><a href="#javaSE-数据类型" class="headerlink" title="javaSE-数据类型"></a>javaSE-数据类型</h2><h3 id="1-基本数据类型分类"><a href="#1-基本数据类型分类" class="headerlink" title="1.基本数据类型分类"></a>1.基本数据类型分类</h3><h4 id="1-1基本数据类型"><a href="#1-1基本数据类型" class="headerlink" title="1-1基本数据类型"></a>1-1基本数据类型</h4><p>(又叫原生类或内置类型)</p><p>整数：byte，short，int，long（默认是int类型） </p><p>浮点类型： float，double（默认是double类型） </p><p>字符类型：char                            </p><p>布尔类型：boolean </p><h4 id="1-2引用数据类型"><a href="#1-2引用数据类型" class="headerlink" title="1-2引用数据类型"></a>1-2引用数据类型</h4><p><strong>数组，类，接口 ,枚举类型,注解类型</strong>； </p><p>基本数据类型之间除了boolean，其他数据类型之间可以任意的相互转换（强制转化或默认转换） </p><h4 id="1-3默认值问题"><a href="#1-3默认值问题" class="headerlink" title="1-3默认值问题"></a>1-3默认值问题</h4><p><strong>基本类型</strong>的值就是<strong>一个数字，一个字符，或者一个布尔值</strong>。存放在<strong>栈空间</strong>中，未初始化时为随机值(正常无法使用,编译期异常)。 </p><p><strong>引用类型</strong>是一个对象类型，值是指向内存空间的引用，就是地址。所指向的内存空间有默认值.</p><h4 id="1-4基本数据类型优点"><a href="#1-4基本数据类型优点" class="headerlink" title="1-4基本数据类型优点"></a>1-4基本数据类型优点</h4><p>在栈内存中,速度很快,每次开辟的空间,都可以实现栈内数据共享</p><h4 id="1-5JVM对基本数据类型和引用数据类型的分配"><a href="#1-5JVM对基本数据类型和引用数据类型的分配" class="headerlink" title="1-5JVM对基本数据类型和引用数据类型的分配"></a>1-5JVM对基本数据类型和引用数据类型的分配</h4><p>JVM虚拟机对基本数据类型和引用数据类型的分配策略是不同的</p><p><strong>基本数据类型:</strong>分配数据类型实际大小的内存</p><p><strong>引用数据类型:</strong>分配一个指向堆内存的引用</p><h4 id="1-6被final修饰"><a href="#1-6被final修饰" class="headerlink" title="1-6被final修饰"></a>1-6被final修饰</h4><p><strong>(编译期对常量识别)</strong>当数据被final修饰时,即转换为常量,此时对该数据类型做运算只会考虑数据的范围,只要不超过范围即可运行</p><h3 id="2-基本数据类型包装类"><a href="#2-基本数据类型包装类" class="headerlink" title="2.基本数据类型包装类"></a>2.基本数据类型包装类</h3><h4 id="2-1-包装类"><a href="#2-1-包装类" class="headerlink" title="2-1.包装类"></a>2-1.包装类</h4><p><strong>Byte,Integer,Short,Long,Float,Double,Boolean,Character</strong></p><h4 id="2-2区别"><a href="#2-2区别" class="headerlink" title="2-2区别"></a>2-2区别</h4><p>存放位置/内存消耗/值址类型</p><h4 id="2-3-场景"><a href="#2-3-场景" class="headerlink" title="2-3.场景"></a>2-3.场景</h4><p>集合/持久层接收数据库(如查找数值)/指定字符串类型等</p><h4 id="2-4-自动拆装箱"><a href="#2-4-自动拆装箱" class="headerlink" title="2-4.自动拆装箱"></a>2-4.自动拆装箱</h4><p><strong>java5.0</strong>以后,添加<strong>自动拆装箱功能</strong>,就可以不必显示的进行类型转换，系统会自动的按照需要进行数据类型的转换。 </p><p><strong>手动Integer拆装箱方法</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Integer valueOf(String s/int i)  两种装箱 </span><br><span class="line">int parseInt(String s) 拆箱</span><br><span class="line">----</span><br><span class="line">int intValue()   拆箱(直接. 不需要参数的拆箱方法)</span><br></pre></td></tr></table></figure><h4 id="2-5-包装类型和泛型集合的关系"><a href="#2-5-包装类型和泛型集合的关系" class="headerlink" title="2-5.包装类型和泛型集合的关系"></a>2-5.包装类型和泛型集合的关系</h4><p>在java中，所有的<strong>泛型集合</strong>存放的值或者变量统一转换为Object类型。 </p><p>因为Object是所有类的祖类,因此这个转化过程都<strong>不需要强转</strong></p><p>此时无论是<strong>写int类型</strong>还是Integer类型,存入集合都会转为Object</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">      int a=1123;</span><br><span class="line">      Integer b=22222;</span><br><span class="line"></span><br><span class="line">  List list=new ArrayList&lt;&gt;();</span><br><span class="line">  list.add(a);</span><br><span class="line">  list.add(b);</span><br><span class="line">      System.out.println(Integer.parseInt(list.get(0).toString())==1123); //true</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure><p><strong>注意</strong></p><p>集合中存储的元素都是引用类型的引用,int是在栈中的基本数据类型,是无法直接存入集合中的,此时需要<strong>装箱</strong></p><p><strong>上文提过,java5.0之后,添加了自动拆装箱的功能,所以在使用时一般不会出现问题,但底层确实调用了装箱过程</strong></p><h3 id="3-数据类型的设计模式"><a href="#3-数据类型的设计模式" class="headerlink" title="3.数据类型的设计模式"></a>3.数据类型的设计模式</h3><h4 id="3-1享元设计模式"><a href="#3-1享元设计模式" class="headerlink" title="3-1享元设计模式"></a>3-1享元设计模式</h4><p>如果整型字面量的值在-128到127之间，那么不会new新的Integer对象，而是直接引用<strong>常量池</strong>中的Integer对象<strong>java中基本类型的包装类的大部分都实现了常量池技术</strong></p><p>这些类是Byte,Short,Integer,Long,Character,Boolean,另外两种浮点数类型的包装类则没有实现。</p><p>另外Byte,Short,Integer,Long,Character这5种整型的包装类也只是在对应值小于等于127时才可使用常量池，也即对象不负责创建和管理大于127的这些类的对象。 </p><h4 id="3-2字符串常量池"><a href="#3-2字符串常量池" class="headerlink" title="3-2字符串常量池"></a>3-2字符串常量池</h4>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;javaSE-数据类型&quot;&gt;&lt;a href=&quot;#javaSE-数据类型&quot; class=&quot;headerlink&quot; title=&quot;javaSE-数据类型&quot;&gt;&lt;/a&gt;javaSE-数据类型&lt;/h2&gt;&lt;h3 id=&quot;1-基本数据类型分类&quot;&gt;&lt;a href=&quot;#1-基本数据类
-      
-    
-    </summary>
-    
-      <category term="SE基础" scheme="http://yoursite.com/categories/SE%E5%9F%BA%E7%A1%80/"/>
     
     
   </entry>

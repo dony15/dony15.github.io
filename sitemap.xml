@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/03/23/javaSE-%E9%9B%86%E5%90%88/</loc>
+    
+    <lastmod>2018-08-05T10:47:04.578Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/08/05/volatile%E5%9F%BA%E7%A1%80/</loc>
+    
+    <lastmod>2018-08-05T06:37:09.301Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/05/15/Spring-MVC%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/</loc>
     
     <lastmod>2018-08-02T02:38:28.648Z</lastmod>
@@ -166,13 +180,6 @@
     <loc>http://yoursite.com/2018/07/20/Spring%20Cloud%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</loc>
     
     <lastmod>2018-07-24T10:34:11.787Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/03/23/javaSE-%E9%9B%86%E5%90%88/</loc>
-    
-    <lastmod>2018-07-24T00:05:39.749Z</lastmod>
     
   </url>
   

@@ -157,11 +157,11 @@
                         
                         
                         <li>
-                            <a href="/categories/组件/">组件</a>
+                            <a href="/categories/Web基础/">Web基础</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/Web基础/">Web基础</a>
+                            <a href="/categories/组件/">组件</a>
                         </li>
                         
                         <li>
@@ -181,15 +181,15 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/IO/">IO</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/初等数学/">初等数学</a>
                         </li>
                         
                         <li>
                             <a href="/categories/工具类/">工具类</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/IO/">IO</a>
                         </li>
                         
                         <li>
@@ -300,6 +300,36 @@
 <p><strong>Collection</strong>是一个顶层的接口。</p>
 <p>在Collections类中提供了大量的方法，比如对集合或者容器进行排序、查找等操作。最重要的是，在它里面提供了几个<strong>静态工厂方法来创建同步容器类</strong></p>
 <hr>
+<h3 id="3-单项链表的增删"><a href="#3-单项链表的增删" class="headerlink" title="3.单项链表的增删"></a>3.单项链表的增删</h3><p>链表的增删原理需要注意,重点<strong>因为存储空间并非连续存在,不能在改变链表结构时使其断开,否则将难以再次找到到原来的标记</strong></p>
+<p><img src="https://i.imgur.com/KCi2UAD.png" alt=""></p>
+<p><strong>增加</strong></p>
+<ol>
+<li>a的next改为a1的next</li>
+<li>a1的next改为a</li>
+</ol>
+<p><strong>删除</strong></p>
+<ol>
+<li>a1的next改为a2的next</li>
+<li>a2的值赋给e</li>
+<li>释放a2</li>
+</ol>
+<h3 id="4-ArrayList相关"><a href="#4-ArrayList相关" class="headerlink" title="4.ArrayList相关"></a>4.ArrayList相关</h3><h4 id="4-1-ArrayList线程安全问题"><a href="#4-1-ArrayList线程安全问题" class="headerlink" title="4-1.ArrayList线程安全问题"></a>4-1.ArrayList线程安全问题</h4><p>ArrayList本身是线程不安全的,如果在多线程情况下使用可以考虑一下两种方案</p>
+<ol>
+<li>Collections.synchronizedList(List list)方法返回一个线程安全的ArrayList类</li>
+<li>concurrent并发包下的CopyOneWriteArrayList类</li>
+</ol>
+<h4 id="4-2-ArrayList实现的部分接口"><a href="#4-2-ArrayList实现的部分接口" class="headerlink" title="4-2.ArrayList实现的部分接口"></a>4-2.ArrayList实现的部分接口</h4><p>ArrayList实现了List接口,继承了AbstractList (维持集合结构的本身需求)</p>
+<p>ArrayList实现了Serialization接口,可以序列化传输</p>
+<p>ArrayList实现了RandomAccess接口,支持快速随机访问(实际上通过下标实现快速随机访问)</p>
+<p> ArrayList实现了Cloneable接口,可以被克隆</p>
+<h4 id="4-3-扩容的选择"><a href="#4-3-扩容的选择" class="headerlink" title="4-3.扩容的选择"></a>4-3.扩容的选择</h4><p>集合中的结构都支持自动扩容</p>
+<p>如ArrayList的扩容机制是<strong>1.5</strong>倍(1.6和1.7的区别(16/15))</p>
+<p>ArrayList可以指定初始大小也可以默认(10个单位),使用时可以根据业务需求,通过构造设置初始容量,</p>
+<ul>
+<li>这里考虑的因素是集合自动扩容对性能的一个损耗,如果提前知道集合内元素的大概数量,那么初始容量可以设置大一些,从而减少自动扩容的损耗</li>
+<li>也可以通过ensureCapacity方法来指定扩容的长度(使用场景了解较少)</li>
+</ul>
+<h4 id="4-4-数组的底层实现"><a href="#4-4-数组的底层实现" class="headerlink" title="4-4.数组的底层实现"></a>4-4.数组的底层实现</h4><p><strong>数组的引用+下标*数组数据类型的大小—&gt;获得该元素的数据内容</strong></p>
 
     </div>
 </article>
@@ -382,6 +412,12 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2018/08/05/volatile基础/">volatile基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
                 </span>
             </li>
@@ -434,12 +470,6 @@
                 </span>
             </li>
             
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/05/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
-                </span>
-            </li>
-            
         </ul>
     </div>
 </aside>
@@ -458,31 +488,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/12/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2017/07/06/Log日志整理/">Log日志整理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2017/12/02/javaSE-数据类型/">javaSE-数据类型</a>
+                    <a href="/2017/04/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
                 </span>
             </li>
             
@@ -494,13 +500,37 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
+                    <a href="/2017/06/02/java-IO/">java-IO</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/06/02/java-IO/">java-IO</a>
+                    <a href="/2017/04/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/12/02/javaSE-数据类型/">javaSE-数据类型</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/07/14/服务器搭建/">服务器搭建(持续更新)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
                 </span>
             </li>
             
@@ -512,7 +542,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
+                    <a href="/2017/09/15/Struts2基础/">Struts2基础</a>
                 </span>
             </li>
             
