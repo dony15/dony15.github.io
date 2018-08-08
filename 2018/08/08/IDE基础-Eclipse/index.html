@@ -10,7 +10,7 @@
     
     
     
-    <title>javaSE-接口&amp;抽象类 | DonY15</title>
+    <title>IDE基础-Eclipse | DonY15</title>
     <link href=”http://yoursite.com“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -248,19 +248,19 @@
        
 				<a href="/">DonY15</a>
         >
-        <span>javaSE-接口&amp;抽象类</span>
+        <span>IDE基础-Eclipse</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
+                <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
             </h1>
         </div>
         <div class="tag-article">
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2017-05-23
+                <i class="fa fa-calendar"></i> 2018-08-08
             </span>
             
             <span class="label label-gal">
@@ -274,11 +274,11 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
+                    <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2017-05-23
+                <i class="fa fa-calendar"></i> 2018-08-08
             </p>
             <p>
                 
@@ -289,47 +289,43 @@
         </center>
     </div>
     <div class="content-article">
-        <h2 id="javaSE-接口-amp-抽象类"><a href="#javaSE-接口-amp-抽象类" class="headerlink" title="javaSE-接口&amp;抽象类"></a>javaSE-接口&amp;抽象类</h2><h3 id="1-接口和抽象类的异同"><a href="#1-接口和抽象类的异同" class="headerlink" title="1.接口和抽象类的异同"></a>1.接口和抽象类的异同</h3><h4 id="1-1-interface-amp-amp-abstract-class"><a href="#1-1-interface-amp-amp-abstract-class" class="headerlink" title="1-1.interface &amp;&amp; abstract class"></a>1-1.interface &amp;&amp; abstract class</h4><p><strong>不能实例化</strong></p>
+        <h2 id="IDE基础"><a href="#IDE基础" class="headerlink" title="IDE基础"></a>IDE基础</h2><p>[TOC]</p>
+<h3 id="1-一楼送给自己"><a href="#1-一楼送给自己" class="headerlink" title="1.一楼送给自己"></a>1.一楼送给自己</h3><p>用习惯IDEA,很长时间没有使用Eclipse了,马上换工作可能又要用回Eclipse,写一篇回归文档,重新巩固一下Eclipse的基础使用,简单粗暴,新手不宜观看        ಠ_ಠ我有一个特异功能！！(Maven+基础快捷键篇)</p>
+<h3 id="2-Maven搭建"><a href="#2-Maven搭建" class="headerlink" title="2.Maven搭建"></a>2.Maven搭建</h3><p><strong>注意开始选择简单maven,否则建出来的项目包可能不完整,主要是jre可能不会自动识别,导致message问题不显示</strong></p>
+<p>本次maven搭建是简单的粗粒度模块切分,主要是熟悉<strong>parent继承</strong>和<strong>聚合项目</strong>在Eclipse中的搭建方式和<strong>BUG坑</strong></p>
+<h4 id="2-1-从首选项导入Maven"><a href="#2-1-从首选项导入Maven" class="headerlink" title="2-1.从首选项导入Maven"></a>2-1.从首选项导入Maven</h4><p><img src="https://i.imgur.com/tRcpLJ5.png" alt=""></p>
+<h4 id="2-2-Maven配置"><a href="#2-2-Maven配置" class="headerlink" title="2-2.Maven配置"></a>2-2.Maven配置</h4><p><img src="https://i.imgur.com/HWKL3sw.png" alt=""></p>
+<h4 id="2-3-搭建Server服务器软件"><a href="#2-3-搭建Server服务器软件" class="headerlink" title="2-3.搭建Server服务器软件"></a>2-3.搭建Server服务器软件</h4><p><img src="https://i.imgur.com/Uad0d58.png" alt=""></p>
+<p>服务器软件可以这样搭<strong>↑↑↑</strong>,但是实际中我们建议使用maven的<strong>tomcat插件↓↓↓</strong>来使用(模块较多时效果更好)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 在聚合pom工程配置tomcat插件统一启动即可(减少其他模块频繁打包) --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat7-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">path</span>&gt;</span>/<span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">port</span>&gt;</span>8080<span class="tag">&lt;/<span class="name">port</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-4-新建Maven工程-parent"><a href="#2-4-新建Maven工程-parent" class="headerlink" title="2-4.新建Maven工程(parent)"></a>2-4.新建Maven工程(parent)</h4><p>(pom)</p>
+<p><img src="https://i.imgur.com/BrsYk8C.png" alt=""></p>
+<h4 id="2-4-parent配置"><a href="#2-4-parent配置" class="headerlink" title="2-4.parent配置"></a>2-4.parent配置</h4><p> (pom)</p>
+<p><img src="https://i.imgur.com/hg3GCVr.png" alt=""><br><img src="https://i.imgur.com/zw9BVzW.png" alt=""></p>
+<h4 id="2-5-common配置"><a href="#2-5-common配置" class="headerlink" title="2-5.common配置"></a>2-5.common配置</h4><p> (jar)</p>
+<p><img src="https://i.imgur.com/U4vDRHB.png" alt=""></p>
+<h4 id="2-6-mvc聚合配置"><a href="#2-6-mvc聚合配置" class="headerlink" title="2-6.mvc聚合配置"></a>2-6.mvc聚合配置</h4><p> (pom) 此处三层架构没有拆解,统一扔到聚合里了,正常可以将模块拆分</p>
+<p><img src="https://i.imgur.com/e5LwXCn.png" alt=""></p>
+<p>注意聚合中的模块大多数会用到common中的工具类或者实体类,这里的pom文件需要依赖common,后面不在提示依赖关系(根据业务逻辑进行依赖jar和模块即可)<br><img src="https://i.imgur.com/oqIeNNn.png" alt=""></p>
+<h4 id="2-7-聚合模块pojo"><a href="#2-7-聚合模块pojo" class="headerlink" title="2-7.聚合模块pojo"></a>2-7.聚合模块pojo</h4><p>(jar)</p>
+<p><img src="https://i.imgur.com/xlEmr3c.png" alt=""><br><img src="https://i.imgur.com/KrG76Qj.png" alt=""><br><img src="https://i.imgur.com/aAuNUhA.png" alt=""></p>
+<h4 id="2-8-聚合模块dao-省略-service"><a href="#2-8-聚合模块dao-省略-service" class="headerlink" title="2-8.聚合模块dao(省略)/service"></a>2-8.聚合模块dao(省略)/service</h4><p>(jar)</p>
+<p><img src="https://i.imgur.com/jsLF0jT.png" alt=""></p>
+<h4 id="2-9-聚合模块controller"><a href="#2-9-聚合模块controller" class="headerlink" title="2-9.聚合模块controller"></a>2-9.聚合模块controller</h4><p>(war)</p>
+<p><img src="https://i.imgur.com/03pqII2.png" alt=""></p>
+<p>注意问题:此时webapp为空(因为选择的基本maven)</p>
+<p><img src="https://i.imgur.com/4VZXkAC.png" alt=""></p>
+<p>右键war模块,选择JavaEE工具重新部署(点一下就行了),webapp将会注入内容(web-inf等)</p>
+<p><img src="https://i.imgur.com/lX1VfJa.png" alt=""></p>
+<h4 id="2-10-聚合结构完成"><a href="#2-10-聚合结构完成" class="headerlink" title="2-10.聚合结构完成"></a>2-10.聚合结构完成</h4><p><img src="https://i.imgur.com/1yxPu4f.png" alt=""></p>
+<h4 id="2-end-总结"><a href="#2-end-总结" class="headerlink" title="2-end.总结"></a>2-end.总结</h4><p>Eclipse的maven搭建并不是很复杂,主要是用习惯了IDEA后,经常会忘记Eclipse搭建的坑,比如</p>
 <ol>
-<li>抽象类和接口都不能够<strong>实例化</strong>，但可以定义抽象类和接口类型的引用。</li>
+<li>建立的模块少包(没有选简单maven模板,jre没有注入)</li>
+<li>建立的模块少webapp资源(还是bug,解决方案很多)</li>
+<li>合理的选择打包方式(打pom,src中存在的是site(别紧张,没啥用))</li>
 </ol>
-<p><strong>抽象方法</strong></p>
-<ol>
-<li>有抽象方法的类必须被声明为抽象类或者接口，而抽象类未必要有抽象方法。</li>
-</ol>
-<p><strong>继承和实现</strong></p>
-<ol>
-<li>接口的实现类可以被直接实现多个接口,抽象类的子类只能被直接继承一个抽象类</li>
-<li>一个类如果继承了某个抽象类或者实现了某个接口都需要对其中的抽象方法全部进行实现，否则该类仍然需要被声明为抽象类。</li>
-</ol>
-<p><strong>抽象</strong></p>
-<ol>
-<li>接口比抽象类更加抽象，因为抽象类中可以定义构造器，可以有抽象方法和具体方法，而接口中不能定义构造器而且在1.8以前的的方法全部都是抽象方法。</li>
-</ol>
-<p><strong>访问限定</strong></p>
-<ol>
-<li>抽象类中的成员可以是private、默认、protected、public的，而接口中的成员都是public的。</li>
-</ol>
-<p><strong>属性</strong></p>
-<ol>
-<li>抽象类中可以定义成员变量，而接口中定义的成员变量实际上都是常量。</li>
-</ol>
-<h4 id="1-2-注意-接口在1-8以后新特性"><a href="#1-2-注意-接口在1-8以后新特性" class="headerlink" title="1-2.注意!接口在1.8以后新特性:"></a>1-2.注意!接口在1.8以后新特性:</h4><h5 id="default"><a href="#default" class="headerlink" title="default"></a>default</h5><ol>
-<li>可以定义<strong>default</strong> 普通实现方法(可以被继承,但是同时实现两个同样default接口时,default必须被重写)</li>
-<li><strong>如果子类继承父类，父类中有b方法，该子类同时实现的接口中也有b方法（被default修饰），那么子类会继承父类的b方法而不是继承接口中的b方法</strong> </li>
-<li><p>使用接口中类型时，仅仅需要实现抽象方法，default、static方法不需要强制自己实现类去再次实现</p>
-</li>
-<li><p>非default、static方法不能有实现，否则编译错误：Abstract methods do not specify a body</p>
-</li>
-<li>default、static方法必须有具体的实现，否则编译错误：This method requires a body instead of a semicolon</li>
-<li>可以拥有多个default方法</li>
-<li>可以拥有多个static方法</li>
-</ol>
-<h5 id="static"><a href="#static" class="headerlink" title="static"></a>static</h5><p>java8中为接口新增了一项功能：定义一个或者更多个静态方法。</p>
-<p>类似于类中的静态方法，接口定义的静态方法可以独立于任何对象调用。</p>
-<p>所以，在调用静态方法时，不需要实现接口，也不需要接口的实例，也就是说和调用类的静态方法的方式类似。</p>
-<p><strong>语法如：</strong>接口名字.静态方法名。 </p>
-<p><strong>注意，实现接口的类或者子接口不会继承接口中的静态方法.</strong> </p>
+<p>建议全部项目都以简单Maven模板的方式搭建,区别在于打包方式的不同pom/jar/war</p>
+<h3 id="3-基础快捷键"><a href="#3-基础快捷键" class="headerlink" title="3.基础快捷键"></a>3.基础快捷键</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">[核心快捷键]</span><br><span class="line">Alt+/  代码助手/单词补全</span><br><span class="line">Ctrl+1 快速修正</span><br><span class="line">Shift+F2 打开外部Java文档</span><br><span class="line">Ctrl+Shift+O 快速导包/清理无效包</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------------(**查看**)----------------</span><br><span class="line">Ctrl+H 搜索对话框</span><br><span class="line">Ctrl+O 快速Outline结构显示</span><br><span class="line">全局 查找并替换 Ctrl+F </span><br><span class="line">Ctrl+e 快速切换编辑页面</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------------(**Alt修改代码**)----------------</span><br><span class="line">Ctrl+D 删除行</span><br><span class="line">Alt+Up/Down 上下移动选中行</span><br><span class="line">Ctrl+Alt+↑/↓ 复制当前行到上/下一行(复制增加)</span><br><span class="line">Alt+← 前一个编辑的页面</span><br><span class="line">Alt+→ 下一个编辑的页面(当然是针对上面那条来说了)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">----------------------------</span><br><span class="line">Ctrl+Shift+F 格式化当前代码</span><br><span class="line">Alt+Shift+M 抽取方法 (这是重构里面最常用的方法之一了,尤其是对一大堆泥团代码有用)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">----------------------------</span><br><span class="line">Ctrl+Shift+S 保存所有</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-------------------------[辅助使用]-----------------------------------</span><br><span class="line">Ctrl+Shift+X/Y 改变大小写</span><br><span class="line">Alt+Shift+T 显示重构菜单</span><br><span class="line">Ctrl+P 全局打印</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-------------------------[Debug辅助]-----------------------------------</span><br><span class="line">F5：Step Into（debug）</span><br><span class="line">F6：Step over（debug）</span><br><span class="line">F7：Step return（debug）</span><br><span class="line">F8：Resume（debug）</span><br><span class="line">F11：debug上一个应用（debug）</span><br></pre></td></tr></table></figure>
 
     </div>
 </article>
@@ -340,7 +336,7 @@
 <script>
 	if(!window.commentConfig) {
       window.commentConfig = {}
-      window.commentConfig.title = 'javaSE-接口&amp;抽象类'
+      window.commentConfig.title = 'IDE基础-Eclipse'
     }
 </script>
 
@@ -488,25 +484,25 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/12/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
+                    <a href="/2017/03/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/08/08/Linux基础操作/">Linux基础操作文档</a>
+                    <a href="/2018/02/04/Nginx基础原理/">Nginx基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
+                    <a href="/2017/07/06/Log日志整理/">Log日志整理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/04/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
+                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
                 </span>
             </li>
             
@@ -524,13 +520,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/05/08/基础排序 组合/">基础排序 组合</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                    <a href="/2018/02/06/javaSE-继承/">JAVAEE-继承</a>
                 </span>
             </li>
             
@@ -542,7 +532,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/09/15/Struts2基础/">Struts2基础</a>
+                    <a href="/2018/04/15/Spring基础原理/">Spring基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/04/Redis基础原理/">Redis基础原理</a>
                 </span>
             </li>
             
@@ -555,13 +551,13 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/2017/05/23/javaSE-接口&抽象类/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2018/08/08/IDE基础-Eclipse/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/2017/05/23/javaSE-接口&抽象类/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2018/08/08/IDE基础-Eclipse/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/2017/05/23/javaSE-接口&抽象类/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/08/08/IDE基础-Eclipse/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -742,7 +738,7 @@ $(function(){
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     if(window.commentConfig) {
-      window.commentConfig.id = 'Tue May 23 2017 00:00:00 GMT+0800'
+      window.commentConfig.id = 'Wed Aug 08 2018 00:00:00 GMT+0800'
       window.commentConfig.owner = 'dony15'
       window.commentConfig.repo = 'reply.github.io'
       window.commentConfig.client_id = '3e620f638731b84942ed'
@@ -750,7 +746,7 @@ $(function(){
       window.commentConfig.redirect_uri = ''
     } else {
       window.commentConfig = {
-      	id: 'Tue May 23 2017 00:00:00 GMT+0800',
+      	id: 'Wed Aug 08 2018 00:00:00 GMT+0800',
         owner: 'dony15',
         repo: 'reply.github.io',
         client_id: '3e620f638731b84942ed',

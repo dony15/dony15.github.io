@@ -10,7 +10,7 @@
     
     
     
-    <title>javaSE-接口&amp;抽象类 | DonY15</title>
+    <title>categories: IDE | DonY15</title>
     <link href=”http://yoursite.com“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -241,32 +241,20 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    
-<article class="article well article-body" id="article">
+                    <article class="article well article-body" id="article-category">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
-       
-				<a href="/">DonY15</a>
+        <!--<a href="http://yoursite.com">DonY15</a>-->
+		<a href="/">DonY15</a>
         >
-        <span>javaSE-接口&amp;抽象类</span>
+        <span>目录</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
+                <a href="/categories/IDE/index.html">IDE</a>
             </h1>
-        </div>
-        <div class="tag-article">
-            
-            <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2017-05-23
-            </span>
-            
-            <span class="label label-gal">
-                <i class="fa fa-eye"></i>
-            </span>
-            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -274,76 +262,21 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
+                    <a href="/categories/IDE/index.html">IDE</a>
                 </h4>
             </div>
-            <p>
-                <i class="fa fa-calendar"></i> 2017-05-23
-            </p>
-            <p>
-                
-                
-                <i class="fa fa-eye"></i>
-                
-            </p>
         </center>
     </div>
-    <div class="content-article">
-        <h2 id="javaSE-接口-amp-抽象类"><a href="#javaSE-接口-amp-抽象类" class="headerlink" title="javaSE-接口&amp;抽象类"></a>javaSE-接口&amp;抽象类</h2><h3 id="1-接口和抽象类的异同"><a href="#1-接口和抽象类的异同" class="headerlink" title="1.接口和抽象类的异同"></a>1.接口和抽象类的异同</h3><h4 id="1-1-interface-amp-amp-abstract-class"><a href="#1-1-interface-amp-amp-abstract-class" class="headerlink" title="1-1.interface &amp;&amp; abstract class"></a>1-1.interface &amp;&amp; abstract class</h4><p><strong>不能实例化</strong></p>
-<ol>
-<li>抽象类和接口都不能够<strong>实例化</strong>，但可以定义抽象类和接口类型的引用。</li>
-</ol>
-<p><strong>抽象方法</strong></p>
-<ol>
-<li>有抽象方法的类必须被声明为抽象类或者接口，而抽象类未必要有抽象方法。</li>
-</ol>
-<p><strong>继承和实现</strong></p>
-<ol>
-<li>接口的实现类可以被直接实现多个接口,抽象类的子类只能被直接继承一个抽象类</li>
-<li>一个类如果继承了某个抽象类或者实现了某个接口都需要对其中的抽象方法全部进行实现，否则该类仍然需要被声明为抽象类。</li>
-</ol>
-<p><strong>抽象</strong></p>
-<ol>
-<li>接口比抽象类更加抽象，因为抽象类中可以定义构造器，可以有抽象方法和具体方法，而接口中不能定义构造器而且在1.8以前的的方法全部都是抽象方法。</li>
-</ol>
-<p><strong>访问限定</strong></p>
-<ol>
-<li>抽象类中的成员可以是private、默认、protected、public的，而接口中的成员都是public的。</li>
-</ol>
-<p><strong>属性</strong></p>
-<ol>
-<li>抽象类中可以定义成员变量，而接口中定义的成员变量实际上都是常量。</li>
-</ol>
-<h4 id="1-2-注意-接口在1-8以后新特性"><a href="#1-2-注意-接口在1-8以后新特性" class="headerlink" title="1-2.注意!接口在1.8以后新特性:"></a>1-2.注意!接口在1.8以后新特性:</h4><h5 id="default"><a href="#default" class="headerlink" title="default"></a>default</h5><ol>
-<li>可以定义<strong>default</strong> 普通实现方法(可以被继承,但是同时实现两个同样default接口时,default必须被重写)</li>
-<li><strong>如果子类继承父类，父类中有b方法，该子类同时实现的接口中也有b方法（被default修饰），那么子类会继承父类的b方法而不是继承接口中的b方法</strong> </li>
-<li><p>使用接口中类型时，仅仅需要实现抽象方法，default、static方法不需要强制自己实现类去再次实现</p>
-</li>
-<li><p>非default、static方法不能有实现，否则编译错误：Abstract methods do not specify a body</p>
-</li>
-<li>default、static方法必须有具体的实现，否则编译错误：This method requires a body instead of a semicolon</li>
-<li>可以拥有多个default方法</li>
-<li>可以拥有多个static方法</li>
-</ol>
-<h5 id="static"><a href="#static" class="headerlink" title="static"></a>static</h5><p>java8中为接口新增了一项功能：定义一个或者更多个静态方法。</p>
-<p>类似于类中的静态方法，接口定义的静态方法可以独立于任何对象调用。</p>
-<p>所以，在调用静态方法时，不需要实现接口，也不需要接口的实例，也就是说和调用类的静态方法的方式类似。</p>
-<p><strong>语法如：</strong>接口名字.静态方法名。 </p>
-<p><strong>注意，实现接口的类或者子接口不会继承接口中的静态方法.</strong> </p>
-
+    <div class="content-article" style="margin-top: 30px;">
+        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
+            
+            <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
+            <br>
+            
+            
+        </div>
     </div>
 </article>
-
-
-<div id="comments-template"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script>
-	if(!window.commentConfig) {
-      window.commentConfig = {}
-      window.commentConfig.title = 'javaSE-接口&amp;抽象类'
-    }
-</script>
-
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -488,6 +421,12 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2017/07/10/Ajax基础服务/">Ajax基础服务</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2017/12/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
                 </span>
             </li>
@@ -500,25 +439,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
+                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
                     <a href="/2017/04/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2017/12/02/javaSE-数据类型/">javaSE-数据类型</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
                 </span>
             </li>
             
@@ -542,7 +475,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/09/15/Struts2基础/">Struts2基础</a>
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
                 </span>
             </li>
             
@@ -555,13 +488,13 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/2017/05/23/javaSE-接口&抽象类/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/categories/IDE/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/2017/05/23/javaSE-接口&抽象类/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/categories/IDE/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/2017/05/23/javaSE-接口&抽象类/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/categories/IDE/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -742,7 +675,7 @@ $(function(){
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     if(window.commentConfig) {
-      window.commentConfig.id = 'Tue May 23 2017 00:00:00 GMT+0800'
+      window.commentConfig.id = ''
       window.commentConfig.owner = 'dony15'
       window.commentConfig.repo = 'reply.github.io'
       window.commentConfig.client_id = '3e620f638731b84942ed'
@@ -750,7 +683,7 @@ $(function(){
       window.commentConfig.redirect_uri = ''
     } else {
       window.commentConfig = {
-      	id: 'Tue May 23 2017 00:00:00 GMT+0800',
+      	id: '',
         owner: 'dony15',
         repo: 'reply.github.io',
         client_id: '3e620f638731b84942ed',

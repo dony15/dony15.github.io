@@ -161,11 +161,15 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/组件/">组件</a>
+                            <a href="/categories/搭建/">搭建</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/搭建/">搭建</a>
+                            <a href="/categories/IDE/">IDE</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/组件/">组件</a>
                         </li>
                         
                         <li>
@@ -196,10 +200,14 @@
                             <a href="/categories/工具类/">工具类</a>
                         </li>
                         
+                        <li>
+                            <a href="/categories/服务器/">服务器</a>
+                        </li>
                         
                         <li>
-                            <a href="/categories">...</a>
+                            <a href="/categories/SQL/">SQL</a>
                         </li>
+                        
                         
                         
                     </ul>
@@ -282,17 +290,17 @@
     </div>
     <div class="content-article">
         <h2 id="volatile基础"><a href="#volatile基础" class="headerlink" title="volatile基础"></a>volatile基础</h2><p>[TOC]</p>
-<h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h3><p>轻量级同步机制,与synchronized重量级锁不同,不会引起线程的上下文切换,但是需要注意两个问题:</p>
+<h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h3><p><strong>A.</strong>轻量级同步机制,与synchronized重量级锁不同,不会引起线程的上下文切换,但是需要注意两个问题:</p>
 <ol>
-<li>非复合类操作 如 <strong>count++</strong></li>
-<li>不在其他变量的不变式中包含 如<strong>常量和条件</strong>(后续再深入理解不变式)</li>
+<li>复合类操作无法同步 如 <strong>count++</strong></li>
+<li>在其他变量的不变式中包含则无法同步 如<strong>常量和条件</strong>(后续再深入理解不变式)</li>
 </ol>
-<p>阻止指令重排</p>
+<p><strong>B.</strong>阻止指令重排</p>
 <h3 id="2-内存可见性"><a href="#2-内存可见性" class="headerlink" title="2.内存可见性"></a>2.内存可见性</h3><p>volatile是轻量级的同步机制,相比于synchronized重量级锁来说 ,能够节省更大的消耗,虽然在总体能力上不如synchronized安全,但是在一定场合也具有自己的优势,合理的利用volatile能够让程序更高效的运行</p>
 <p>volatile修饰的属性对整个内存来说是可见的,即:每个线程获取到的该数据都是最新的(此处内存分配属逻辑模拟)</p>
 <ul>
-<li>A线程(工作内存)→</li>
-<li>​                    } 主内存空间 </li>
+<li>A线程(工作内存)→<pre><code>} 主内存空间 
+</code></pre></li>
 <li>B线程(工作内存)→</li>
 </ul>
 <p>对线程来说,正常的共享资源会从主内存中copy到自己的工作内存中,这里如同内存和硬盘的区别,可以更加快速的使用copy的资源,但是此时的工作内存对于其他线程是不可见的,因此很容易因为并发产生数据异常</p>
@@ -405,6 +413,12 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2018/08/05/volatile基础/">volatile基础</a>
                 </span>
             </li>
@@ -451,12 +465,6 @@
                 </span>
             </li>
             
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/03/hello-world/">Hello World</a>
-                </span>
-            </li>
-            
         </ul>
     </div>
 </aside>
@@ -475,13 +483,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/07/10/Ajax基础服务/">Ajax基础服务</a>
+                    <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/08/08/Linux基础操作/">Linux基础操作文档</a>
+                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
                 </span>
             </li>
             
@@ -493,13 +501,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/04/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                    <a href="/2017/09/18/java POI辅助框架/">java POI辅助框架基础</a>
                 </span>
             </li>
             
@@ -511,13 +519,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/02/06/javaSE-继承/">JAVAEE-继承</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2017/12/02/javaSE-数据类型/">javaSE-数据类型</a>
+                    <a href="/2017/07/05/java基础SE-java优点/">javaSE-java优点</a>
                 </span>
             </li>
             
@@ -529,7 +531,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/07/14/服务器搭建/">服务器搭建(持续更新)</a>
+                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
                 </span>
             </li>
             
