@@ -165,11 +165,11 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/框架/">框架</a>
+                            <a href="/categories/搭建/">搭建</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/搭建/">搭建</a>
+                            <a href="/categories/框架/">框架</a>
                         </li>
                         
                         <li>
@@ -178,10 +178,6 @@
                         
                         <li>
                             <a href="/categories/Linux基础/">Linux基础</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/Spring全家桶/">Spring全家桶</a>
                         </li>
                         
                         <li>
@@ -197,11 +193,15 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/工具类/">工具类</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/服务器/">服务器</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/工具类/">工具类</a>
+                            <a href="/categories/Spring全家桶/">Spring全家桶</a>
                         </li>
                         
                         <li>
@@ -289,31 +289,87 @@
         </center>
     </div>
     <div class="content-article">
-        <h2 id="Spring-Boot基础使用"><a href="#Spring-Boot基础使用" class="headerlink" title="Spring Boot基础使用"></a>Spring Boot基础使用</h2><h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h3><p>SpringBoot可以用更少的配置快速构建项目,对杂乱的配置和第三方jar包进行了重新封装</p>
-<h3 id="2-配置"><a href="#2-配置" class="headerlink" title="2.配置"></a>2.配置</h3><h4 id="2-1-0XML-约定大于配置"><a href="#2-1-0XML-约定大于配置" class="headerlink" title="2-1.   0XML 约定大于配置"></a>2-1.   0XML 约定大于配置</h4><p>使用properties或者yml来代替</p>
-<p>配置优先级顺序(高到底)</p>
+        <h2 id="Spring-boot基础整合"><a href="#Spring-boot基础整合" class="headerlink" title="Spring boot基础整合"></a>Spring boot基础整合</h2><p><a href="#Springboot基础整合">Spring boot基础整合</a><br><a href="#1.Starter">1.Starter</a><br><a href="#1-1.概念">1-1.概念</a><br><a href="#1-2.springboot根据starter生成主观配置">1-2.spring boot根据starter生成主观配置</a><br><a href="#2.可执行jar">2.可执行jar</a><br><a href="#3.Spring快速搭建">3.Spring快速搭建</a><br><a href="#3-1.Demo01入门">3-1.Demo01入门</a><br><a href="#4.常用注解整合">4.常用注解整合</a><br><a href="#4-1.Controller层常用注解">4-1.Controller层常用注解</a><br><a href="#4-2.配置注解">4-2.配置注解</a><br><a href="#4-3.全局异常注解">4-3.全局异常注解</a><br><a href="#4-4.事务管理">4-4.事务管理</a><br><a href="#4-5.整合Mybatis">4-5.整合Mybatis</a><br><a href="#4-6.JPA注解">4-6.JPA注解</a></p>
+<h3 id="1-Starter"><a href="#1-Starter" class="headerlink" title="1.Starter"></a>1.Starter</h3><h4 id="1-1-概念"><a href="#1-1-概念" class="headerlink" title="1-1.概念"></a>1-1.概念</h4><p>Spring boot的依赖项，所有spring boot整合的依赖都有此约定</p>
 <ul>
-<li>resources/config/properties</li>
-<li>resources/config/yml</li>
-<li>resources/properties</li>
-<li>resources/yml</li>
+<li>核心依赖org.springframework.boot中的整合都以 spring-boot-starter-xxx的形式引入</li>
+<li>第三方的依赖可能是以xxx-spring-boot-starter的形式引入</li>
 </ul>
-<p><strong>优先使用resources/config中的properties</strong></p>
-<h4 id="2-2-允许多环境配置搭建"><a href="#2-2-允许多环境配置搭建" class="headerlink" title="2-2.允许多环境配置搭建"></a>2-2.允许多环境配置搭建</h4><p>spring.profiles.active=dev或者online</p>
+<p>如spring-boot-starter 核心启动器，整合自动配置的支持以及日志记录和YAML<br>Spring-boot-starter-aop 支持spring 面向切面编程<br>……更多参考官网列表<br><a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-starter" target="_blank" rel="noopener">https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-starter</a></p>
+<h4 id="1-2-spring-boot根据starter生成主观配置"><a href="#1-2-spring-boot根据starter生成主观配置" class="headerlink" title="1-2.spring boot根据starter生成主观配置"></a>1-2.spring boot根据starter生成主观配置</h4><p>Spring boot会根据配置的starter生成自己的主观配置，如导入spring-boot-starter-web时生成的观点</p>
 <ul>
-<li>application-dev.properties</li>
-<li>application-online.properties</li>
+<li>使用Tomcat作为嵌入web服务容器</li>
+<li>使用Hibernation 对象关系映射(ORM)</li>
+<li>使用Apache Jackson绑定Json</li>
+<li>使用Spring MVC作为Rest风格框架</li>
 </ul>
-<h3 id="3-核心注解"><a href="#3-核心注解" class="headerlink" title="3.核心注解"></a>3.核心注解</h3><h4 id="3-1-SpringBootApplication"><a href="#3-1-SpringBootApplication" class="headerlink" title="3-1.@SpringBootApplication"></a>3-1.@SpringBootApplication</h4><h4 id="3-2-EnableAutoConfiguration"><a href="#3-2-EnableAutoConfiguration" class="headerlink" title="3-2.@EnableAutoConfiguration"></a>3-2.@EnableAutoConfiguration</h4><h4 id="3-3-EnableTransactionManagement"><a href="#3-3-EnableTransactionManagement" class="headerlink" title="3-3.@EnableTransactionManagement"></a>3-3.@EnableTransactionManagement</h4><h4 id="3-4-SpringBootConfiguration"><a href="#3-4-SpringBootConfiguration" class="headerlink" title="3-4.@SpringBootConfiguration"></a>3-4.@SpringBootConfiguration</h4><h4 id="3-5-MapperScan-“com-test03-dao”"><a href="#3-5-MapperScan-“com-test03-dao”" class="headerlink" title="3-5.@MapperScan(“com.test03.dao”)"></a>3-5.@MapperScan(“com.test03.dao”)</h4><h4 id="3-6-Bean"><a href="#3-6-Bean" class="headerlink" title="3-6.@Bean"></a>3-6.@Bean</h4><h4 id="3-configuration和component的关系"><a href="#3-configuration和component的关系" class="headerlink" title="3-?.configuration和component的关系"></a>3-?.configuration和component的关系</h4><ul>
-<li>component用来生成实例对象</li>
-<li>configuration用来表示配置类</li>
-<li>…</li>
+<p>Spring boot会生成目前主流的web默认配置（¯<em>(ツ)</em>/¯），如果需要替换，可以自定义，方法下方传送门</p>
+<h3 id="2-可执行jar"><a href="#2-可执行jar" class="headerlink" title="2.可执行jar"></a>2.可执行jar</h3><p>可以通过maven插件配置打包，在本地命令窗口即可启动项目（简单实用的功能，省略）</p>
+<p><strong>精选传送门，附带整合Rest风格的Demo</strong><br><strong><a href="https://www.ibm.com/developerworks/cn/java/j-spring-boot-basics-perry/index.html" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/java/j-spring-boot-basics-perry/index.html</a></strong></p>
+<h3 id="3-Spring快速搭建"><a href="#3-Spring快速搭建" class="headerlink" title="3.Spring快速搭建"></a>3.Spring快速搭建</h3><h4 id="3-1-Demo01入门"><a href="#3-1-Demo01入门" class="headerlink" title="3-1.Demo01入门"></a>3-1.Demo01入门</h4><p>该博客有一套基础的Spring boot搭建文章<br><a href="https://www.cnblogs.com/ityouknow/p/5662753.html" target="_blank" rel="noopener">https://www.cnblogs.com/ityouknow/p/5662753.html</a></p>
+<h3 id="4-常用注解整合"><a href="#4-常用注解整合" class="headerlink" title="4.常用注解整合"></a>4.常用注解整合</h3><h4 id="4-1-Controller层常用注解"><a href="#4-1-Controller层常用注解" class="headerlink" title="4-1.Controller层常用注解"></a>4-1.Controller层常用注解</h4><p><strong>@Controller</strong><br>Spring中，表现层的控制器标识（servlet）</p>
+<p><strong>@RestController</strong><br>在rest风格中常用的控制器标识，是组合注解，包括</p>
+<ul>
+<li>@ResponseBody</li>
+<li>@Controller</li>
+<li>@Retention(value=RUNTIME)</li>
+<li>@Documented<br>SpringMVC中，该类的所有handler都会以字符串渲染的形式返回给调用者</li>
 </ul>
-<h3 id="4-Thymeleaf-丁香叶"><a href="#4-Thymeleaf-丁香叶" class="headerlink" title="4.Thymeleaf 丁香叶"></a>4.Thymeleaf 丁香叶</h3><p>SpringBoot官方不支持使用JSP,官方推荐 <strong>Thymeleaf</strong> 引擎代替JSP</p>
+<p><strong>@RequestMapping</strong><br>扩展处理器映射器，被标注的方法即handler，可以标注对象，这也是springMVC的特点之一<br>属性：</p>
+<ul>
+<li>value 地址/变量/正则表达式</li>
+<li>method 方法格式，如 RequestMethod.GET</li>
+<li>consumes 如 consumes=”application/json” 处理Content-Type的类型为指定类型的请求</li>
+<li>produces 如 produces=”application/json” 处理请求的Accept为指定类型的请求，并返回相同的内容类型</li>
+<li>params 如 params = “username=DonY15” 处理带有username参数，且值为DonY15的指定请求</li>
+<li>headers 如 headers=”Referer=<a href="http://www.ifeng.com/" target="_blank" rel="noopener">http://www.ifeng.com/</a>“ 处理header中带有Referer且值为<a href="http://www.ifeng.com/" target="_blank" rel="noopener">http://www.ifeng.com/</a>的请求</li>
+</ul>
+<p>不同属性的映射注解</p>
+<ul>
+<li>@PathVariable 如 @PathVariable String username 接收地址栏中变量/正则的注解</li>
+<li>@RequestParams 接收约定传递的参数</li>
+</ul>
+<p><strong>@ResponseBody</strong><br>普通MVC中常用来返回json格式给前端，建议和json类型转换器搭配使用</p>
+<p><strong>@RequestBody</strong><br>很少使用，限制请求参数来自请求体中</p>
+<h4 id="4-2-配置注解"><a href="#4-2-配置注解" class="headerlink" title="4-2.配置注解"></a>4-2.配置注解</h4><p><strong>@SpringBootApplication</strong><br>启动类注解，组合注解，内部封装了三种注解，都需要时可以使用该注解来简化代码</p>
+<ul>
+<li>@ComponentScan 扫描需要的组件</li>
+<li>@Configuration 配置类</li>
+<li>@EnableAutoConfiguration 开启自动配置</li>
+</ul>
+<p><strong>@Component</strong><br>与Configuration类似，一般当组件配置不好分类时使用</p>
+<p><strong>@Autowired/@Resource</strong><br>自动装配/指定注入</p>
+<p><strong>@Inject</strong><br>等价于默认的@Autowired，只是没有required属性</p>
+<p><strong>@ImportResource</strong><br>用来加载xml配置文件。</p>
+<p><strong>@Service</strong><br>一般用于修饰service层的组件（不同框架有不同的作用，如Dubbo）</p>
+<p><strong>@Repository</strong><br>使用@Repository注解可以确保DAO或者repositories提供异常转译，这个注解修饰的DAO或者repositories类会被ComponetScan发现并配置，同时也不需要为它们提供XML配置项。</p>
+<p><strong>@Bean</strong><br>用@Bean标注方法等价于XML中配置的bean。</p>
+<p><strong>@Value</strong><br>注入Spring boot application.properties配置的属性的值。</p>
+<p>—————「待深入注解」—————<br><strong>@JsonBackReference</strong><br>解决嵌套外链问题</p>
+<p><strong>@RepositoryRestResourcepublic</strong><br>配合spring-boot-starter-data-rest使用。</p>
+<p><strong>@Import</strong><br>用来导入其他配置类</p>
+<p><strong>@Qualifier</strong><br>当有多个同一类型的Bean时，可以用@Qualifier(“name”)来指定。与@Autowired配合使用。@Qualifier限定描述符除了能根据名字进行注入，但能进行更细粒度的控制如何选择候选者</p>
+<h4 id="4-3-全局异常注解"><a href="#4-3-全局异常注解" class="headerlink" title="4-3.全局异常注解"></a>4-3.全局异常注解</h4><p><strong>@ControllerAdvice</strong><br>包含@Component。可以被扫描到。统一处理异常。</p>
+<p><strong>@ExceptionHandler（Exception.class）</strong><br>用在方法上面表示遇到这个异常就执行以下方法。</p>
+<h4 id="4-4-事务管理"><a href="#4-4-事务管理" class="headerlink" title="4-4.事务管理"></a>4-4.事务管理</h4><p><strong>@EnableTransactionManagement</strong><br>开始事务支持</p>
+<p><strong> @Transactional</strong><br>Service中指定方法开启事物</p>
+<p><strong>多事务管理器传送门</strong><br><a href="https://blog.csdn.net/catoop/article/details/50595702" target="_blank" rel="noopener">https://blog.csdn.net/catoop/article/details/50595702</a><br><strong>事务简单配置传送门</strong><br><a href="https://blog.csdn.net/rickiyeat/article/details/62042685" target="_blank" rel="noopener">https://blog.csdn.net/rickiyeat/article/details/62042685</a></p>
+<h4 id="4-5-整合Mybatis"><a href="#4-5-整合Mybatis" class="headerlink" title="4-5.整合Mybatis"></a>4-5.整合Mybatis</h4><p>mybatis-spring-boot-starter<br><strong>@MapperScan</strong><br>扫描Mapper包</p>
+<p><strong>整合Mybatis传送门</strong><br><a href="http://www.ityouknow.com/springboot/2016/11/06/spring-boo-mybatis.html" target="_blank" rel="noopener">http://www.ityouknow.com/springboot/2016/11/06/spring-boo-mybatis.html</a></p>
+<h4 id="4-6-JPA注解"><a href="#4-6-JPA注解" class="headerlink" title="4-6.JPA注解"></a>4-6.JPA注解</h4><p><strong>@Entity</strong><br>实体类注解</p>
+<p><strong>@Table</strong><br>实体类和数据库表映射，如果两者名字相同可以省略</p>
+<p><strong>@Column</strong><br>实体类属性和字段映射，如果两者名字相同可省略</p>
+<p><strong>@Id</strong><br>主键映射</p>
+<p><strong>@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = “repair_seq”)</strong><br>表示主键生成策略是sequence（可以为Auto、IDENTITY、native等，Auto表示可在多个数据库间切换），指定sequence的名字是repair_seq。</p>
+<p><strong>@JsonIgnore</strong><br>作用是json序列化时将Java bean中的一些属性忽略掉,序列化和反序列化都受影响。</p>
+<p><strong>@JoinColumn（name=”loginId”）</strong><br>一对一：本表中指向另一个表的外键。<br>一对多：另一个表指向本表的外键。</p>
+<p>@OneToOne<br>@OneToMany<br>@ManyToOne<br>对应hibernate配置文件中的一对一，一对多，多对一。</p>
+<p>—————「待深入注解」—————<br>@Transient：表示该属性并非一个到数据库表的字段的映射,ORM框架将忽略该属性。如果一个属性并非数据库表的字段映射,就务必将其标示为@Transient,否则,ORM框架默认其注解为@Basic。@Basic(fetch=FetchType.LAZY)：标记可以指定实体属性的加载方式</p>
+<h3 id="5-Thymeleaf-丁香叶"><a href="#5-Thymeleaf-丁香叶" class="headerlink" title="5.Thymeleaf 丁香叶"></a>5.Thymeleaf 丁香叶</h3><p>SpringBoot官方不支持使用JSP,官方推荐 <strong>Thymeleaf</strong> 引擎代替JSP</p>
 <p><strong>Thymeleaf支持动静结合</strong></p>
-<h4 id="4-1-语法-th-前缀"><a href="#4-1-语法-th-前缀" class="headerlink" title="4-1. 语法 th: 前缀"></a>4-1. 语法 th: 前缀</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;p th:text=&quot;$&#123;text&#125;&quot;&gt;我是普通文本&lt;/p&gt;	</span><br><span class="line"></span><br><span class="line">&lt;p th:utext=&quot;$&#123;htmlText&#125;&quot;&gt;我是转义文本(标签)&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;&lt;a th:href=&quot;@&#123;&#123;ahref&#125;?pa=&#123;text&#125;(ahref=$&#123;ahref&#125;,text=$&#123;text&#125;)&#125;&quot;&gt;我是a标签&lt;/a&gt;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">我是表格&lt;br/&gt;</span><br><span class="line">&lt;table border=&quot;1&quot;&gt;</span><br><span class="line">    &lt;tr th:each=&quot;dept:$&#123;deptList&#125;&quot;&gt;</span><br><span class="line">        &lt;td th:text=&quot;$&#123;dept.id&#125;&quot;&gt;id&lt;/td&gt;</span><br><span class="line">        &lt;td th:text=&quot;$&#123;dept.name&#125;&quot;&gt;name&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">我是下拉框</span><br><span class="line">    &lt;select  &gt;</span><br><span class="line">        &lt;option th:each=&quot;dept:$&#123;deptList&#125;&quot; th:value=&quot;$&#123;dept.id&#125;&quot; th:text=&quot;$&#123;dept.name&#125;&quot; th:selected=&quot;$&#123;dept.id&#125;==$&#123;param.id[0]&#125;&quot;&gt;&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;&lt;br/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;input th:value=&quot;$&#123;text&#125;&quot;&gt; //value值</span><br><span class="line">  </span><br><span class="line">&lt;script th:src=&quot;@&#123;static/test.js&#125;&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;div th:if=&quot;$&#123;ahref == &apos;test&apos;&#125;&quot;&gt;条件判断是否显示这段话&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="5-1-语法-th-前缀"><a href="#5-1-语法-th-前缀" class="headerlink" title="5-1. 语法 th: 前缀"></a>5-1. 语法 th: 前缀</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;p th:text=&quot;$&#123;text&#125;&quot;&gt;我是普通文本&lt;/p&gt;	</span><br><span class="line"></span><br><span class="line">&lt;p th:utext=&quot;$&#123;htmlText&#125;&quot;&gt;我是转义文本(标签)&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;&lt;a th:href=&quot;@&#123;&#123;ahref&#125;?pa=&#123;text&#125;(ahref=$&#123;ahref&#125;,text=$&#123;text&#125;)&#125;&quot;&gt;我是a标签&lt;/a&gt;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">我是表格&lt;br/&gt;</span><br><span class="line">&lt;table border=&quot;1&quot;&gt;</span><br><span class="line">    &lt;tr th:each=&quot;dept:$&#123;deptList&#125;&quot;&gt;</span><br><span class="line">        &lt;td th:text=&quot;$&#123;dept.id&#125;&quot;&gt;id&lt;/td&gt;</span><br><span class="line">        &lt;td th:text=&quot;$&#123;dept.name&#125;&quot;&gt;name&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">我是下拉框</span><br><span class="line">    &lt;select  &gt;</span><br><span class="line">        &lt;option th:each=&quot;dept:$&#123;deptList&#125;&quot; th:value=&quot;$&#123;dept.id&#125;&quot; th:text=&quot;$&#123;dept.name&#125;&quot; th:selected=&quot;$&#123;dept.id&#125;==$&#123;param.id[0]&#125;&quot;&gt;&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;&lt;br/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;input th:value=&quot;$&#123;text&#125;&quot;&gt; //value值</span><br><span class="line">  </span><br><span class="line">&lt;script th:src=&quot;@&#123;static/test.js&#125;&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;div th:if=&quot;$&#123;ahref == &apos;test&apos;&#125;&quot;&gt;条件判断是否显示这段话&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 <p>后台可以使用Model</p>
-<h3 id="5-PageInfo的使用"><a href="#5-PageInfo的使用" class="headerlink" title="5.PageInfo的使用"></a>5.PageInfo的使用</h3><h5 id="传送门https-blog-csdn-net-csdn-huzeliang-article-details-79350425"><a href="#传送门https-blog-csdn-net-csdn-huzeliang-article-details-79350425" class="headerlink" title="传送门https://blog.csdn.net/csdn_huzeliang/article/details/79350425"></a>传送门<a href="https://blog.csdn.net/csdn_huzeliang/article/details/79350425" target="_blank" rel="noopener">https://blog.csdn.net/csdn_huzeliang/article/details/79350425</a></h5>
+<h3 id="6-PageInfo的使用"><a href="#6-PageInfo的使用" class="headerlink" title="6.PageInfo的使用"></a>6.PageInfo的使用</h3><h5 id="传送门https-blog-csdn-net-csdn-huzeliang-article-details-79350425"><a href="#传送门https-blog-csdn-net-csdn-huzeliang-article-details-79350425" class="headerlink" title="传送门https://blog.csdn.net/csdn_huzeliang/article/details/79350425"></a>传送门<a href="https://blog.csdn.net/csdn_huzeliang/article/details/79350425" target="_blank" rel="noopener">https://blog.csdn.net/csdn_huzeliang/article/details/79350425</a></h5>
     </div>
 </article>
 
@@ -471,31 +527,25 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/03/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                    <a href="/2017/07/10/Ajax基础服务/">Ajax基础服务</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
+                    <a href="/2017/07/06/Log日志整理/">Log日志整理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/04/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
+                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/04/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2017/07/05/java基础SE-java优点/">javaSE-java优点</a>
+                    <a href="/2017/12/02/javaSE-数据类型/">javaSE-数据类型</a>
                 </span>
             </li>
             
@@ -507,19 +557,25 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                    <a href="/2017/12/06/FastDfs基础原理/">FastDFS 基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/05/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
+                    <a href="/2018/07/13/SpringBoot基础原理/">Spring Boot基础使用</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/05/06/Git回顾/">Git回顾</a>
+                    <a href="/2017/09/15/Struts2基础/">Struts2基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/04/15/Spring基础原理/">Spring基础原理</a>
                 </span>
             </li>
             

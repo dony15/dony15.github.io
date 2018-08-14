@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/07/13/SpringBoot%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/</loc>
+    
+    <lastmod>2018-08-14T13:07:49.849Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/05/06/Git%E5%9B%9E%E9%A1%BE/</loc>
     
     <lastmod>2018-08-11T08:41:15.143Z</lastmod>
@@ -222,13 +229,6 @@
     <loc>http://yoursite.com/2018/07/15/SQL%E9%93%B6%E8%A1%8C%E6%A8%A1%E6%8B%9F%E8%AF%AD%E5%8F%A5%E6%95%B4%E5%90%88/</loc>
     
     <lastmod>2018-07-21T08:59:27.308Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/07/13/SpringBoot%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/</loc>
-    
-    <lastmod>2018-07-21T08:54:38.636Z</lastmod>
     
   </url>
   
