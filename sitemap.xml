@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2018/07/13/SpringBoot%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/</loc>
+    <loc>http://yoursite.com/2018/08/15/Spring%20boot%E6%95%B4%E5%90%88%E7%AF%87/</loc>
     
-    <lastmod>2018-08-14T13:11:27.386Z</lastmod>
+    <lastmod>2018-08-15T14:59:46.222Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/07/13/Spring%20Boot%E5%9F%BA%E7%A1%80/</loc>
+    
+    <lastmod>2018-08-15T14:31:36.608Z</lastmod>
     
   </url>
   

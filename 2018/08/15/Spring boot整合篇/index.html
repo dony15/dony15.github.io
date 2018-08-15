@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="宝全哥哥">
+    
+    
+    
+    
+    
+    
+    <title>Spring Boot整合篇 | DonY15</title>
+    <link href=”http://yoursite.com“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz',
+        appKey: 'nYP6CNjSvE1TUhTur6M4ldxz'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpg,preview7.jpg,preview8.jpg,preview9.jpg,preview10.jpg,preview11.jpg,preview12.jpg,preview13.jpg,preview14.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+		<!--统计-->
+			<!--<script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>-->
+		<!--<script>AV.initialize("Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz", "nYP6CNjSvE1TUhTur6M4ldxz");</script>-->
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-realtime@4.1.0/dist/realtime.browser.min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-live-query-min.js"></script>
+		
+		<script>
+		// 存储服务
+		var { Query, User } = AV;
+		AV.init('Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz', 'nYP6CNjSvE1TUhTur6M4ldxz');
+		// 实时消息服务
+		var { Realtime, TextMessage } = AV;
+		
+		</script>
+		
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="http://yoursite.com" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/categories" class="menuItem" style="left: 50%; top: 85%;">目录</a>
+            <a href="/message" class="menuItem" style="left: 19.6891%; top: 67.5%;">留言板</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <!--<a href="http://yoursite.com">-->
+						<a href="/">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">DonY15</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>目录
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/Web基础/">Web基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/组件/">组件</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/搭建/">搭建</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/框架/">框架</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Linux基础/">Linux基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IDE/">IDE</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Spring全家桶/">Spring全家桶</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IO/">IO</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SE基础/">SE基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/初等数学/">初等数学</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/工具类/">工具类</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/服务器/">服务器</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SQL/">SQL</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="">
+                    <a href="/tags">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-user"></i>留言板
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+       
+				<a href="/">DonY15</a>
+        >
+        <span>Spring Boot整合篇</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2018/08/15/Spring boot整合篇/">Spring Boot整合篇</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-08-15
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2018/08/15/Spring boot整合篇/">Spring Boot整合篇</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-08-15
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h2 id="Spring-boot整合篇"><a href="#Spring-boot整合篇" class="headerlink" title="Spring boot整合篇"></a>Spring boot整合篇</h2><p>[TOC]</p>
+<h3 id="1-优秀传送门"><a href="#1-优秀传送门" class="headerlink" title="1.优秀传送门"></a>1.优秀传送门</h3><h4 id="1-1-第一章送给GitHub仓库-多种框架整合实战案例"><a href="#1-1-第一章送给GitHub仓库-多种框架整合实战案例" class="headerlink" title="1-1.第一章送给GitHub仓库,多种框架整合实战案例"></a>1-1.第一章送给GitHub仓库,多种框架整合实战案例</h4><p><a href="https://github.com/JeffLi1993/springboot-learning-example" target="_blank" rel="noopener">https://github.com/JeffLi1993/springboot-learning-example</a></p>
+<h3 id="2-基础整合搭建ZK-Dubbo"><a href="#2-基础整合搭建ZK-Dubbo" class="headerlink" title="2.基础整合搭建ZK/Dubbo"></a>2.基础整合搭建ZK/Dubbo</h3><p>Dubbo Spring Boot Starter 致力于简化 Dubbo 应用在 Spring Boot 环境中的开发，主要包括自动装配（Auto-Configure）、外部化配置（Externalized-Configuration）以及生产准备（Actuator） </p>
+<p><strong>思路</strong></p>
+<ol>
+<li>在Spring boot中整合ZK/Dubbo,可以将ZK抽出来放在parent中,这样子模块只需要考虑dubbo的服务配置即可</li>
+<li>利用强大的注解功能,运用Dubbo的@Service做服务端注解,@Reference做消费端注解,快速整合Springboot+ZK+Dubbo</li>
+</ol>
+<h4 id="2-1-基础搭建传送门"><a href="#2-1-基础搭建传送门" class="headerlink" title="2-1.基础搭建传送门"></a>2-1.基础搭建传送门</h4><p><a href="https://www.bysocket.com/?p=1681" target="_blank" rel="noopener">https://www.bysocket.com/?p=1681</a></p>
+<h4 id="2-2-优秀开源项目"><a href="#2-2-优秀开源项目" class="headerlink" title="2-2.优秀开源项目"></a>2-2.优秀开源项目</h4><p><a href="https://github.com/dubbo/dubbo-spring-boot-project" target="_blank" rel="noopener">https://github.com/dubbo/dubbo-spring-boot-project</a> </p>
+<p><em>Springboot</em> 多模块项目，整合了freemark,jsp,logback,mail,多数据源,mybatis,redis,docker,SSL等(待验证) </p>
+<p><a href="https://github.com/dony15/springboot-dubbox" target="_blank" rel="noopener">https://github.com/dony15/springboot-dubbox</a></p>
+<h4 id="2-3-配置详解"><a href="#2-3-配置详解" class="headerlink" title="2-3.配置详解"></a>2-3.配置详解</h4><p>application.properties  </p>
+<p><strong>简单基础配置</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## Dubbo 服务提供者配置</span><br><span class="line">spring.dubbo.application.name=provider/consumer</span><br><span class="line">spring.dubbo.registry.address=zookeeper://127.0.0.1:2181</span><br><span class="line">spring.dubbo.protocol.name=dubbo</span><br><span class="line">spring.dubbo.protocol.port=20880</span><br><span class="line">spring.dubbo.scan=org.spring.springboot.</span><br></pre></td></tr></table></figure>
+<p>spring.dubbo.application.name 应用名称  </p>
+<p>spring.dubbo.registry.address 注册中心地址  </p>
+<p>spring.dubbo.protocol.name 协议名称 </p>
+<p>spring.dubbo.protocol.port 协议端口  </p>
+<p>spring.dubbo.scan dubbo 服务类包目录 </p>
+<p><strong>详细配置清单</strong></p>
+<p>#根据 starter 工程源码，可以看出 application.properties 对应的 Dubbo 配置类 DubboProperties 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@ConfigurationProperties(prefix = &quot;spring.dubbo&quot;)</span><br><span class="line"></span><br><span class="line">public class DubboProperties &#123;</span><br><span class="line"></span><br><span class="line">private String scan;</span><br><span class="line"></span><br><span class="line">private ApplicationConfig application;</span><br><span class="line"></span><br><span class="line">private RegistryConfig registry;</span><br><span class="line"></span><br><span class="line">private ProtocolConfig protocol;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>包括了扫描路径、应用配置类、注册中心配置类和服务协议类 所以具体常用配置下扫描包路径：指的是 Dubbo 服务注解的服务包路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br></pre></td><td class="code"><pre><span class="line">## Dubbo 配置</span><br><span class="line"></span><br><span class="line"># 扫描包路径</span><br><span class="line"></span><br><span class="line">spring.dubbo.scan=org.spring.springboot.dubbo</span><br><span class="line"></span><br><span class="line">应用配置类：关于 Dubbo 应用级别的配置</span><br><span class="line"></span><br><span class="line">## Dubbo 应用配置</span><br><span class="line"></span><br><span class="line"># 应用名称</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.name=xxx</span><br><span class="line"></span><br><span class="line"># 模块版本</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.version=xxx</span><br><span class="line"></span><br><span class="line"># 应用负责人</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.owner=xxx</span><br><span class="line"></span><br><span class="line"># 组织名(BU或部门)</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.organization=xxx</span><br><span class="line"></span><br><span class="line"># 分层</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.architecture=xxx</span><br><span class="line"></span><br><span class="line"># 环境，如：dev/test/run</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.environment=xxx</span><br><span class="line"></span><br><span class="line"># Java代码编译器</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.compiler=xxx</span><br><span class="line"></span><br><span class="line"># 日志输出方式</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.logger=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心 0</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries[0].address=zookeeper:#127.0.0.1:2181=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心 1</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries[1].address=zookeeper:#127.0.0.1:2181=xxx</span><br><span class="line"></span><br><span class="line"># 服务监控</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.monitor.address=xxx</span><br><span class="line"></span><br><span class="line">这里注意多个注册中心的配置方式。下面介绍单个注册中心的配置方式。 注册中心配置类：常用 ZooKeeper 作为注册中心进行服务注册。</span><br><span class="line"></span><br><span class="line">## Dubbo 注册中心配置类</span><br><span class="line"></span><br><span class="line"># 注册中心地址</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.address=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心登录用户名</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.username=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心登录密码</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.password=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心缺省端口</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.port=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心协议</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.protocol=xxx</span><br><span class="line"></span><br><span class="line"># 客户端实现</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.transporter=xxx</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.server=xxx</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.client=xxx</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.cluster=xxx</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.group=xxx</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.version=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心请求超时时间(毫秒)</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.timeout=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心会话超时时间(毫秒)</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.session=xxx</span><br><span class="line"></span><br><span class="line"># 动态注册中心列表存储文件</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.file=xxx</span><br><span class="line"></span><br><span class="line"># 停止时等候完成通知时间</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.wait=xxx</span><br><span class="line"></span><br><span class="line"># 启动时检查注册中心是否存在</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.check=xxx</span><br><span class="line"></span><br><span class="line"># 在该注册中心上注册是动态的还是静态的服务</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.dynamic=xxx</span><br><span class="line"></span><br><span class="line"># 在该注册中心上服务是否暴露</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.register=xxx</span><br><span class="line"></span><br><span class="line"># 在该注册中心上服务是否引用</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.subscribe=xxx</span><br><span class="line"></span><br><span class="line">服务协议配置类：</span><br><span class="line"></span><br><span class="line">## Dubbo 服务协议配置</span><br><span class="line"></span><br><span class="line"># 服务协议</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.name=xxx</span><br><span class="line"></span><br><span class="line"># 服务IP地址(多网卡时使用)</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.host=xxx</span><br><span class="line"></span><br><span class="line"># 服务端口</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.port=xxx</span><br><span class="line"></span><br><span class="line"># 上下文路径</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.contextpath=xxx</span><br><span class="line"></span><br><span class="line"># 线程池类型</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.threadpool=xxx</span><br><span class="line"></span><br><span class="line"># 线程池大小(固定大小)</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.threads=xxx</span><br><span class="line"></span><br><span class="line"># IO线程池大小(固定大小)</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.iothreads=xxx</span><br><span class="line"></span><br><span class="line"># 线程池队列大小</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.queues=xxx</span><br><span class="line"></span><br><span class="line"># 最大接收连接数</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.accepts=xxx</span><br><span class="line"></span><br><span class="line"># 协议编码</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.codec=xxx</span><br><span class="line"></span><br><span class="line"># 序列化方式</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.serialization=xxx</span><br><span class="line"></span><br><span class="line"># 字符集</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.charset=xxx</span><br><span class="line"></span><br><span class="line"># 最大请求数据长度</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.payload=xxx</span><br><span class="line"></span><br><span class="line"># 缓存区大小</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.buffer=xxx</span><br><span class="line"></span><br><span class="line"># 心跳间隔</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.heartbeat=xxx</span><br><span class="line"></span><br><span class="line"># 访问日志</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.accesslog=xxx</span><br><span class="line"></span><br><span class="line"># 网络传输方式</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.transporter=xxx</span><br><span class="line"></span><br><span class="line"># 信息交换方式</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.exchanger=xxx</span><br><span class="line"></span><br><span class="line"># 信息线程模型派发方式</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.dispatcher=xxx</span><br><span class="line"></span><br><span class="line"># 对称网络组网方式</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.networker=xxx</span><br><span class="line"></span><br><span class="line"># 服务器端实现</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.server=xxx</span><br><span class="line"></span><br><span class="line"># 客户端实现</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.client=xxx</span><br><span class="line"></span><br><span class="line"># 支持的telnet命令，多个命令用逗号分隔</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.telnet=xxx</span><br><span class="line"></span><br><span class="line"># 命令行提示符</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.prompt=xxx</span><br><span class="line"></span><br><span class="line"># status检查</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.status=xxx</span><br><span class="line"></span><br><span class="line"># 是否注册</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.status=xxx</span><br></pre></td></tr></table></figure>
+<h4 id="2-4-Service-服务提供者常用配置"><a href="#2-4-Service-服务提供者常用配置" class="headerlink" title="2-4.@Service 服务提供者常用配置"></a>2-4.@Service 服务提供者常用配置</h4><p>常用 @Service 配置的如下</p>
+<ul>
+<li><p>version 版本</p>
+</li>
+<li><p>group 分组</p>
+</li>
+<li><p>provider 提供者</p>
+</li>
+<li><p>protocol 服务协议</p>
+</li>
+<li><p>monitor 服务监控</p>
+</li>
+<li><p>registry 服务注册</p>
+</li>
+<li><p>…</p>
+</li>
+</ul>
+<h4 id="2-5-Reference-服务消费者常用配置"><a href="#2-5-Reference-服务消费者常用配置" class="headerlink" title="2-5.@Reference 服务消费者常用配置"></a>2-5.@Reference 服务消费者常用配置</h4><p>常用 @Reference 配置的如下</p>
+<ul>
+<li><p>version 版本</p>
+</li>
+<li><p>group 分组</p>
+</li>
+<li><p>timeout 消费者调用提供者的超时时间</p>
+</li>
+<li><p>consumer 服务消费者</p>
+</li>
+<li><p>monitor 服务监控</p>
+</li>
+<li><p>registry 服务注册</p>
+</li>
+</ul>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'Spring Boot整合篇'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            宝全哥哥
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/15/Spring boot整合篇/">Spring Boot整合篇</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/08/Linux基础操作/">Linux基础操作文档</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/05/volatile基础/">volatile基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/13/Spring Boot基础/">Spring Boot基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/02/04/Nginx基础原理/">Nginx基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/13/Spring Boot基础/">Spring Boot基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/04/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/04/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/02/06/javaSE-继承/">JAVAEE-继承</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/08/基础排序 组合/">基础排序 组合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/05/06/Git回顾/">Git回顾</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                <li class="">
+                    <a href="/2018/08/15/Spring boot整合篇/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                <li class="">
+                    <a href="/2018/08/15/Spring boot整合篇/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                <li class="">
+                    <a href="/2018/08/15/Spring boot整合篇/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+</div>
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://kdays.net/days/" target="_blank">KDays Forum</a>
+    </li>
+    
+    <li>
+        <a href="http://www.gal123.com/" target="_blank">绅士导航♂</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">萌导航</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/dony15" target="_blank">Github</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 宝全哥哥 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+
+<!--page counter part统计-->
+<script>
+function addCount (Counter) {
+        url=$('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query=new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url",url);
+        query.find({
+            success: function(results){
+                if(results.length>0)
+                {
+                    var counter=results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                }
+                else
+                {
+                    var newcounter=new Counter();
+                    newcounter.set("title",title);
+                    newcounter.set("url",url);
+                    newcounter.set("time",1);
+                    newcounter.save(null,{
+                        success: function(newcounter){
+                        //alert('New object created');
+                        },
+                        error: function(newcounter,error){
+                        alert('Failed to create');
+                        }
+                        });
+                }
+            },
+            error: function(error){
+                //find null is not a error
+                alert('Error:'+error.code+" "+error.message);
+            }
+        });
+}
+$(function(){
+        var Counter=AV.Object.extend("Counter");
+        //only increse visit counting when intering a page
+        if ($('.article-title').length == 1)
+           addCount(Counter);
+        var query=new AV.Query(Counter);
+        query.descending("time");
+        // the sum of popular posts
+        query.limit(10); 
+        query.find({
+            success: function(results){
+                    for(var i=0;i<results.length;i++)    
+                    {
+                        var counter=results[i];
+                        title=counter.get("title");
+                        url=counter.get("url");
+                        time=counter.get("time");
+                        // add to the popularlist widget
+                        showcontent=title+" ("+time+")";
+                        //notice the "" in href
+                        $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
+                    }
+                },
+            error: function(error){
+                alert("Error:"+error.code+" "+error.message);
+            }
+            }
+        )
+        });
+</script>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '8'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Wed Aug 15 2018 00:00:00 GMT+0800'
+      window.commentConfig.owner = 'dony15'
+      window.commentConfig.repo = 'reply.github.io'
+      window.commentConfig.client_id = '3e620f638731b84942ed'
+      window.commentConfig.client_secret = '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e'
+      window.commentConfig.redirect_uri = ''
+    } else {
+      window.commentConfig = {
+      	id: 'Wed Aug 15 2018 00:00:00 GMT+0800',
+        owner: 'dony15',
+        repo: 'reply.github.io',
+        client_id: '3e620f638731b84942ed',
+        client_secret: '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e',
+        redirect_uri: ''
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>
