@@ -157,11 +157,11 @@
                         
                         
                         <li>
-                            <a href="/categories/搭建/">搭建</a>
+                            <a href="/categories/Web基础/">Web基础</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/Web基础/">Web基础</a>
+                            <a href="/categories/框架/">框架</a>
                         </li>
                         
                         <li>
@@ -173,11 +173,11 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/框架/">框架</a>
+                            <a href="/categories/Linux基础/">Linux基础</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/Linux基础/">Linux基础</a>
+                            <a href="/categories/搭建/">搭建</a>
                         </li>
                         
                         <li>
@@ -193,11 +193,11 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/工具类/">工具类</a>
+                            <a href="/categories/初等数学/">初等数学</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/初等数学/">初等数学</a>
+                            <a href="/categories/工具类/">工具类</a>
                         </li>
                         
                         <li>
@@ -346,7 +346,27 @@
 <li><p>registry 服务注册</p>
 </li>
 </ul>
-
+<h4 id="2-6-总结"><a href="#2-6-总结" class="headerlink" title="2-6.总结"></a>2-6.总结</h4><h5 id="A-依赖问题"><a href="#A-依赖问题" class="headerlink" title="A) 依赖问题"></a>A) 依赖问题</h5><p>目前测试的是Spring boot整合的dubbo依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;io.dubbo.springboot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-dubbo&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>注意该依赖中存在了dubbo和zk所有依赖包,不需要额外的配置zk,<strong>否则会引起jar包冲突</strong>,选择时可以通过插件查看</p>
+<p>注意提供者如果使用事务,那么需要导入AOP依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="B-配置问题"><a href="#B-配置问题" class="headerlink" title="B)配置问题"></a>B)配置问题</h5><p>注意ZK的注册地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#ZK地址</span><br><span class="line">spring.dubbo.registry.address=zookeeper://www.dony15.com:2181</span><br></pre></td></tr></table></figure>
+<p>注意服务包目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.dubbo.scan=com.dony15.service</span><br></pre></td></tr></table></figure>
+<p>该目录的提供者和消费者并不需要一致,扫描的是本工程内对应的注解位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#服务包目录-提供者</span><br><span class="line">spring.dubbo.scan=com.dony15.service</span><br><span class="line"></span><br><span class="line">#服务包目录-消费者</span><br><span class="line">spring.dubbo.scan=com.dony15.dubbo</span><br></pre></td></tr></table></figure>
+<h5 id="C-注解问题"><a href="#C-注解问题" class="headerlink" title="C)注解问题"></a>C)注解问题</h5><p>@Service(version = “1.0.0”)和@Reference(version = “1.0.0”)</p>
+<p>版本号可以写也可以不写,但是这两个注解注意是dubbo包下,并非spring包</p>
+<h5 id="D-解耦"><a href="#D-解耦" class="headerlink" title="D)解耦"></a>D)解耦</h5><p>可以将通用的接口和实体类抽离出来打成jar进行依赖,优点</p>
+<ol>
+<li>提高复用性</li>
+<li>避免springboot的<strong>按需依赖原则</strong>造成的过多引用问题</li>
+<li>如果不这样做,注解方式的引用需要在提供者和消费者都建立服务接口,降低dubbo的实用性(每次调用服务都需要将服务内容复制一遍)</li>
+</ol>
+<h5 id="E-注解篇代码奉上Spring-boot-Dubbo-ZK-JDBC-AOP-Mybatis-Restful"><a href="#E-注解篇代码奉上Spring-boot-Dubbo-ZK-JDBC-AOP-Mybatis-Restful" class="headerlink" title="E)注解篇代码奉上Spring boot+Dubbo+ZK+JDBC+AOP+Mybatis+Restful"></a>E)注解篇代码奉上Spring boot+Dubbo+ZK+JDBC+AOP+Mybatis+Restful</h5><p><a href="https://github.com/dony15/my_springboot_code" target="_blank" rel="noopener">https://github.com/dony15/my_springboot_code</a></p>
+<h3 id="3-基础整合搭建ZK-Dubbo-Thymeleaf"><a href="#3-基础整合搭建ZK-Dubbo-Thymeleaf" class="headerlink" title="3.基础整合搭建ZK/Dubbo/Thymeleaf"></a>3.基础整合搭建ZK/Dubbo/Thymeleaf</h3><h4 id="3-1-代码"><a href="#3-1-代码" class="headerlink" title="3-1.代码"></a>3-1.代码</h4><h5 id="注解篇代码奉上Thymeleaf-Spring-boot-Dubbo-ZK-JDBC-AOP-Mybatis-Restful"><a href="#注解篇代码奉上Thymeleaf-Spring-boot-Dubbo-ZK-JDBC-AOP-Mybatis-Restful" class="headerlink" title="注解篇代码奉上Thymeleaf+Spring boot+Dubbo+ZK+JDBC+AOP+Mybatis+Restful"></a>注解篇代码奉上Thymeleaf+Spring boot+Dubbo+ZK+JDBC+AOP+Mybatis+Restful</h5>
     </div>
 </article>
 
@@ -510,7 +530,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/05/06/IDEA整合Git基础/">IDEA整合Git基础</a>
+                    <a href="/2018/08/08/Linux基础操作/">Linux基础操作文档</a>
                 </span>
             </li>
             
@@ -522,25 +542,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/07/06/Log日志整理/">Log日志整理</a>
+                    <a href="/2017/04/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/13/Spring Boot基础/">Spring Boot基础使用</a>
+                    <a href="/2018/05/08/基础排序 组合/">基础排序 组合</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/07/05/java基础SE-java优点/">javaSE-java优点</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                    <a href="/2017/07/14/服务器搭建/">服务器搭建(持续更新)</a>
                 </span>
             </li>
             
@@ -552,13 +566,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/09/15/Struts2基础/">Struts2基础</a>
+                    <a href="/2018/05/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/05/06/Git回顾/">Git回顾</a>
+                    <a href="/2018/05/04/Redis基础原理/">Redis基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
                 </span>
             </li>
             
