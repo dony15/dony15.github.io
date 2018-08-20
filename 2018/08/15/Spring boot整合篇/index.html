@@ -161,10 +161,6 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/组件/">组件</a>
-                        </li>
-                        
-                        <li>
                             <a href="/categories/搭建/">搭建</a>
                         </li>
                         
@@ -173,11 +169,15 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/Linux基础/">Linux基础</a>
+                            <a href="/categories/IDE/">IDE</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/IDE/">IDE</a>
+                            <a href="/categories/组件/">组件</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Linux基础/">Linux基础</a>
                         </li>
                         
                         <li>
@@ -401,8 +401,19 @@
 <h5 id="B-基础逻辑"><a href="#B-基础逻辑" class="headerlink" title="B)基础逻辑"></a>B)基础逻辑</h5><p>基础的逻辑,文件上传到FastDFS,通过回调获取URI</p>
 <p>再和Nginx的地址拼接成完整的URL响应给前段</p>
 <p>前段拿到响应的URL和其他数据一起存进数据库</p>
-<h3 id="5-emmm-Redis或者定时-MQ吧"><a href="#5-emmm-Redis或者定时-MQ吧" class="headerlink" title="5.emmm..Redis或者定时/MQ吧"></a>5.emmm..Redis或者定时/MQ吧</h3><p>(预计8-20-21更一个)</p>
-<p>( • ̀ω•́ )✧</p>
+<h3 id="5-整合Redis"><a href="#5-整合Redis" class="headerlink" title="5.整合Redis"></a>5.整合Redis</h3><h4 id="5-1-代码"><a href="#5-1-代码" class="headerlink" title="5-1.代码"></a>5-1.代码</h4><p><strong>Thymeleaf+Freemarker+Spring boot+Dubbo+ZK+JDBC+AOP+Mybatis+Restful+FastDFS+Nginx+Redis</strong></p>
+<p><a href="https://github.com/dony15/my_springboot_code/tree/master/springboot4-redis" target="_blank" rel="noopener">https://github.com/dony15/my_springboot_code/tree/master/springboot4-redis</a></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><h5 id="A-依赖问题-1"><a href="#A-依赖问题-1" class="headerlink" title="A)依赖问题"></a>A)依赖问题</h5><p>注意redis需要和jackson一起,否则异常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;functionDomainRedisTemplate&apos; defined in class path resource [com/dony15/config/RedisConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.redis.core.RedisTemplate]: Factory method &apos;functionDomainRedisTemplate&apos; threw exception; nested exception is java.lang.NoClassDefFoundError: com/fasterxml/jackson/databind/ObjectMapper</span><br></pre></td></tr></table></figure>
+<p>我们可以看到这里的提示,缺少jacksion中的ObjectMapper</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nested exception is java.lang.NoClassDefFoundError: com/fasterxml/jackson/databind/ObjectMapper</span><br></pre></td></tr></table></figure>
+<p>因此依赖应该这样配套使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 整合redis --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!-- jackson --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>当然,FastJSON也是需要的,主要用在处理业务的时候,选择怎么存的策略转换,比如List,Map,数组等的处理选择上</p>
+<h5 id="B-配置-单机版"><a href="#B-配置-单机版" class="headerlink" title="B)配置-单机版"></a>B)配置-单机版</h5><p>Springboot整合redis,需要注意RedisTemplate的注入,通过配置类来实现</p>
+<p>将RedisUtil注入封装RedisTemplate</p>
+<p>调用RedisUtil通过自动装配或者@Resource注入即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#Redis</span><br><span class="line">#Matser的ip地址</span><br><span class="line">redis.host=www.dony15.com</span><br><span class="line">#端口号</span><br><span class="line">redis.port=6379</span><br><span class="line">#如果有密码</span><br><span class="line">redis.password=</span><br><span class="line">#客户端超时时间单位是毫秒 默认是2000</span><br><span class="line">redis.timeout=20000  </span><br><span class="line"></span><br><span class="line">#最大空闲数</span><br><span class="line">redis.maxIdle=300  </span><br><span class="line">#连接池的最大数据库连接数。设为0表示无限制,如果是jedis 2.4以后用redis.maxTotal</span><br><span class="line">#redis.maxActive=600</span><br><span class="line">#控制一个pool可分配多少个jedis实例,用来替换上面的redis.maxActive,如果是jedis 2.4以后用该属性</span><br><span class="line">redis.maxTotal=1000  </span><br><span class="line">#最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。</span><br><span class="line">redis.maxWaitMillis=10000  </span><br><span class="line">#连接的最小空闲时间 默认1800000毫秒(30分钟)</span><br><span class="line">redis.minEvictableIdleTimeMillis=300000  </span><br><span class="line">#每次释放连接的最大数目,默认3</span><br><span class="line">redis.numTestsPerEvictionRun=1024  </span><br><span class="line">#逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1</span><br><span class="line">redis.timeBetweenEvictionRunsMillis=30000  </span><br><span class="line">#是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个</span><br><span class="line">redis.testOnBorrow=true  </span><br><span class="line">#在空闲时检查有效性, 默认false</span><br><span class="line">redis.testWhileIdle=true</span><br></pre></td></tr></table></figure>
 
     </div>
 </article>
@@ -491,13 +502,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/08/08/Linux基础操作/">Linux基础操作文档</a>
+                    <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
+                    <a href="/2018/08/08/Linux基础操作/">Linux基础操作文档</a>
                 </span>
             </li>
             
@@ -561,25 +572,25 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                    <a href="/2017/12/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/04/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
+                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/03/23/javaSE-集合/">javaSE-集合</a>
+                    <a href="/2017/04/06/activeMQ基础与运用/">ActiveMQ基础与运用</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
+                    <a href="/2017/09/18/java POI辅助框架/">java POI辅助框架基础</a>
                 </span>
             </li>
             
@@ -591,13 +602,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/07/14/服务器搭建/">服务器搭建(持续更新)</a>
+                    <a href="/2018/05/08/基础排序 组合/">基础排序 组合</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/12/06/FastDfs基础原理/">FastDFS 基础原理</a>
+                    <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/07/14/服务器搭建/">服务器搭建(持续更新)</a>
                 </span>
             </li>
             
@@ -609,13 +626,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/09/15/Struts2基础/">Struts2基础</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
+                    <a href="/2017/05/06/Git回顾/">Git回顾</a>
                 </span>
             </li>
             
