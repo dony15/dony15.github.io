@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="宝全哥哥">
+    
+    
+    
+    
+    
+    
+    <title>Spring Boot整合篇 | DonY15</title>
+    <link href=”http://yoursite.com“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz',
+        appKey: 'nYP6CNjSvE1TUhTur6M4ldxz'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpg,preview7.jpg,preview8.jpg,preview9.jpg,preview10.jpg,preview11.jpg,preview12.jpg,preview13.jpg,preview14.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+		<!--统计-->
+			<!--<script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>-->
+		<!--<script>AV.initialize("Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz", "nYP6CNjSvE1TUhTur6M4ldxz");</script>-->
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-realtime@4.1.0/dist/realtime.browser.min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-live-query-min.js"></script>
+		
+		<script>
+		// 存储服务
+		var { Query, User } = AV;
+		AV.init('Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz', 'nYP6CNjSvE1TUhTur6M4ldxz');
+		// 实时消息服务
+		var { Realtime, TextMessage } = AV;
+		
+		</script>
+		
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="http://yoursite.com" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/categories" class="menuItem" style="left: 50%; top: 85%;">目录</a>
+            <a href="/message" class="menuItem" style="left: 19.6891%; top: 67.5%;">留言板</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <!--<a href="http://yoursite.com">-->
+						<a href="/">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">DonY15</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>目录
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/Web基础/">Web基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/框架/">框架</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/搭建/">搭建</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/组件/">组件</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IDE/">IDE</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Linux基础/">Linux基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Spring全家桶/">Spring全家桶</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IO/">IO</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SE基础/">SE基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/初等数学/">初等数学</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/工具类/">工具类</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/服务器/">服务器</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SQL/">SQL</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="">
+                    <a href="/tags">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-user"></i>留言板
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+       
+				<a href="/">DonY15</a>
+        >
+        <span>Spring Boot整合篇</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2018/08/24/Spring boot整合篇/">Spring Boot整合篇</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-08-24
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2018/08/24/Spring boot整合篇/">Spring Boot整合篇</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-08-24
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h2 id="Spring-boot整合篇"><a href="#Spring-boot整合篇" class="headerlink" title="Spring boot整合篇"></a>Spring boot整合篇</h2><p>[TOC]</p>
+<h3 id="1-优秀传送门"><a href="#1-优秀传送门" class="headerlink" title="1.优秀传送门"></a>1.优秀传送门</h3><h4 id="1-1-第一章送给GitHub仓库-多种框架整合实战案例"><a href="#1-1-第一章送给GitHub仓库-多种框架整合实战案例" class="headerlink" title="1-1.第一章送给GitHub仓库,多种框架整合实战案例"></a>1-1.第一章送给GitHub仓库,多种框架整合实战案例</h4><p><a href="https://github.com/JeffLi1993/springboot-learning-example" target="_blank" rel="noopener">https://github.com/JeffLi1993/springboot-learning-example</a></p>
+<hr>
+<h3 id="公告"><a href="#公告" class="headerlink" title="公告"></a>公告</h3><p><strong>该套框架整合尽量以一个工程进行叠加演示,一般情况下后面的整合都包含前面的基础整合</strong></p>
+<p>(上面 1 仓库实战是各个框架分离,可以参考学习)</p>
+<hr>
+<h3 id="2-基础整合搭建ZK-Dubbo"><a href="#2-基础整合搭建ZK-Dubbo" class="headerlink" title="2.基础整合搭建ZK/Dubbo"></a>2.基础整合搭建ZK/Dubbo</h3><p>Dubbo Spring Boot Starter 致力于简化 Dubbo 应用在 Spring Boot 环境中的开发，主要包括自动装配（Auto-Configure）、外部化配置（Externalized-Configuration）以及生产准备（Actuator） </p>
+<p><strong>思路</strong></p>
+<ol>
+<li>在Spring boot中整合ZK/Dubbo,可以将ZK抽出来放在parent中,这样子模块只需要考虑dubbo的服务配置即可</li>
+<li>利用强大的注解功能,运用Dubbo的@Service做服务端注解,@Reference做消费端注解,快速整合Springboot+ZK+Dubbo</li>
+</ol>
+<h4 id="2-1-基础搭建传送门"><a href="#2-1-基础搭建传送门" class="headerlink" title="2-1.基础搭建传送门"></a>2-1.基础搭建传送门</h4><p><a href="https://www.bysocket.com/?p=1681" target="_blank" rel="noopener">https://www.bysocket.com/?p=1681</a></p>
+<h4 id="2-2-优秀开源项目"><a href="#2-2-优秀开源项目" class="headerlink" title="2-2.优秀开源项目"></a>2-2.优秀开源项目</h4><p><a href="https://github.com/dubbo/dubbo-spring-boot-project" target="_blank" rel="noopener">https://github.com/dubbo/dubbo-spring-boot-project</a> </p>
+<p><em>Springboot</em> 多模块项目，整合了freemark,jsp,logback,mail,多数据源,mybatis,redis,docker,SSL等(待验证) </p>
+<p><a href="https://github.com/dony15/springboot-dubbox" target="_blank" rel="noopener">https://github.com/dony15/springboot-dubbox</a></p>
+<h4 id="2-3-配置详解"><a href="#2-3-配置详解" class="headerlink" title="2-3.配置详解"></a>2-3.配置详解</h4><p>application.properties  </p>
+<p><strong>简单基础配置</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## Dubbo 服务提供者配置</span><br><span class="line">spring.dubbo.application.name=provider/consumer</span><br><span class="line">spring.dubbo.registry.address=zookeeper://127.0.0.1:2181</span><br><span class="line">spring.dubbo.protocol.name=dubbo</span><br><span class="line">spring.dubbo.protocol.port=20880</span><br><span class="line">spring.dubbo.scan=org.spring.springboot.</span><br></pre></td></tr></table></figure>
+<p>spring.dubbo.application.name 应用名称  </p>
+<p>spring.dubbo.registry.address 注册中心地址  </p>
+<p>spring.dubbo.protocol.name 协议名称 </p>
+<p>spring.dubbo.protocol.port 协议端口  </p>
+<p>spring.dubbo.scan dubbo 服务类包目录 </p>
+<p><strong>详细配置清单</strong></p>
+<p>#根据 starter 工程源码，可以看出 application.properties 对应的 Dubbo 配置类 DubboProperties 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@ConfigurationProperties(prefix = &quot;spring.dubbo&quot;)</span><br><span class="line"></span><br><span class="line">public class DubboProperties &#123;</span><br><span class="line"></span><br><span class="line">private String scan;</span><br><span class="line"></span><br><span class="line">private ApplicationConfig application;</span><br><span class="line"></span><br><span class="line">private RegistryConfig registry;</span><br><span class="line"></span><br><span class="line">private ProtocolConfig protocol;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>包括了扫描路径、应用配置类、注册中心配置类和服务协议类 所以具体常用配置下扫描包路径：指的是 Dubbo 服务注解的服务包路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br></pre></td><td class="code"><pre><span class="line">## Dubbo 配置</span><br><span class="line"></span><br><span class="line"># 扫描包路径</span><br><span class="line"></span><br><span class="line">spring.dubbo.scan=org.spring.springboot.dubbo</span><br><span class="line"></span><br><span class="line">应用配置类：关于 Dubbo 应用级别的配置</span><br><span class="line"></span><br><span class="line">## Dubbo 应用配置</span><br><span class="line"></span><br><span class="line"># 应用名称</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.name=xxx</span><br><span class="line"></span><br><span class="line"># 模块版本</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.version=xxx</span><br><span class="line"></span><br><span class="line"># 应用负责人</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.owner=xxx</span><br><span class="line"></span><br><span class="line"># 组织名(BU或部门)</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.organization=xxx</span><br><span class="line"></span><br><span class="line"># 分层</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.architecture=xxx</span><br><span class="line"></span><br><span class="line"># 环境，如：dev/test/run</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.environment=xxx</span><br><span class="line"></span><br><span class="line"># Java代码编译器</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.compiler=xxx</span><br><span class="line"></span><br><span class="line"># 日志输出方式</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.logger=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心 0</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries[0].address=zookeeper:#127.0.0.1:2181=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心 1</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries[1].address=zookeeper:#127.0.0.1:2181=xxx</span><br><span class="line"></span><br><span class="line"># 服务监控</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.monitor.address=xxx</span><br><span class="line"></span><br><span class="line">这里注意多个注册中心的配置方式。下面介绍单个注册中心的配置方式。 注册中心配置类：常用 ZooKeeper 作为注册中心进行服务注册。</span><br><span class="line"></span><br><span class="line">## Dubbo 注册中心配置类</span><br><span class="line"></span><br><span class="line"># 注册中心地址</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.address=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心登录用户名</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.username=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心登录密码</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.password=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心缺省端口</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.port=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心协议</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.protocol=xxx</span><br><span class="line"></span><br><span class="line"># 客户端实现</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.transporter=xxx</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.server=xxx</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.client=xxx</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.cluster=xxx</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.group=xxx</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.version=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心请求超时时间(毫秒)</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.timeout=xxx</span><br><span class="line"></span><br><span class="line"># 注册中心会话超时时间(毫秒)</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.session=xxx</span><br><span class="line"></span><br><span class="line"># 动态注册中心列表存储文件</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.file=xxx</span><br><span class="line"></span><br><span class="line"># 停止时等候完成通知时间</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.wait=xxx</span><br><span class="line"></span><br><span class="line"># 启动时检查注册中心是否存在</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.check=xxx</span><br><span class="line"></span><br><span class="line"># 在该注册中心上注册是动态的还是静态的服务</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.dynamic=xxx</span><br><span class="line"></span><br><span class="line"># 在该注册中心上服务是否暴露</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.register=xxx</span><br><span class="line"></span><br><span class="line"># 在该注册中心上服务是否引用</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.registries.subscribe=xxx</span><br><span class="line"></span><br><span class="line">服务协议配置类：</span><br><span class="line"></span><br><span class="line">## Dubbo 服务协议配置</span><br><span class="line"></span><br><span class="line"># 服务协议</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.name=xxx</span><br><span class="line"></span><br><span class="line"># 服务IP地址(多网卡时使用)</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.host=xxx</span><br><span class="line"></span><br><span class="line"># 服务端口</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.port=xxx</span><br><span class="line"></span><br><span class="line"># 上下文路径</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.contextpath=xxx</span><br><span class="line"></span><br><span class="line"># 线程池类型</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.threadpool=xxx</span><br><span class="line"></span><br><span class="line"># 线程池大小(固定大小)</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.threads=xxx</span><br><span class="line"></span><br><span class="line"># IO线程池大小(固定大小)</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.iothreads=xxx</span><br><span class="line"></span><br><span class="line"># 线程池队列大小</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.queues=xxx</span><br><span class="line"></span><br><span class="line"># 最大接收连接数</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.accepts=xxx</span><br><span class="line"></span><br><span class="line"># 协议编码</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.codec=xxx</span><br><span class="line"></span><br><span class="line"># 序列化方式</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.serialization=xxx</span><br><span class="line"></span><br><span class="line"># 字符集</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.charset=xxx</span><br><span class="line"></span><br><span class="line"># 最大请求数据长度</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.payload=xxx</span><br><span class="line"></span><br><span class="line"># 缓存区大小</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.buffer=xxx</span><br><span class="line"></span><br><span class="line"># 心跳间隔</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.heartbeat=xxx</span><br><span class="line"></span><br><span class="line"># 访问日志</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.accesslog=xxx</span><br><span class="line"></span><br><span class="line"># 网络传输方式</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.transporter=xxx</span><br><span class="line"></span><br><span class="line"># 信息交换方式</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.exchanger=xxx</span><br><span class="line"></span><br><span class="line"># 信息线程模型派发方式</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.dispatcher=xxx</span><br><span class="line"></span><br><span class="line"># 对称网络组网方式</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.networker=xxx</span><br><span class="line"></span><br><span class="line"># 服务器端实现</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.server=xxx</span><br><span class="line"></span><br><span class="line"># 客户端实现</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.client=xxx</span><br><span class="line"></span><br><span class="line"># 支持的telnet命令，多个命令用逗号分隔</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.telnet=xxx</span><br><span class="line"></span><br><span class="line"># 命令行提示符</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.prompt=xxx</span><br><span class="line"></span><br><span class="line"># status检查</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.status=xxx</span><br><span class="line"></span><br><span class="line"># 是否注册</span><br><span class="line"></span><br><span class="line">spring.dubbo.application.protocol.status=xxx</span><br></pre></td></tr></table></figure>
+<h4 id="2-4-Service-服务提供者常用配置"><a href="#2-4-Service-服务提供者常用配置" class="headerlink" title="2-4.@Service 服务提供者常用配置"></a>2-4.@Service 服务提供者常用配置</h4><p>常用 @Service 配置的如下</p>
+<ul>
+<li><p>version 版本</p>
+</li>
+<li><p>group 分组</p>
+</li>
+<li><p>provider 提供者</p>
+</li>
+<li><p>protocol 服务协议</p>
+</li>
+<li><p>monitor 服务监控</p>
+</li>
+<li><p>registry 服务注册</p>
+</li>
+<li><p>…</p>
+</li>
+</ul>
+<h4 id="2-5-Reference-服务消费者常用配置"><a href="#2-5-Reference-服务消费者常用配置" class="headerlink" title="2-5.@Reference 服务消费者常用配置"></a>2-5.@Reference 服务消费者常用配置</h4><p>常用 @Reference 配置的如下</p>
+<ul>
+<li><p>version 版本</p>
+</li>
+<li><p>group 分组</p>
+</li>
+<li><p>timeout 消费者调用提供者的超时时间</p>
+</li>
+<li><p>consumer 服务消费者</p>
+</li>
+<li><p>monitor 服务监控</p>
+</li>
+<li><p>registry 服务注册</p>
+</li>
+</ul>
+<h4 id="2-6-总结"><a href="#2-6-总结" class="headerlink" title="2-6.总结"></a>2-6.总结</h4><h5 id="A-依赖问题"><a href="#A-依赖问题" class="headerlink" title="A) 依赖问题"></a>A) 依赖问题</h5><p>目前测试的是Spring boot整合的dubbo依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;io.dubbo.springboot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-dubbo&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>注意该依赖中存在了dubbo和zk所有依赖包,不需要额外的配置zk,<strong>否则会引起jar包冲突</strong>,选择时可以通过插件查看</p>
+<p>注意提供者如果使用事务,那么需要导入AOP依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="B-配置问题"><a href="#B-配置问题" class="headerlink" title="B)配置问题"></a>B)配置问题</h5><p>注意ZK的注册地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#ZK地址</span><br><span class="line">spring.dubbo.registry.address=zookeeper://www.dony15.com:2181</span><br></pre></td></tr></table></figure>
+<p>注意服务包目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.dubbo.scan=com.dony15.service</span><br></pre></td></tr></table></figure>
+<p>该目录的提供者和消费者并不需要一致,扫描的是本工程内对应的注解位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#服务包目录-提供者</span><br><span class="line">spring.dubbo.scan=com.dony15.service</span><br><span class="line"></span><br><span class="line">#服务包目录-消费者</span><br><span class="line">spring.dubbo.scan=com.dony15.dubbo</span><br></pre></td></tr></table></figure>
+<h5 id="C-注解问题"><a href="#C-注解问题" class="headerlink" title="C)注解问题"></a>C)注解问题</h5><p>@Service(version = “1.0.0”)和@Reference(version = “1.0.0”)</p>
+<p>版本号可以写也可以不写,但是这两个注解注意是dubbo包下,并非spring包</p>
+<h5 id="D-解耦"><a href="#D-解耦" class="headerlink" title="D)解耦"></a>D)解耦</h5><p>可以将通用的接口和实体类抽离出来打成jar进行依赖,优点</p>
+<ol>
+<li>提高复用性</li>
+<li>避免springboot的<strong>按需依赖原则</strong>造成的过多引用问题</li>
+<li>如果不这样做,注解方式的引用需要在提供者和消费者都建立服务接口,降低dubbo的实用性(每次调用服务都需要将服务内容复制一遍)</li>
+</ol>
+<h5 id="E-注解篇代码奉上Spring-boot-Dubbo-ZK-JDBC-AOP-Mybatis-Restful"><a href="#E-注解篇代码奉上Spring-boot-Dubbo-ZK-JDBC-AOP-Mybatis-Restful" class="headerlink" title="E)注解篇代码奉上Spring boot+Dubbo+ZK+JDBC+AOP+Mybatis+Restful"></a>E)注解篇代码奉上Spring boot+Dubbo+ZK+JDBC+AOP+Mybatis+Restful</h5><p><a href="https://github.com/dony15/my_springboot_code" target="_blank" rel="noopener">https://github.com/dony15/my_springboot_code</a></p>
+<p>### </p>
+<hr>
+<h3 id="3-整合Thymeleaf-Freemarker"><a href="#3-整合Thymeleaf-Freemarker" class="headerlink" title="3.整合Thymeleaf/Freemarker"></a>3.整合Thymeleaf/Freemarker</h3><h4 id="3-1-代码"><a href="#3-1-代码" class="headerlink" title="3-1.代码"></a>3-1.代码</h4><h5 id="注解篇代码奉上Thymeleaf-Freemarker-Spring-boot-Dubbo-ZK-JDBC-AOP-Mybatis-Restful"><a href="#注解篇代码奉上Thymeleaf-Freemarker-Spring-boot-Dubbo-ZK-JDBC-AOP-Mybatis-Restful" class="headerlink" title="注解篇代码奉上Thymeleaf+Freemarker+Spring boot+Dubbo+ZK+JDBC+AOP+Mybatis+Restful"></a>注解篇代码奉上Thymeleaf+Freemarker+Spring boot+Dubbo+ZK+JDBC+AOP+Mybatis+Restful</h5><p><a href="https://github.com/dony15/my_springboot_code/tree/master/springboot-dubbo-mybatis-freemarker-thymeleaf" target="_blank" rel="noopener">https://github.com/dony15/my_springboot_code/tree/master/springboot-dubbo-mybatis-freemarker-thymeleaf</a></p>
+<h4 id="3-2-配置文件"><a href="#3-2-配置文件" class="headerlink" title="3-2.配置文件"></a>3-2.配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">#Themleaf配置</span><br><span class="line">spring.thymeleaf.content-type=text/html  </span><br><span class="line">spring.thymeleaf.mode =LEGACYHTML5</span><br><span class="line">#开发时关闭缓存,不然没法看到实时页面</span><br><span class="line">spring.thymeleaf.cache=false</span><br><span class="line"></span><br><span class="line">#配置静态资源路径</span><br><span class="line">spring.mvc.static-path-pattern=/static/**</span><br><span class="line"></span><br><span class="line">#DispatcherServlet 映射后缀(效果暂时没发现,并非伪静态技术)</span><br><span class="line">server.sevlet-path=*.html</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#freemarker模板</span><br><span class="line">spring.freemarker.allow-request-override=false</span><br><span class="line">spring.freemarker.cache=false</span><br><span class="line">spring.freemarker.check-template-location=true</span><br><span class="line">spring.freemarker.charset=UTF-8</span><br><span class="line">spring.freemarker.content-type=text/html</span><br><span class="line">spring.freemarker.expose-request-attributes=false</span><br><span class="line">spring.freemarker.expose-session-attributes=false</span><br><span class="line">spring.freemarker.expose-spring-macro-helpers=false</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-总结"><a href="#3-3-总结" class="headerlink" title="3-3.总结"></a>3-3.总结</h4><p>Thymeleaf和Freemarker可以共存,当然语法有区别,根据实际业务选择吧,整合基本没有难点,有时间可以了解一下他们的配置文件都是啥意思,百度很多,不留了</p>
+<h5 id="A-严谨问题"><a href="#A-严谨问题" class="headerlink" title="A)严谨问题"></a>A)严谨问题</h5><p>Thymeleaf对标签格式要求比较严谨,如果需要可以通过依赖jar进行自动补充(前段不一定写的很完整哦)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--ThymeLeaf代码补全--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;net.sourceforge.nekohtml&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;nekohtml&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.9.22&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="B-伪静态思路"><a href="#B-伪静态思路" class="headerlink" title="B)伪静态思路"></a>B)伪静态思路</h5><p>通过过滤器实现伪静态化,优化SEO,项目在不值得做大量静态页面时,可以使用</p>
+<p>一时半会没整合好,就注释掉了,大概这个思路( • ̀ω•́ )✧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--伪静态化优化方案,未实现--&gt;</span><br><span class="line">       &lt;dependency&gt;</span><br><span class="line">           &lt;groupId&gt;org.tuckey&lt;/groupId&gt;</span><br><span class="line">           &lt;artifactId&gt;urlrewritefilter&lt;/artifactId&gt;</span><br><span class="line">           &lt;version&gt;4.0.4&lt;/version&gt;</span><br><span class="line">       &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="C-依赖问题"><a href="#C-依赖问题" class="headerlink" title="C)依赖问题"></a>C)依赖问题</h5><p>Thymeleaf的依赖中已经存在spring-boot-starter-web的依赖</p>
+<p>因此spring-boot-starter-web可以无情的去掉了</p>
+<h5 id="D-FreemarkerUtil使用问题"><a href="#D-FreemarkerUtil使用问题" class="headerlink" title="D)FreemarkerUtil使用问题"></a>D)FreemarkerUtil使用问题</h5><p>注意目录,如果写错了很尴尬哦.中间环节取不到值会提示异常,表达式值为null</p>
+<h5 id="E-前后端分离"><a href="#E-前后端分离" class="headerlink" title="E)前后端分离"></a>E)前后端分离</h5><p>如果你能参与项目的设计,那么通过/{page}进行较大程度的前后端分离,是个不错的点子哦,项目中有示例</p>
+<hr>
+<h3 id="4-整合-FastDFS-Nginx"><a href="#4-整合-FastDFS-Nginx" class="headerlink" title="4.整合 FastDFS+Nginx"></a>4.整合 FastDFS+Nginx</h3><p>本次整合会增加数据库字段,当然包括代码层的更新咯.url存图片来演示FastDFS功能</p>
+<p>新增字段city_image存储url,演示是1张图,实际上在实体类中已经为多图扩展做了准备(数组切割)</p>
+<h4 id="4-1-代码"><a href="#4-1-代码" class="headerlink" title="4-1.代码"></a>4-1.代码</h4><p><strong>Thymeleaf+Freemarker+Spring boot+Dubbo+ZK+JDBC+AOP+Mybatis+Restful+FastDFS+Nginx</strong></p>
+<p><a href="https://github.com/dony15/my_springboot_code/tree/master/3springboot-fastDFS-Nginx" target="_blank" rel="noopener">https://github.com/dony15/my_springboot_code/tree/master/3springboot-fastDFS-Nginx</a></p>
+<h4 id="4-2-配置文件"><a href="#4-2-配置文件" class="headerlink" title="4-2.配置文件"></a>4-2.配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tracker_server=www.dony15.com:22122</span><br></pre></td></tr></table></figure>
+<p><strong>不足</strong></p>
+<p>Nginx地址没有提出来,开发时应该提出来通用的,方案有很多,放在配置文件或者指定类或接口都可以</p>
+<p>都没有做太多限制,比如图片类型,大小等等.可以进行各种判断过滤,这里只演示基础的功能实现</p>
+<p>FastDFS只演示了增加,还缺少删和改哦,可以自行百度</p>
+<h4 id="4-3-总结"><a href="#4-3-总结" class="headerlink" title="4-3.总结"></a>4-3.总结</h4><h5 id="A-前段问题"><a href="#A-前段问题" class="headerlink" title="A)前段问题"></a>A)前段问题</h5><p>这次演示没有使用富文本,可以更直接的去尝试细节(脑壳疼),</p>
+<p>注意文件上传的类型,使用ajax的时候很容易前后不兼容,400或者406等</p>
+<p>该方案是不依赖于form表单的ajax 详细见源码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;input  type=<span class="string">"file"</span> alt=<span class="string">"插入图片"</span> id=<span class="string">"uploadFile"</span>name=<span class="string">"uploadFile"</span> /&gt;</span><br><span class="line">-----------------------------------------------------</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 图片上传</span></span><br><span class="line"><span class="comment">* 注意如果不加processData:false和contentType:false会报错</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">$(<span class="string">"#uploadFile"</span>).change(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> imageForm = <span class="keyword">new</span> FormData();</span><br><span class="line">        imageForm.append(<span class="string">"uploadFile"</span>, $(<span class="string">"#uploadFile"</span>).get(<span class="number">0</span>).files[<span class="number">0</span>]);</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            type: <span class="string">'POST'</span>,</span><br><span class="line">            url: <span class="string">"/insertImage"</span>,</span><br><span class="line">            data: imageForm,</span><br><span class="line">            processData: <span class="literal">false</span>,  <span class="comment">// 告诉jQuery不要去处理发送的数据</span></span><br><span class="line">            contentType: <span class="literal">false</span>,   <span class="comment">// 告诉jQuery不要去设置Content-Type请求头</span></span><br><span class="line">            success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> result = <span class="built_in">JSON</span>.parse(data);</span><br><span class="line">                <span class="keyword">if</span> (result.error==<span class="number">1</span>) &#123;</span><br><span class="line">                    alert(result.message)</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    $(<span class="string">"#image_echo"</span>).attr(<span class="string">"src"</span>, result.url);</span><br><span class="line">                    $(<span class="string">"#cityImage"</span>).attr(<span class="string">"value"</span>, result.url);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            error: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                alert(<span class="string">"上传失败"</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h5 id="B-基础逻辑"><a href="#B-基础逻辑" class="headerlink" title="B)基础逻辑"></a>B)基础逻辑</h5><p>基础的逻辑,文件上传到FastDFS,通过回调获取URI</p>
+<p>再和Nginx的地址拼接成完整的URL响应给前段</p>
+<p>前段拿到响应的URL和其他数据一起存进数据库</p>
+<h3 id="5-整合Redis"><a href="#5-整合Redis" class="headerlink" title="5.整合Redis"></a>5.整合Redis</h3><h4 id="5-1-代码"><a href="#5-1-代码" class="headerlink" title="5-1.代码"></a>5-1.代码</h4><p><strong>Thymeleaf+Freemarker+Spring boot+Dubbo+ZK+JDBC+AOP+Mybatis+Restful+FastDFS+Nginx+Redis</strong></p>
+<p><a href="https://github.com/dony15/my_springboot_code/tree/master/springboot4-redis" target="_blank" rel="noopener">https://github.com/dony15/my_springboot_code/tree/master/springboot4-redis</a></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><h5 id="A-依赖问题-1"><a href="#A-依赖问题-1" class="headerlink" title="A)依赖问题"></a>A)依赖问题</h5><p>注意redis需要和jackson一起,否则异常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;functionDomainRedisTemplate&apos; defined in class path resource [com/dony15/config/RedisConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.redis.core.RedisTemplate]: Factory method &apos;functionDomainRedisTemplate&apos; threw exception; nested exception is java.lang.NoClassDefFoundError: com/fasterxml/jackson/databind/ObjectMapper</span><br></pre></td></tr></table></figure>
+<p>我们可以看到这里的提示,缺少jacksion中的ObjectMapper</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nested exception is java.lang.NoClassDefFoundError: com/fasterxml/jackson/databind/ObjectMapper</span><br></pre></td></tr></table></figure>
+<p>因此依赖应该这样配套使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 整合redis --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!-- jackson --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>当然,FastJSON也是需要的,主要用在处理业务的时候,选择怎么存的策略转换,比如List,Map,数组等的处理选择上</p>
+<h5 id="B-配置-单机版"><a href="#B-配置-单机版" class="headerlink" title="B)配置-单机版"></a>B)配置-单机版</h5><p>Springboot整合redis,需要注意RedisTemplate的注入,通过配置类来实现</p>
+<p>将RedisUtil注入封装RedisTemplate</p>
+<p>调用RedisUtil通过自动装配或者@Resource注入即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#Redis</span><br><span class="line">#Matser的ip地址</span><br><span class="line">redis.host=www.dony15.com</span><br><span class="line">#端口号</span><br><span class="line">redis.port=6379</span><br><span class="line">#如果有密码</span><br><span class="line">redis.password=</span><br><span class="line">#客户端超时时间单位是毫秒 默认是2000</span><br><span class="line">redis.timeout=20000  </span><br><span class="line"></span><br><span class="line">#最大空闲数</span><br><span class="line">redis.maxIdle=300  </span><br><span class="line">#连接池的最大数据库连接数。设为0表示无限制,如果是jedis 2.4以后用redis.maxTotal</span><br><span class="line">#redis.maxActive=600</span><br><span class="line">#控制一个pool可分配多少个jedis实例,用来替换上面的redis.maxActive,如果是jedis 2.4以后用该属性</span><br><span class="line">redis.maxTotal=1000  </span><br><span class="line">#最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。</span><br><span class="line">redis.maxWaitMillis=10000  </span><br><span class="line">#连接的最小空闲时间 默认1800000毫秒(30分钟)</span><br><span class="line">redis.minEvictableIdleTimeMillis=300000  </span><br><span class="line">#每次释放连接的最大数目,默认3</span><br><span class="line">redis.numTestsPerEvictionRun=1024  </span><br><span class="line">#逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1</span><br><span class="line">redis.timeBetweenEvictionRunsMillis=30000  </span><br><span class="line">#是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个</span><br><span class="line">redis.testOnBorrow=true  </span><br><span class="line">#在空闲时检查有效性, 默认false</span><br><span class="line">redis.testWhileIdle=true</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="6-整合Logback全局异常处理"><a href="#6-整合Logback全局异常处理" class="headerlink" title="6.整合Logback全局异常处理"></a>6.整合Logback全局异常处理</h3><p>个人理解目前Logback仍为主流的异常处理工具,但是配置<strong>细粒度</strong>较为麻烦,并且难以分析,对于中小项目比较实用;</p>
+<p>对于长期的中大型soa项目,建议添加Cat检测,更加细粒度控制大部分细节,使用也相对简单方便,如:</p>
+<ol>
+<li>分布式细粒度实时监控</li>
+<li>故障快速发现 </li>
+<li>系统问题分析 </li>
+<li>Cat报表展示消息类型  </li>
+<li>Transaction  </li>
+<li>Event  </li>
+<li>Heartbeat  </li>
+<li>Metric  </li>
+<li>Trace  </li>
+<li>各种埋点</li>
+<li>丰富的模块警告通知/多种通知方式</li>
+<li>…</li>
+</ol>
+<p>Cat待更新,在新篇章介绍</p>
+<h4 id="6-1-代码"><a href="#6-1-代码" class="headerlink" title="6-1.代码"></a>6-1.代码</h4><p><strong>Thymeleaf+Freemarker+Spring boot+Dubbo+ZK+JDBC+AOP+Mybatis+Restful+FastDFS+Nginx+Redis+Logback</strong></p>
+<p><a href="https://github.com/dony15/my_springboot_code/tree/master/springboot5-logback" target="_blank" rel="noopener">https://github.com/dony15/my_springboot_code/tree/master/springboot5-logback</a></p>
+<h4 id="6-2-配置"><a href="#6-2-配置" class="headerlink" title="6-2.配置"></a>6-2.配置</h4><p><strong>A)、Logger、appender及layout</strong></p>
+<p>Logger作为日志的记录器，把它关联到应用的对应的context上后，主要用于存放日志对象，也可以定义日志类型、级别。</p>
+<p>Appender主要用于指定日志输出的目的地，目的地可以是控制台、文件、远程套接字服务器、 MySQL、 PostreSQL、 Oracle和其他数据库、 JMS和远程UNIX Syslog守护进程等。</p>
+<p>Layout 负责把事件转换成字符串，格式化的日志信息的输出。</p>
+<p><strong>B)、logger context</strong></p>
+<p>各个logger 都被关联到一个 LoggerContext，LoggerContext负责制造logger，也负责以树结构排列各 logger。其他所有logger也通过org.slf4j.LoggerFactory 类的静态方法getLogger取得。 getLogger方法以 logger 名称为参数。用同一名字调用LoggerFactory.getLogger 方法所得到的永远都是同一个logger对象的引用。</p>
+<p><strong>C)、有效级别及级别的继承</strong></p>
+<p>Logger 可以被分配级别。级别包括：TRACE、DEBUG、INFO、WARN 和 ERROR，定义于 ch.qos.logback.classic.Level类。如果 logger没有被分配级别，那么它将从有被分配级别的最近的祖先那里继承级别。root logger 默认级别是 DEBUG。</p>
+<p><strong>D)、打印方法与基本的选择规则</strong></p>
+<p>打印方法决定记录请求的级别。例如，如果 L 是一个 logger 实例，那么，语句 L.info(“..”)是一条级别为 INFO 的记录语句。记录请求的级别在高于或等于其 logger 的有效级别时被称为被启用，否则，称为被禁用。记录请求级别为 p，其logger的有效级别为 q，只有则当 p&gt;=q时，该请求才会被执行。</p>
+<p>该规则是 logback 的核心。级别排序为： <strong>TRACE &lt; DEBUG &lt; INFO &lt; WARN &lt; ERROR</strong>。</p>
+<p><strong>Logback默认配置的步骤</strong></p>
+<p>(1). 尝试在 classpath 下查找文件 logback-test.xml；</p>
+<p>(2). 如果文件不存在，则查找文件 logback.xml；</p>
+<p>(3). 如果两个文件都不存在，logback 用 Bas icConfigurator 自动对自己进行配置，这会导致记录输出到控制台。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span> <span class="attr">debug</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"LOG_HOME"</span> <span class="attr">value</span>=<span class="string">"D:/temp/log"</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 控制台输出 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"STDOUT"</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">encoder</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.classic.encoder.PatternLayoutEncoder"</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; [%thread] %-5level %logger&#123;50&#125; - %msg%n<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 按照每天生成日志文件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"FILE"</span>  <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.rolling.RollingFileAppender"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">rollingPolicy</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.rolling.TimeBasedRollingPolicy"</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--日志文件输出的文件名--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">FileNamePattern</span>&gt;</span>$&#123;LOG_HOME&#125;/TestWeb.log.%d&#123;yyyy-MM-dd&#125;.log<span class="tag">&lt;/<span class="name">FileNamePattern</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--日志文件保留天数--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">MaxHistory</span>&gt;</span>30<span class="tag">&lt;/<span class="name">MaxHistory</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">rollingPolicy</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">encoder</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.classic.encoder.PatternLayoutEncoder"</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; [%thread] %-5level %logger&#123;50&#125; - %msg%n<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--日志文件最大的大小--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">triggeringPolicy</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">MaxFileSize</span>&gt;</span>10MB<span class="tag">&lt;/<span class="name">MaxFileSize</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">triggeringPolicy</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"org.hibernate.type.descriptor.sql.BasicBinder"</span>  <span class="attr">level</span>=<span class="string">"TRACE"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"org.hibernate.type.descriptor.sql.BasicExtractor"</span>  <span class="attr">level</span>=<span class="string">"DEBUG"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"org.hibernate.SQL"</span> <span class="attr">level</span>=<span class="string">"DEBUG"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"org.hibernate.engine.QueryParameters"</span> <span class="attr">level</span>=<span class="string">"DEBUG"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"org.hibernate.engine.query.HQLQueryPlan"</span> <span class="attr">level</span>=<span class="string">"DEBUG"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--myibatis log configure--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"com.apache.ibatis"</span> <span class="attr">level</span>=<span class="string">"TRACE"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"java.sql.Connection"</span> <span class="attr">level</span>=<span class="string">"DEBUG"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"java.sql.Statement"</span> <span class="attr">level</span>=<span class="string">"DEBUG"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"java.sql.PreparedStatement"</span> <span class="attr">level</span>=<span class="string">"DEBUG"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 日志输出级别 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">"INFO"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"STDOUT"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"FILE"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--日志异步到数据库 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"DB"</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.classic.db.DBAppender"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--日志异步到数据库 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- DriverManagerConnectionSource不支持DataSource --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">connectionSource</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.db.DriverManagerConnectionSource"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- DataSourceConnectionSource支持DataSource,但是没整合上,这里有区别,使用时需要注意 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource"&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--连接池 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource"&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;dataSource class="com.alibaba.druid.pool.DruidDataSource"&gt;--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">driverClass</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">driverClass</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>jdbc:mysql://localhost:3306/test01?useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;useSSL=false<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">user</span>&gt;</span>root<span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">password</span>&gt;</span>68835230<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;/dataSource&gt;--&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">connectionSource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 数据库日志输出级别 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">"INFO"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;appender-ref ref="STDOUT" /&gt;--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"DB"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="6-3-建表语句"><a href="#6-3-建表语句" class="headerlink" title="6-3.建表语句"></a>6-3.建表语句</h4><p>如果输出到数据库,那么需要先建表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> logging_event_property;</span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> logging_event_exception;</span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> logging_event;</span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> logging_event </span><br><span class="line">  (</span><br><span class="line">    timestmp         <span class="built_in">BIGINT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    formatted_message  <span class="built_in">TEXT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    logger_name       <span class="built_in">VARCHAR</span>(<span class="number">254</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    level_string      <span class="built_in">VARCHAR</span>(<span class="number">254</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    thread_name       <span class="built_in">VARCHAR</span>(<span class="number">254</span>),</span><br><span class="line">    reference_flag    <span class="built_in">SMALLINT</span>,</span><br><span class="line">    arg0              <span class="built_in">VARCHAR</span>(<span class="number">254</span>),</span><br><span class="line">    arg1              <span class="built_in">VARCHAR</span>(<span class="number">254</span>),</span><br><span class="line">    arg2              <span class="built_in">VARCHAR</span>(<span class="number">254</span>),</span><br><span class="line">    arg3              <span class="built_in">VARCHAR</span>(<span class="number">254</span>),</span><br><span class="line">    caller_filename   <span class="built_in">VARCHAR</span>(<span class="number">254</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    caller_class      <span class="built_in">VARCHAR</span>(<span class="number">254</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    caller_method     <span class="built_in">VARCHAR</span>(<span class="number">254</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    caller_line       <span class="built_in">CHAR</span>(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    event_id          <span class="built_in">BIGINT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT PRIMARY <span class="keyword">KEY</span></span><br><span class="line">  );</span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> logging_event_property</span><br><span class="line">  (</span><br><span class="line">    event_id       <span class="built_in">BIGINT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    mapped_key        <span class="built_in">VARCHAR</span>(<span class="number">254</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    mapped_value      <span class="built_in">TEXT</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span>(event_id, mapped_key),</span><br><span class="line">    FOREIGN <span class="keyword">KEY</span> (event_id) <span class="keyword">REFERENCES</span> logging_event(event_id)</span><br><span class="line">  );</span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> logging_event_exception</span><br><span class="line">  (</span><br><span class="line">    event_id         <span class="built_in">BIGINT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    i                <span class="built_in">SMALLINT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    trace_line       <span class="built_in">VARCHAR</span>(<span class="number">254</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span>(event_id, i),</span><br><span class="line">    FOREIGN <span class="keyword">KEY</span> (event_id) <span class="keyword">REFERENCES</span> logging_event(event_id)</span><br><span class="line">  );</span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="6-5-加入全局异常处理器即可使用"><a href="#6-5-加入全局异常处理器即可使用" class="headerlink" title="6-5.加入全局异常处理器即可使用"></a>6-5.加入全局异常处理器即可使用</h4><p>这里整合了ajax请求(需要ajax请求工具类)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.dony15.exception;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.dony15.utils.AjaxResponse;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerExceptionResolver;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.Cookie;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.PrintWriter;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 统一的错误处理页面</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExceptionHandler</span> <span class="keyword">implements</span> <span class="title">HandlerExceptionResolver</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">resolveException</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">                                         HttpServletResponse response, Object handler, Exception ex)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        logger.error(ex.getMessage(),ex);</span><br><span class="line">        <span class="comment">//ajax 请求</span></span><br><span class="line">        <span class="keyword">if</span> (request.getHeader(<span class="string">"x-requested-with"</span>) != <span class="keyword">null</span> &amp;&amp; request.getHeader(<span class="string">"x-requested-with"</span>).equalsIgnoreCase(<span class="string">"XMLHttpRequest"</span>)) &#123; <span class="comment">//如果是ajax请求响应头会有x-requested-with</span></span><br><span class="line">            AjaxResponse ajaxResponse = <span class="keyword">new</span> AjaxResponse();</span><br><span class="line">            ajaxResponse.setThrowable(ex);</span><br><span class="line">            response.reset();</span><br><span class="line">            response.setContentType(<span class="string">"application/json;charset=UTF-8"</span>);</span><br><span class="line">            PrintWriter out = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                out = response.getWriter();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                logger.error(e.getMessage(),e);</span><br><span class="line">            &#125;</span><br><span class="line">            out.print(JSON.toJSONString(ajaxResponse));</span><br><span class="line">            out.flush();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;<span class="comment">//非ajax请求跳转登陆页</span></span><br><span class="line"></span><br><span class="line">            ModelAndView mv = <span class="keyword">new</span> ModelAndView();</span><br><span class="line"></span><br><span class="line">            Cookie[] cookies = request.getCookies();</span><br><span class="line">            <span class="keyword">if</span> (cookies != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; cookies.length; i++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="string">"debug"</span>.equals(cookies[i].getName())) &#123;</span><br><span class="line">                        StackTraceElement[] stackTraces = ex.getStackTrace();</span><br><span class="line"></span><br><span class="line">                        StringBuilder stackTraceStr = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">                        stackTraceStr.append(ex.toString())</span><br><span class="line">                                .append(<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">                        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; stackTraces.length; j++) &#123;</span><br><span class="line">                            stackTraceStr.append(stackTraces[j].toString())</span><br><span class="line">                                    .append(<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        mv.getModel().put(<span class="string">"stackTraces"</span>, stackTraceStr);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            mv.setViewName(<span class="string">"error.html"</span>);</span><br><span class="line">            <span class="keyword">return</span> mv;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="6-6-总结"><a href="#6-6-总结" class="headerlink" title="6-6.总结"></a>6-6.总结</h4><h5 id="A-依赖"><a href="#A-依赖" class="headerlink" title="A)依赖"></a>A)依赖</h5><p>依赖没有问题,spring-boot默认首先支持logback,不需要引入,详细关系可以查看关系图</p>
+<h5 id="B-配置"><a href="#B-配置" class="headerlink" title="B)配置"></a>B)配置</h5><p>配置中需要注意的是,如果输出到数据库,那么除了配置文件外,需要在数据库中建好表哦</p>
+<p>测试logback-test.xml </p>
+<p>生产logback.xml</p>
+<hr>
+<h3 id="7-整合Quartz"><a href="#7-整合Quartz" class="headerlink" title="7.整合Quartz"></a>7.整合Quartz</h3><h4 id="7-1-配置组成"><a href="#7-1-配置组成" class="headerlink" title="7-1.配置组成"></a>7-1.配置组成</h4><p>以下为<strong>Spring boot</strong> 方式的配置,不依赖于任何配置文件</p>
+<ol>
+<li>JobFactory   配置类:Job注入到Spring中管理,否则无法与Spring中的Bean交互</li>
+<li>QuartzConfig 配置类:Schedulder注入到Spring中管理</li>
+<li>QuartzManager 工具管理类:封装调用Quartz的方法,如添加/修改/删除/查看</li>
+<li>SelectCityJob Job类:任务类,处理业务逻辑的地方</li>
+</ol>
+<p>注意此处配置的注入,实际上是将<strong>Job和Schedulder的工厂</strong>交给<strong>Spring管理</strong>,<br>因为<strong>Quartz本身具有自己的容器</strong>,而自身的容器和Spring的容器互相没有关联,导致Bean无法沟通</p>
+<p><strong>可参考该文章:</strong></p>
+<p><a href="https://blog.csdn.net/xiaobuding007/article/details/80455187" target="_blank" rel="noopener">https://blog.csdn.net/xiaobuding007/article/details/80455187</a></p>
+<p><strong>①个人仓库中代码集成演示:</strong><br><a href="https://github.com/dony15/my_springboot_code/tree/master/springboot6-quartz%20X" target="_blank" rel="noopener">https://github.com/dony15/my_springboot_code/tree/master/springboot6-quartz%20X</a><br>该演示是单独Quartz的集成,特意打穿MVC架构使用,问题和理解↓↓↓</p>
+<h4 id="7-2-原理"><a href="#7-2-原理" class="headerlink" title="7-2.原理"></a>7-2.原理</h4><p><strong>假设: 我们需要通过CMS界面来定时执行某个任务</strong></p>
+<p><strong>①</strong>中的集成实际上存在问题,首先我们知道Quartz底层调用<code>Object.wait()</code>方法来阻塞实现</p>
+<p>那么使用Quartz就必须异步实现,否则将会影响程序的正常运行</p>
+<p>该演示中的集成恰好没有实现异步,我们一起来看后果是什么:</p>
+<p>首先:如果我们在Controller调用Job的方法,那么会抛出TimeOut超时,其实很容易理解,</p>
+<p>Object.wait()阻塞下是拿不到返回值的,该方法执行一段时间后,因为Controller中的请求本身有设定超时时间,</p>
+<p>时间到了自然<strong>超时</strong>(防止死锁和同步的问题,spring本身的优化方案)</p>
+<p>超时情况下,我们的Quartz实际上是生效了的,而且会生效两次,这是SpringMVC本身的机制,超时时仍然会刷新该方法</p>
+<p>这个时候的Quartz会被再次执行,导致一个无关紧要的异常提示:<strong>该job已经存在</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//错误示范</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getCityByName</span><span class="params">(String cityName)</span> </span>&#123;</span><br><span class="line">            Map&lt;String, Object&gt; params = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">            params.put(<span class="string">"cityName"</span>, cityName);</span><br><span class="line">            <span class="comment">//try..catch省略</span></span><br><span class="line">            quartzManager.addJob(<span class="string">"getCityN"</span>, <span class="string">"cityJ"</span>,</span><br><span class="line">                    <span class="string">"getCityT"</span>, <span class="string">"cityT"</span>,</span><br><span class="line">                    SelectCityJob.class, <span class="string">"0/3 * * * * ?"</span>, params);</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"SUCCESS"</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>解决这两个问题我进行了如下尝试</p>
+<ol>
+<li>不调用需要返回值</li>
+<li>提前进行任务判断</li>
+<li>(Job中设置@DisallowConcurrentExecution 禁止并发)</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初次解决方案</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getCityByName</span><span class="params">(String cityName)</span> </span>&#123;</span><br><span class="line">       Boolean exists = quartzManager.notExists(<span class="string">"getCityT"</span>, <span class="string">"cityT"</span>);</span><br><span class="line">           Map&lt;String, Object&gt; params = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">           params.put(<span class="string">"cityName"</span>, cityName);</span><br><span class="line">       <span class="keyword">if</span> (!exists)&#123;</span><br><span class="line">           <span class="comment">//如果存在该任务,那么不操作</span></span><br><span class="line">           System.out.println(<span class="string">"存在该任务哦,可以尝试移除"</span>);</span><br><span class="line">       &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">           <span class="comment">//如果不存在,那么创建该任务</span></span><br><span class="line">           quartzManager.addJob(<span class="string">"getCityN"</span>, <span class="string">"cityJ"</span>,</span><br><span class="line">                   <span class="string">"getCityT"</span>, <span class="string">"cityT"</span>,</span><br><span class="line">                   SelectCityJob.class, <span class="string">"0/3 * * * * ?"</span>, params);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>实际上该方案只能解决第二个异常提示:<strong>该job已存在</strong></p>
+<p>对于<strong>SpringMVC</strong>超时问题仍然无法解决,那么问题的根源又回到了一开始,为什么Quartz要使用异步来处理</p>
+<p>我们知道SpringMVC本身有一套完善的请求流程(13步),但是我们在handler中的业务操作同步阻塞,</p>
+<p>导致后续的流程需要超时后才能执行</p>
+<p>虽然以上两个异常提示都不会终止程序,也不会终止业务的实现,但是等待超时的时间和毫无意义的异常仍然不利于我们的开发</p>
+<p>同理,在此代码中,<strong>Quartz和dubbo</strong>也会发生同步超时的状态</p>
+<p>因此,我们可以<strong>重新屡一下</strong></p>
+<p>我们需要定时做些事情–&gt;选择定时框架Quartz(扔进大后方)–&gt;Controller难以做到异步通知(X)–&gt;选择MQ消息队列通知(√)–&gt;完美ヾ(ﾟ∀ﾟゞ)</p>
+<h4 id="7-3-正确使用"><a href="#7-3-正确使用" class="headerlink" title="7-3.正确使用"></a>7-3.正确使用</h4><p><strong>修改后的完整代码</strong></p>
+<p><a href="https://github.com/dony15/my_springboot_code/tree/master/springboot7-quartz%20%E2%88%9A-ActiveMQ" target="_blank" rel="noopener">https://github.com/dony15/my_springboot_code/tree/master/springboot7-quartz%20%E2%88%9A-ActiveMQ</a> </p>
+<p><strong>加入MQ</strong></p>
+<p>ActiveMQ</p>
+<p>注意:序列化的对象不可以直接用来做ActiveMQ的消息,需要添加配置允许</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spring.activemq.packages.trust-all=true   //允许所有</span><br><span class="line">    </span><br><span class="line">此处百度  //允许指定序列化类</span><br><span class="line">    详细可参考ActiveMQ文章</span><br></pre></td></tr></table></figure>
+<p><strong>核心:</strong></p>
+<ol>
+<li>ActiveMQ配置文件</li>
+<li>ActiveProvider</li>
+<li>ActiveConsumer</li>
+</ol>
+<h4 id="7-4-结合数据库"><a href="#7-4-结合数据库" class="headerlink" title="7-4.结合数据库"></a>7-4.结合数据库</h4><p>本次数据库结合并非持久化MQ消息,只是持久化Quartz的任务</p>
+<p>假装结合一下,剩下的就是普通的业务逻辑了,说明书代替就好</p>
+<p><img src="https://i.imgur.com/7Ta6HZq.jpg" alt=""></p>
+<h4 id="7-5-ActiveMQ消息持久化到数据库"><a href="#7-5-ActiveMQ消息持久化到数据库" class="headerlink" title="7-5.ActiveMQ消息持久化到数据库"></a>7-5.ActiveMQ消息持久化到数据库</h4><p><a href="http://topmanopensource.iteye.com/blog/1066383" target="_blank" rel="noopener">http://topmanopensource.iteye.com/blog/1066383</a></p>
+<h4 id="7-6-RocketMQ"><a href="#7-6-RocketMQ" class="headerlink" title="7-6.RocketMQ"></a>7-6.RocketMQ</h4><p>资源传送门</p>
+<p><a href="https://blog.csdn.net/zhangll_2008/article/details/78657177" target="_blank" rel="noopener">https://blog.csdn.net/zhangll_2008/article/details/78657177</a></p>
+<p>在MQ文章中记录个人总结</p>
+<p>xxxxxx</p>
+<h4 id="7-7-整合Quartz总结"><a href="#7-7-整合Quartz总结" class="headerlink" title="7-7.整合Quartz总结"></a>7-7.整合Quartz总结</h4><h5 id="A-结构问题"><a href="#A-结构问题" class="headerlink" title="A)结构问题"></a>A)结构问题</h5><p>注意其本身需要异步实现,否则基本上会出现超时问题</p>
+<p>本身具有自己的容器,该容器与Spring容器无关,需要配置注入到Spring管理,才能使用Spring中的bean</p>
+<h5 id="B-位置"><a href="#B-位置" class="headerlink" title="B)位置"></a>B)位置</h5><p>建议放在大后方,还是异步处理的问题,最好不要与其他框架同步</p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'Spring Boot整合篇'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            宝全哥哥
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/24/Spring boot整合篇/">Spring Boot整合篇</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/24/MQ基础与运用/">MQ基础与运用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/23/Cat基础使用/">Cat监控基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/08/Linux基础操作/">Linux基础操作文档</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/05/volatile基础/">volatile基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/13/Spring Boot基础/">Spring Boot基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/07/10/Ajax基础服务/">Ajax基础服务</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/07/06/Log日志整理/">Log日志整理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/09/18/java POI辅助框架/">java POI辅助框架基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/05/volatile基础/">volatile基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/12/06/FastDfs基础原理/">FastDFS 基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/05/06/Git回顾/">Git回顾</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                <li class="">
+                    <a href="/2018/08/24/Spring boot整合篇/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                <li class="">
+                    <a href="/2018/08/24/Spring boot整合篇/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                <li class="">
+                    <a href="/2018/08/24/Spring boot整合篇/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+</div>
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://kdays.net/days/" target="_blank">KDays Forum</a>
+    </li>
+    
+    <li>
+        <a href="http://www.gal123.com/" target="_blank">绅士导航♂</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">萌导航</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/dony15" target="_blank">Github</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 宝全哥哥 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+
+<!--page counter part统计-->
+<script>
+function addCount (Counter) {
+        url=$('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query=new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url",url);
+        query.find({
+            success: function(results){
+                if(results.length>0)
+                {
+                    var counter=results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                }
+                else
+                {
+                    var newcounter=new Counter();
+                    newcounter.set("title",title);
+                    newcounter.set("url",url);
+                    newcounter.set("time",1);
+                    newcounter.save(null,{
+                        success: function(newcounter){
+                        //alert('New object created');
+                        },
+                        error: function(newcounter,error){
+                        alert('Failed to create');
+                        }
+                        });
+                }
+            },
+            error: function(error){
+                //find null is not a error
+                alert('Error:'+error.code+" "+error.message);
+            }
+        });
+}
+$(function(){
+        var Counter=AV.Object.extend("Counter");
+        //only increse visit counting when intering a page
+        if ($('.article-title').length == 1)
+           addCount(Counter);
+        var query=new AV.Query(Counter);
+        query.descending("time");
+        // the sum of popular posts
+        query.limit(10); 
+        query.find({
+            success: function(results){
+                    for(var i=0;i<results.length;i++)    
+                    {
+                        var counter=results[i];
+                        title=counter.get("title");
+                        url=counter.get("url");
+                        time=counter.get("time");
+                        // add to the popularlist widget
+                        showcontent=title+" ("+time+")";
+                        //notice the "" in href
+                        $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
+                    }
+                },
+            error: function(error){
+                alert("Error:"+error.code+" "+error.message);
+            }
+            }
+        )
+        });
+</script>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '8'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri Aug 24 2018 00:00:00 GMT+0800'
+      window.commentConfig.owner = 'dony15'
+      window.commentConfig.repo = 'reply.github.io'
+      window.commentConfig.client_id = '3e620f638731b84942ed'
+      window.commentConfig.client_secret = '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e'
+      window.commentConfig.redirect_uri = ''
+    } else {
+      window.commentConfig = {
+      	id: 'Fri Aug 24 2018 00:00:00 GMT+0800',
+        owner: 'dony15',
+        repo: 'reply.github.io',
+        client_id: '3e620f638731b84942ed',
+        client_secret: '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e',
+        redirect_uri: ''
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>
