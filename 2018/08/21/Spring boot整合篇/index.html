@@ -161,15 +161,11 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/搭建/">搭建</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/组件/">组件</a>
-                        </li>
-                        
-                        <li>
                             <a href="/categories/框架/">框架</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/搭建/">搭建</a>
                         </li>
                         
                         <li>
@@ -178,6 +174,10 @@
                         
                         <li>
                             <a href="/categories/Linux基础/">Linux基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/组件/">组件</a>
                         </li>
                         
                         <li>
@@ -458,6 +458,66 @@
 <h5 id="B-配置"><a href="#B-配置" class="headerlink" title="B)配置"></a>B)配置</h5><p>配置中需要注意的是,如果输出到数据库,那么除了配置文件外,需要在数据库中建好表哦</p>
 <p>测试logback-test.xml </p>
 <p>生产logback.xml</p>
+<hr>
+<h3 id="7-整合Quartz"><a href="#7-整合Quartz" class="headerlink" title="7.整合Quartz"></a>7.整合Quartz</h3><h4 id="7-1-配置组成"><a href="#7-1-配置组成" class="headerlink" title="7-1.配置组成"></a>7-1.配置组成</h4><p>以下为<strong>Spring boot</strong> 方式的配置,不依赖于任何配置文件</p>
+<ol>
+<li>JobFactory   配置类:Job注入到Spring中管理,否则无法与Spring中的Bean交互</li>
+<li>QuartzConfig 配置类:Schedulder注入到Spring中管理</li>
+<li>QuartzManager 工具管理类:封装调用Quartz的方法,如添加/修改/删除/查看</li>
+<li>SelectCityJob Job类:任务类,处理业务逻辑的地方</li>
+</ol>
+<p>注意此处配置的注入,实际上是将<strong>Job和Schedulder的工厂</strong>交给<strong>Spring管理</strong>,<br>因为<strong>Quartz本身具有自己的容器</strong>,而自身的容器和Spring的容器互相没有关联,导致Bean无法沟通</p>
+<p><strong>可参考该文章:</strong></p>
+<p><a href="https://blog.csdn.net/xiaobuding007/article/details/80455187" target="_blank" rel="noopener">https://blog.csdn.net/xiaobuding007/article/details/80455187</a></p>
+<p><strong>①个人仓库中代码集成演示:</strong><br><a href="https://github.com/dony15/my_springboot_code/tree/master/springboot6-quartz%20X" target="_blank" rel="noopener">https://github.com/dony15/my_springboot_code/tree/master/springboot6-quartz%20X</a><br>该演示是单独Quartz的集成,特意打穿MVC架构使用,问题和理解↓↓↓</p>
+<h4 id="7-2-原理"><a href="#7-2-原理" class="headerlink" title="7-2.原理"></a>7-2.原理</h4><p><strong>假设: 我们需要通过CMS界面来定时执行某个任务</strong></p>
+<p><strong>①</strong>中的集成实际上存在问题,首先我们知道Quartz底层调用<code>Object.wait()</code>方法来阻塞实现</p>
+<p>那么使用Quartz就必须异步实现,否则将会影响程序的正常运行</p>
+<p>该演示中的集成恰好没有实现异步,我们一起来看后果是什么:</p>
+<p>首先:如果我们在Controller调用Job的方法,那么会抛出TimeOut超时,其实很容易理解,</p>
+<p>Object.wait()阻塞下是拿不到返回值的,该方法执行一段时间后,因为Controller中的请求本身有设定超时时间,</p>
+<p>时间到了自然<strong>超时</strong>(防止死锁和同步的问题,spring本身的优化方案)</p>
+<p>超时情况下,我们的Quartz实际上是生效了的,而且会生效两次,这是SpringMVC本身的机制,超时时仍然会刷新该方法</p>
+<p>这个时候的Quartz会被再次执行,导致一个无关紧要的异常提示:<strong>该job已经存在</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//错误示范</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getCityByName</span><span class="params">(String cityName)</span> </span>&#123;</span><br><span class="line">            Map&lt;String, Object&gt; params = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">            params.put(<span class="string">"cityName"</span>, cityName);</span><br><span class="line">            <span class="comment">//try..catch省略</span></span><br><span class="line">            quartzManager.addJob(<span class="string">"getCityN"</span>, <span class="string">"cityJ"</span>,</span><br><span class="line">                    <span class="string">"getCityT"</span>, <span class="string">"cityT"</span>,</span><br><span class="line">                    SelectCityJob.class, <span class="string">"0/3 * * * * ?"</span>, params);</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"SUCCESS"</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>解决这两个问题我进行了如下尝试</p>
+<ol>
+<li>不调用需要返回值</li>
+<li>提前进行任务判断</li>
+<li>(Job中设置@DisallowConcurrentExecution 禁止并发)</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初次解决方案</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getCityByName</span><span class="params">(String cityName)</span> </span>&#123;</span><br><span class="line">       Boolean exists = quartzManager.notExists(<span class="string">"getCityT"</span>, <span class="string">"cityT"</span>);</span><br><span class="line">           Map&lt;String, Object&gt; params = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">           params.put(<span class="string">"cityName"</span>, cityName);</span><br><span class="line">       <span class="keyword">if</span> (!exists)&#123;</span><br><span class="line">           <span class="comment">//如果存在该任务,那么不操作</span></span><br><span class="line">           System.out.println(<span class="string">"存在该任务哦,可以尝试移除"</span>);</span><br><span class="line">       &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">           <span class="comment">//如果不存在,那么创建该任务</span></span><br><span class="line">           quartzManager.addJob(<span class="string">"getCityN"</span>, <span class="string">"cityJ"</span>,</span><br><span class="line">                   <span class="string">"getCityT"</span>, <span class="string">"cityT"</span>,</span><br><span class="line">                   SelectCityJob.class, <span class="string">"0/3 * * * * ?"</span>, params);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>实际上该方案只能解决第二个异常提示:<strong>该job已存在</strong></p>
+<p>对于<strong>SpringMVC</strong>超时问题仍然无法解决,那么问题的根源又回到了一开始,为什么Quartz要使用异步来处理</p>
+<p>我们知道SpringMVC本身有一套完善的请求流程(13步),但是我们在handler中的业务操作同步阻塞,</p>
+<p>导致后续的流程需要超时后才能执行</p>
+<p>虽然以上两个异常提示都不会终止程序,也不会终止业务的实现,但是等待超时的时间和毫无意义的异常仍然不利于我们的开发</p>
+<p>同理,在此代码中,<strong>Quartz和dubbo</strong>也会发生同步超时的状态</p>
+<p>因此,我们可以<strong>重新屡一下</strong></p>
+<p>我们需要定时做些事情–&gt;选择定时框架Quartz(扔进大后方)–&gt;Controller难以做到异步通知(X)–&gt;选择MQ消息队列通知(√)–&gt;完美ヾ(ﾟ∀ﾟゞ)</p>
+<h4 id="7-3-正确使用"><a href="#7-3-正确使用" class="headerlink" title="7-3.正确使用"></a>7-3.正确使用</h4><p><strong>修改后的完整代码</strong></p>
+<p><a href="https://github.com/dony15/my_springboot_code/tree/master/springboot7-quartz%20%E2%88%9A-ActiveMQ" target="_blank" rel="noopener">https://github.com/dony15/my_springboot_code/tree/master/springboot7-quartz%20%E2%88%9A-ActiveMQ</a> </p>
+<p><strong>加入MQ</strong></p>
+<p>ActiveMQ</p>
+<p>注意:序列化的对象不可以直接用来做ActiveMQ的消息,需要添加配置允许</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spring.activemq.packages.trust-all=true   //允许所有</span><br><span class="line">    </span><br><span class="line">此处百度  //允许指定序列化类</span><br><span class="line">    详细可参考ActiveMQ文章</span><br></pre></td></tr></table></figure>
+<p><strong>核心:</strong></p>
+<ol>
+<li>ActiveMQ配置文件</li>
+<li>ActiveProvider</li>
+<li>ActiveConsumer</li>
+</ol>
+<h4 id="7-4-结合数据库"><a href="#7-4-结合数据库" class="headerlink" title="7-4.结合数据库"></a>7-4.结合数据库</h4><p>本次数据库结合并非持久化MQ消息,只是持久化Quartz的任务</p>
+<p>假装结合一下,剩下的就是普通的业务逻辑了,说明书代替就好</p>
+<p><img src="https://i.imgur.com/7Ta6HZq.jpg" alt=""></p>
+<h4 id="7-5-ActiveMQ消息持久化到数据库"><a href="#7-5-ActiveMQ消息持久化到数据库" class="headerlink" title="7-5.ActiveMQ消息持久化到数据库"></a>7-5.ActiveMQ消息持久化到数据库</h4><p><a href="http://topmanopensource.iteye.com/blog/1066383" target="_blank" rel="noopener">http://topmanopensource.iteye.com/blog/1066383</a></p>
+<h4 id="7-6-RocketMQ"><a href="#7-6-RocketMQ" class="headerlink" title="7-6.RocketMQ"></a>7-6.RocketMQ</h4><p>资源传送门</p>
+<p><a href="https://blog.csdn.net/zhangll_2008/article/details/78657177" target="_blank" rel="noopener">https://blog.csdn.net/zhangll_2008/article/details/78657177</a></p>
+<p>在MQ文章中记录个人总结</p>
+<p>xxxxxx</p>
+<h4 id="7-7-整合Quartz总结"><a href="#7-7-整合Quartz总结" class="headerlink" title="7-7.整合Quartz总结"></a>7-7.整合Quartz总结</h4><h5 id="A-结构问题"><a href="#A-结构问题" class="headerlink" title="A)结构问题"></a>A)结构问题</h5><p>注意其本身需要异步实现,否则基本上会出现超时问题</p>
+<p>本身具有自己的容器,该容器与Spring容器无关,需要配置注入到Spring管理,才能使用Spring中的bean</p>
+<h5 id="B-位置"><a href="#B-位置" class="headerlink" title="B)位置"></a>B)位置</h5><p>建议放在大后方,还是异步处理的问题,最好不要与其他框架同步</p>
 
     </div>
 </article>
@@ -540,6 +600,12 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2018/08/23/Cat基础使用/">Cat监控基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2018/08/21/Spring boot整合篇/">Spring Boot整合篇</a>
                 </span>
             </li>
@@ -588,12 +654,6 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
                 </span>
             </li>
@@ -616,19 +676,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/07/10/Ajax基础服务/">Ajax基础服务</a>
+                    <a href="/2018/02/04/Nginx基础原理/">Nginx基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/12/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
+                    <a href="/2018/05/07/Quartz基础原理/">Quartz基础原理</a>
                 </span>
             </li>
             
@@ -640,13 +694,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2017/04/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
+                    <a href="/2017/12/02/javaSE-数据类型/">javaSE-数据类型</a>
                 </span>
             </li>
             
@@ -658,19 +718,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                    <a href="/2018/05/08/基础排序 组合/">基础排序 组合</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/04/15/Spring基础原理/">Spring基础原理</a>
+                    <a href="/2018/05/15/Spring-MVC基础原理/">Spring-MVC基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/05/06/Git回顾/">Git回顾</a>
+                    <a href="/2018/08/21/Spring boot整合篇/">Spring Boot整合篇</a>
                 </span>
             </li>
             
