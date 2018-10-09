@@ -10,7 +10,7 @@
     
     
     
-    <title>categories: 网络编程 | DonY15</title>
+    <title>快速入门自定义Starter | DonY15</title>
     <link href=”http://yoursite.com“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -249,20 +249,32 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-category">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
-        <!--<a href="http://yoursite.com">DonY15</a>-->
-		<a href="/">DonY15</a>
+       
+				<a href="/">DonY15</a>
         >
-        <span>目录</span>
+        <span>快速入门自定义Starter</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/categories/网络编程/index.html">网络编程</a>
+                <a href="/2018/10/09/快速入门自定义Starter/">快速入门自定义Starter</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-10-09
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -270,21 +282,55 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/categories/网络编程/index.html">网络编程</a>
+                    <a href="/2018/10/09/快速入门自定义Starter/">快速入门自定义Starter</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-10-09
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-            <a href="/2018/10/01/WebSocket入门/">WebSocket入门</a>
-            <br>
-            
-            
-        </div>
+    <div class="content-article">
+        <h2 id="快速入门自定义Starter"><a href="#快速入门自定义Starter" class="headerlink" title="快速入门自定义Starter"></a>快速入门自定义Starter</h2><p>[TOC]</p>
+<h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h3><p>依赖管理是任何复杂项目的关键所在,当项目布局比较大时,纯手工的去做依赖显然比较浪费时间和精力,其中产生各种小问题同样会减少工作核心部分的投入时间</p>
+<p><strong>Springboot starter</strong>作为Springboot四大神器之一,就是为了解决这一问题而诞生,分而治之,提高代码复用性,让代码的配置看起来更加简洁</p>
+<p>(与Apollo结合使用将大大降低因配置而产生的维护难度,提高了配置的治理效率)</p>
+<h3 id="2-思路"><a href="#2-思路" class="headerlink" title="2.思路"></a>2.思路</h3><p>1.引入SpringBoot配置自动注入的依赖*2</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span><span class="comment">&lt;!-- 以下两个依赖是自动配置的依赖 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-autoconfigure<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-configuration-processor<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2.创建配置类(定义properties的内容)</p>
+<p>3.创建服务类(需要封装和处理的业务逻辑等)</p>
+<p>4.创建自动配置类(将配置类和服务类注入)</p>
+<p>5.创建resources/META-INF/spring.factories工厂配置文件,注入自动配置类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.dony15.config.PersonServiceAutoConfiguration</span><br></pre></td></tr></table></figure>
+<h3 id="3-搭建"><a href="#3-搭建" class="headerlink" title="3.搭建"></a>3.搭建</h3><h4 id="3-1-配置类"><a href="#3-1-配置类" class="headerlink" title="3-1.配置类"></a>3-1.<strong>配置类</strong></h4> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.dony15.config;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@ClassMame</span>: PersonServiceProperties</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 人员信息自动配置属性类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> 宝全</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2018/9/18 10:50</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix=<span class="string">"person.proterties.set"</span>)<span class="comment">// 定义application.properties配置文件中的配置前缀</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonServiceProperties</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 姓名</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="comment">// 年龄</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="comment">// 性别，不配置的时候默认为person.proterties.set=man</span></span><br><span class="line">    <span class="keyword">private</span> String sex = <span class="string">"man"</span>;</span><br><span class="line">    <span class="comment">// 身高</span></span><br><span class="line">    <span class="keyword">private</span> String height;</span><br><span class="line">    <span class="comment">// 体重</span></span><br><span class="line">    <span class="keyword">private</span> String weight;</span><br><span class="line">    ...get/set略</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-服务类"><a href="#3-2-服务类" class="headerlink" title="3-2.服务类"></a>3-2.服务类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.dony15.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.dony15.config.PersonServiceProperties;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@ClassMame</span>: PersonService</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 编写服务类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> 宝全</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2018/9/18 10:51</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> PersonServiceProperties personServiceProperties;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PersonService</span><span class="params">(PersonServiceProperties personServiceProperties)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.personServiceProperties=personServiceProperties;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PersonService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPersonName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> personServiceProperties.getName();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPersonAge</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> personServiceProperties.getAge();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPersonSex</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> personServiceProperties.getSex();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-自动配置类-核心"><a href="#3-3-自动配置类-核心" class="headerlink" title="3-3.自动配置类(核心)"></a>3-3.自动配置类(核心)</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.dony15.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.dony15.service.PersonService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnClass;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.EnableConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@ClassMame</span>: PersonServiceAutoConfiguration</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: TODO</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> 宝全</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2018/9/18 10:55</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span> <span class="comment">//声明配置类</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties</span>(PersonServiceProperties.class) <span class="comment">//开启指定类的配置</span></span><br><span class="line"><span class="meta">@ConditionalOnClass</span>(PersonService.class) <span class="comment">//当PersonService这个类在类路径中时，且当前容器中没有这个Bean的情况下，开始自动配置</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty</span>(prefix = <span class="string">"person.proterties.set"</span>,value = <span class="string">"enabled"</span>,matchIfMissing = <span class="keyword">true</span>) <span class="comment">//指定的属性是否有指定的值</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonServiceAutoConfiguration</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PersonServiceProperties properties;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean</span>(PersonService.class) <span class="comment">//当前容器中没有指定bean的情况下,自动配置PersonService类</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PersonService <span class="title">personService</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PersonService(properties);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-使用"><a href="#4-使用" class="headerlink" title="4.使用"></a>4.使用</h3><p>至此,一个简单的starter搭建完毕,如下可以引用</p>
+<p><strong>maven</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span><span class="comment">&lt;!-- 引入自己的starter --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.dony15<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>demo-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>properties</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">person.proterties.set.age=18</span><br><span class="line">person.proterties.set.name=常贵</span><br><span class="line">person.proterties.set.height=189</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><strong>然后直接Autowired自动注入即可正常使用</strong></p>
+
     </div>
 </article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = '快速入门自定义Starter'
+    }
+</script>
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -429,13 +475,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/07/10/Ajax基础服务/">Ajax基础服务</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/10/09/Apollo基础(一)/">Apollo基础(一)</a>
+                    <a href="/2017/12/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
                 </span>
             </li>
             
@@ -447,19 +487,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/02/04/Nginx基础原理/">Nginx基础原理</a>
+                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2017/09/18/java POI辅助框架/">java POI辅助框架基础</a>
+                    <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
                 </span>
             </li>
             
@@ -471,7 +505,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/10/09/快速入门自定义Starter/">快速入门自定义Starter</a>
+                    <a href="/2018/03/23/javaSE-集合/">javaSE-集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/10/微服务入门/">微服务入门</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/09/15/Struts2基础/">Struts2基础</a>
                 </span>
             </li>
             
@@ -483,7 +529,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/05/06/Git回顾/">Git回顾</a>
+                    <a href="/2018/07/15/SQL银行模拟语句整合/">SQL银行模拟语句整合</a>
                 </span>
             </li>
             
@@ -496,13 +542,13 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/categories/网络编程/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2018/10/09/快速入门自定义Starter/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/categories/网络编程/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2018/10/09/快速入门自定义Starter/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/categories/网络编程/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/10/09/快速入门自定义Starter/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -683,7 +729,7 @@ $(function(){
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     if(window.commentConfig) {
-      window.commentConfig.id = ''
+      window.commentConfig.id = 'Tue Oct 09 2018 00:00:00 GMT+0800'
       window.commentConfig.owner = 'dony15'
       window.commentConfig.repo = 'reply.github.io'
       window.commentConfig.client_id = '3e620f638731b84942ed'
@@ -691,7 +737,7 @@ $(function(){
       window.commentConfig.redirect_uri = ''
     } else {
       window.commentConfig = {
-      	id: '',
+      	id: 'Tue Oct 09 2018 00:00:00 GMT+0800',
         owner: 'dony15',
         repo: 'reply.github.io',
         client_id: '3e620f638731b84942ed',

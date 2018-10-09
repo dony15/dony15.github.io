@@ -10,7 +10,7 @@
     
     
     
-    <title>categories: 网络编程 | DonY15</title>
+    <title>Apollo基础(一) | DonY15</title>
     <link href=”http://yoursite.com“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -249,20 +249,32 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-category">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
-        <!--<a href="http://yoursite.com">DonY15</a>-->
-		<a href="/">DonY15</a>
+       
+				<a href="/">DonY15</a>
         >
-        <span>目录</span>
+        <span>Apollo基础(一)</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/categories/网络编程/index.html">网络编程</a>
+                <a href="/2018/10/09/Apollo基础(一)/">Apollo基础(一)</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-10-09
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -270,21 +282,115 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/categories/网络编程/index.html">网络编程</a>
+                    <a href="/2018/10/09/Apollo基础(一)/">Apollo基础(一)</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-10-09
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-            <a href="/2018/10/01/WebSocket入门/">WebSocket入门</a>
-            <br>
-            
-            
-        </div>
+    <div class="content-article">
+        <h2 id="Apollo基础-一"><a href="#Apollo基础-一" class="headerlink" title="Apollo基础(一)"></a>Apollo基础(一)</h2><p>[TOC]</p>
+<h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h3><p>配置中心,实时监听最新配置列表,动态添加配置</p>
+<p><strong>实时生效/灰度发布/分环境/分集群管理配置/完善权限/本地离线等</strong></p>
+<p><strong>本地离线</strong></p>
+<ul>
+<li><strong>Mac/Linux</strong>: /opt/data/{<em>appId</em>}/config-cache</li>
+<li><strong>Windows</strong>: C:\opt\data{<em>appId</em>}\config-cache</li>
+</ul>
+<p>本地配置文件会以下面的文件名格式放置于本地缓存路径下：</p>
+<p><strong>{appId}+{cluster}+{namespace}.properties</strong></p>
+<p><strong>支持四个维度管理的kv配置:</strong></p>
+<ol>
+<li>application(应用)</li>
+<li>env(环境)</li>
+<li>cluster(集群)</li>
+<li>namespace(命名空间)</li>
+</ol>
+<h4 id="1-2-配置的基本概念"><a href="#1-2-配置的基本概念" class="headerlink" title="1-2.配置的基本概念"></a>1-2.配置的基本概念</h4><h5 id="独立于程序的只读变量"><a href="#独立于程序的只读变量" class="headerlink" title="独立于程序的只读变量"></a>独立于程序的只读变量</h5><h5 id="配置伴随应用的整个生命周期"><a href="#配置伴随应用的整个生命周期" class="headerlink" title="配置伴随应用的整个生命周期"></a>配置伴随应用的整个生命周期</h5><h5 id="配置可以有多种加载方式"><a href="#配置可以有多种加载方式" class="headerlink" title="配置可以有多种加载方式:"></a>配置可以有多种加载方式:</h5><ol>
+<li>hard code</li>
+<li>配置文件</li>
+<li>环境变量</li>
+<li>启动参数</li>
+<li>基于数据库等</li>
+</ol>
+<h5 id="配置治理"><a href="#配置治理" class="headerlink" title="配置治理:"></a>配置治理:</h5><ol>
+<li>权限控制</li>
+<li>不同的环境/集群配置管理</li>
+<li>框架类组件配置管理</li>
+</ol>
+<h3 id="2-组成"><a href="#2-组成" class="headerlink" title="2.组成"></a>2.组成</h3><p>四个核心模块(功能相关),三个辅助模块(辅助服务发现的模块)</p>
+<p>———————————-[核心功能模块]————————————</p>
+<h4 id="2-1-ConfigService"><a href="#2-1-ConfigService" class="headerlink" title="2-1.ConfigService"></a>2-1.ConfigService</h4><p>提供配置<strong>获取</strong>接口</p>
+<p>提供配置<strong>推送</strong>接口</p>
+<p>服务于<strong>Apollo客户端</strong></p>
+<h4 id="2-2-AdminService"><a href="#2-2-AdminService" class="headerlink" title="2-2.AdminService"></a>2-2.AdminService</h4><p>提供配置<strong>管理</strong>接口</p>
+<p>提供配置<strong>修改发布</strong>接口</p>
+<p>服务于<strong>管理界面Portal</strong></p>
+<h4 id="2-3-Client"><a href="#2-3-Client" class="headerlink" title="2-3.Client"></a>2-3.Client</h4><p>为应用<strong>获取配置</strong>,支持<strong>实时更新</strong></p>
+<p>通过<strong>MetaServer</strong>获取<strong>ConfigService</strong>的服务列表</p>
+<p>使用客户端软负载<strong>SLB</strong>方式调用<strong>ConfigService</strong></p>
+<h4 id="2-4-Portal"><a href="#2-4-Portal" class="headerlink" title="2-4.Portal"></a>2-4.Portal</h4><p>配置管理界面</p>
+<p>通过<strong>MetServer</strong>获取<strong>AdminService</strong>列表</p>
+<p>使用客户端软辅在<strong>SLB</strong>方式调用<strong>AdminSerivce</strong></p>
+<p>———————————–[辅助服务发现模块]————————————</p>
+<h3 id="2-5-Eureka"><a href="#2-5-Eureka" class="headerlink" title="2-5.Eureka"></a>2-5.Eureka</h3><h6 id="用于服务注册和发现"><a href="#用于服务注册和发现" class="headerlink" title="用于服务注册和发现,"></a>用于服务注册和发现,</h6><p><strong>ConfigService/AdminService</strong>注册实例并定期报心跳</p>
+<p>和<strong>ConfigService</strong>在一起部署</p>
+<h4 id="2-6-MetaServer"><a href="#2-6-MetaServer" class="headerlink" title="2-6.MetaServer"></a>2-6.MetaServer</h4><p><strong>Portal</strong>通过域名访问MetaServer获取<strong>AdminService</strong>服务列表</p>
+<p><strong>Client</strong>通过域名访问MetaServer获取<strong>ConfigService</strong>服务地址</p>
+<p>相当于<strong>Eureka Proxy</strong></p>
+<h3 id="2-7-NginxLB"><a href="#2-7-NginxLB" class="headerlink" title="2-7.NginxLB"></a>2-7.NginxLB</h3><p>和域名系统配合,<strong>协助Portal访问MetaServer</strong>,获取AdminService列表</p>
+<p>和域名系统配合,<strong>协助client访问MetaServer</strong>,获取ConfigService列表</p>
+<h3 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h3><p><img src="https://i.imgur.com/q2pOhTI.jpg" alt=""></p>
+<h3 id="3-Apollo使用指南"><a href="#3-Apollo使用指南" class="headerlink" title="3.Apollo使用指南"></a>3.Apollo使用指南</h3><p><a href="https://github.com/ctripcorp/apollo/wiki/Apollo%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki/Apollo%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97</a></p>
+<h2 id=""><a href="#" class="headerlink" title=" "></a> </h2><h3 id="4-API接入管理-Protal"><a href="#4-API接入管理-Protal" class="headerlink" title="4.API接入管理(Protal)"></a>4.API接入管理(Protal)</h3><p><a href="https://github.com/ctripcorp/apollo/wiki/Apollo%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E4%BB%8B%E7%BB%8D" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki/Apollo%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E4%BB%8B%E7%BB%8D</a></p>
+<h3 id="5-接入使用-Client"><a href="#5-接入使用-Client" class="headerlink" title="5.接入使用(Client)"></a>5.接入使用(Client)</h3><h4 id="5-1-常用方案"><a href="#5-1-常用方案" class="headerlink" title="5-1.常用方案:"></a>5-1.常用方案:</h4><p>引入依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">maven</span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.ctrip.framework.apollo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>apollo-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">or</span><br><span class="line"></span><br><span class="line">gradle</span><br><span class="line">    compile 'com.ctrip.framework.apollo:apollo-client:1.0.0'</span><br></pre></td></tr></table></figure>
+<p>在properties中配置命名空间等即可使用(当做在线properties即可)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.id=apollo-id</span><br><span class="line">apollo.meta=http://localhost:8080</span><br><span class="line">env=DEV</span><br><span class="line"># will inject &apos;application&apos; namespace in bootstrap phase</span><br><span class="line">apollo.bootstrap.enabled = true</span><br><span class="line">apollo.bootstrap.namespaces =redis</span><br></pre></td></tr></table></figure>
+<h4 id="5-2-方案二"><a href="#5-2-方案二" class="headerlink" title="5-2.方案二"></a>5-2.方案二</h4><p><strong>Bean</strong>的形式注入到Spring中(该场景使用不多)(支持<strong>注解/XML</strong>等形式)</p>
+<p><strong>配置类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedissonSingleConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;serverConfig:Single&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String serverConfig;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;singleServerConfig.address:127.0.0.1&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String address;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;singleServerConfig.connectionPoolSize:100&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> Integer connectionPoolSize;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;keepAlive:true&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> Boolean keepAlive;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;database:0&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> Integer database;</span><br><span class="line"><span class="comment">//get set 略</span></span><br></pre></td></tr></table></figure>
+<p><strong>Bean注入类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableApolloConfig</span>(value = &#123;<span class="string">"namespace"</span>&#125;) <span class="comment">//可省略指定命名空间,默认为application私有空间</span></span><br><span class="line"><span class="comment">//@EnableApolloConfig(&#123;"FX.apollo", "FX.soa"&#125;) //指定多个命名空间</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApolloConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedissonSingleConfig <span class="title">getRedissonSingleConfig</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RedissonSingleConfig();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过上面的拉取和注入即可将Apollo的配置注入到Spring中使用,更多内容可参考官网java接入指南</p>
+<p><a href="https://github.com/ctripcorp/apollo/wiki/Java%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97#31-api%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki/Java%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97#31-api%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F</a></p>
+<h4 id="5-3-方案三"><a href="#5-3-方案三" class="headerlink" title="5-3.方案三"></a>5-3.方案三</h4><p><strong>动态切换数据库</strong></p>
+<p><a href="https://github.com/ctripcorp/apollo/wiki/Apollo%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E4%BB%8B%E7%BB%8D" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki/Apollo%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E4%BB%8B%E7%BB%8D</a></p>
+<p>Hikaricp官网(动态切换jar包)</p>
+<p><a href="http://brettwooldridge.github.io/HikariCP/" target="_blank" rel="noopener">http://brettwooldridge.github.io/HikariCP/</a></p>
+<h3 id="6-Apollo使用"><a href="#6-Apollo使用" class="headerlink" title="6.Apollo使用"></a>6.Apollo使用</h3><ol>
+<li><p>创建项目</p>
+</li>
+<li><p>创建配置空间(private/public)</p>
+</li>
+</ol>
+<p>私有空间是本项目使用,</p>
+<p>公共空间是通用空间,其他项目都可以使用</p>
+<p><strong>注意:</strong></p>
+<p>公共空间使用时<strong>建议关联</strong>一个新副本,该副本改动的配置属性为<strong>覆盖效果</strong>,可覆盖公共空间的<strong>部分配置</strong></p>
+<h3 id="优秀分析传送门"><a href="#优秀分析传送门" class="headerlink" title="优秀分析传送门:"></a>优秀分析传送门:</h3><p> <code>https://mp.weixin.qq.com/s/-hUaQPzfsl9Lm3IqQW3VDQ</code></p>
+
     </div>
 </article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'Apollo基础(一)'
+    }
+</script>
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -429,25 +535,25 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/07/10/Ajax基础服务/">Ajax基础服务</a>
+                    <a href="/2018/09/05/Docker容器基础/">Docker容器基础</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/10/09/Apollo基础(一)/">Apollo基础(一)</a>
+                    <a href="/2017/05/06/IDEA整合Git基础/">IDEA整合Git基础</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
+                    <a href="/2018/08/08/Linux基础操作/">Linux基础操作文档</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/02/04/Nginx基础原理/">Nginx基础原理</a>
+                    <a href="/2018/07/13/Spring Boot基础/">Spring Boot基础使用</a>
                 </span>
             </li>
             
@@ -459,31 +565,31 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/09/18/java POI辅助框架/">java POI辅助框架基础</a>
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/06/02/java-IO/">java-IO</a>
+                    <a href="/2017/12/02/javaSE-数据类型/">javaSE-数据类型</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/10/09/快速入门自定义Starter/">快速入门自定义Starter</a>
+                    <a href="/2018/03/23/javaSE-集合/">javaSE-集合</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/10/01/WebSocket入门/">WebSocket入门</a>
+                    <a href="/2017/07/05/java基础SE-java优点/">javaSE-java优点</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/05/06/Git回顾/">Git回顾</a>
+                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
                 </span>
             </li>
             
@@ -496,13 +602,13 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/categories/网络编程/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2018/10/09/Apollo基础(一)/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/categories/网络编程/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2018/10/09/Apollo基础(一)/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/categories/网络编程/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/10/09/Apollo基础(一)/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -683,7 +789,7 @@ $(function(){
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     if(window.commentConfig) {
-      window.commentConfig.id = ''
+      window.commentConfig.id = 'Tue Oct 09 2018 00:00:00 GMT+0800'
       window.commentConfig.owner = 'dony15'
       window.commentConfig.repo = 'reply.github.io'
       window.commentConfig.client_id = '3e620f638731b84942ed'
@@ -691,7 +797,7 @@ $(function(){
       window.commentConfig.redirect_uri = ''
     } else {
       window.commentConfig = {
-      	id: '',
+      	id: 'Tue Oct 09 2018 00:00:00 GMT+0800',
         owner: 'dony15',
         repo: 'reply.github.io',
         client_id: '3e620f638731b84942ed',
