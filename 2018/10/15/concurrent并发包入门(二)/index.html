@@ -185,11 +185,11 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/IO/">IO</a>
+                            <a href="/categories/SE基础/">SE基础</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/SE基础/">SE基础</a>
+                            <a href="/categories/IO/">IO</a>
                         </li>
                         
                         <li>
@@ -201,11 +201,11 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/服务器/">服务器</a>
+                            <a href="/categories/微服务/">微服务</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/微服务/">微服务</a>
+                            <a href="/categories/服务器/">服务器</a>
                         </li>
                         
                         <li>
@@ -312,7 +312,7 @@
 <li>链阻塞双端队列 LinkedBlockingDeque</li>
 </ol>
 <h3 id="2-并发包使用"><a href="#2-并发包使用" class="headerlink" title="2.并发包使用"></a>2.并发包使用</h3><p><strong>BlockingQueue(接口) 阻塞队列</strong></p>
-<p><img src="file:///C:/Users/Administrator/Documents/My Knowledge/temp/694674dc-7cca-4194-8442-f2536fdfac42/128/index_files/15fb421cfe7bd49c.jpg" alt="img"></p>
+<p><img src="https://i.imgur.com/Yae19B4.jpg" alt=""></p>
 <h4 id="场景"><a href="#场景" class="headerlink" title="场景:"></a><strong>场景</strong>:</h4><p>BlockingQueue通常用于一个线程生产对象,另一个线程消费对象(生产者与消费者模式)</p>
 <p>处理数据比较消耗时间，线程独占，生产数据不需要即时的反馈等</p>
 <p>一个线程负责生产对象,将新生产的对象插入队列中,队列是有限的,到达队列临界点后,新生产的对象会处于阻塞状态中,直到队列有对象被消耗</p>
@@ -357,7 +357,7 @@
 <p><strong>超时:</strong>如果试图的操作无法立即执行,则该方法产生阻塞,直到能成功或者超时,返回一个特定值来判断是否成功</p>
 <h4 id="注意"><a href="#注意" class="headerlink" title="注意:"></a><strong>注意:</strong></h4><p>无法向BolckingQueue中插入null,否则将抛出NullPointerException</p>
 <p>可以访问BlockingQueue中所有的元素,不仅仅是开始和结束,如remove(o)移除指定元素(效率很低,不建议做该操作)</p>
-<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a><strong>实现</strong></h4><p><img src="file:///C:/Users/Administrator/Documents/My Knowledge/temp/694674dc-7cca-4194-8442-f2536fdfac42/128/index_files/20170528152959799.jpg" alt="img"></p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a><strong>实现</strong></h4><p><img src="https://i.imgur.com/Igabn7T.jpg" alt=""></p>
 <p>BlockingQueue是个接口,可以使用它的实现来使用,concurrent包中有如下几个实现类:</p>
 <h4 id="2-1-ArrayBlockingQueue"><a href="#2-1-ArrayBlockingQueue" class="headerlink" title="2-1.ArrayBlockingQueue"></a><strong>2-1.ArrayBlockingQueue</strong></h4> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@ClassMame</span>: DemoArrayBlockingQueue</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: TODO</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> 宝全</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Email</span> wb-lbq444313@alibaba-inc.com</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2018/10/11 10:16</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoArrayBlockingQueue</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    BlockingQueue queue=<span class="keyword">new</span> ArrayBlockingQueue(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ArrayBlockingQueueProvide(queue)).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ArrayBlockingQueueConsumer(queue)).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArrayBlockingQueueProvide</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> BlockingQueue queue=<span class="keyword">null</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ArrayBlockingQueueProvide</span><span class="params">(BlockingQueue queue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.queue = queue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            queue.put(<span class="string">"1逻辑"</span>);</span><br><span class="line">            queue.put(<span class="string">"2逻辑"</span>);</span><br><span class="line">            queue.put(<span class="string">"3逻辑"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArrayBlockingQueueConsumer</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> BlockingQueue queue=<span class="keyword">null</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ArrayBlockingQueueConsumer</span><span class="params">(BlockingQueue queue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.queue = queue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">            System.out.println(queue.take());</span><br><span class="line">         <span class="comment">/*</span></span><br><span class="line"><span class="comment">        1逻辑</span></span><br><span class="line"><span class="comment">        2逻辑</span></span><br><span class="line"><span class="comment">        3逻辑</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="ArrayBlockingQueue部分源码属性"><a href="#ArrayBlockingQueue部分源码属性" class="headerlink" title="ArrayBlockingQueue部分源码属性"></a><strong>ArrayBlockingQueue部分源码属性</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">final Object[] items;    //队列数组</span><br><span class="line">int takeIndex;    //拿出下标</span><br><span class="line">int putIndex;    //插入下标</span><br><span class="line">int count;    //元素统计</span><br><span class="line">final ReentrantLock lock;    //重入锁 ,注意:插入和取出用的是同一把锁,因此同一时刻不会一起执行</span><br><span class="line">private final Condition notEmpty; //消费者takes操作(如await开头阻塞,signal开头唤醒)</span><br><span class="line">private final Condition notFull; //提供者puts操作(如await开头阻塞,signal开头唤醒)</span><br></pre></td></tr></table></figure>
@@ -400,7 +400,7 @@
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class City implements Comparable&lt;City&gt;&#123;</span><br><span class="line">    private int priority;</span><br><span class="line">    private String name;</span><br><span class="line">    private String desc;</span><br><span class="line">    //getter setter略</span><br><span class="line">    @Override</span><br><span class="line">    public int compareTo(City o) &#123;</span><br><span class="line">//        return (this.priority&gt;o.priority)?1:(this.priority&lt;o.priority)?-1:0;</span><br><span class="line">        return Integer.compare(this.priority, o.priority);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;City&#123;&quot; +</span><br><span class="line">                &quot;priority=&quot; + priority +</span><br><span class="line">                &quot;, name=&apos;&quot; + name + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, desc=&apos;&quot; + desc + &apos;\&apos;&apos; +</span><br><span class="line">                &apos;&#125;&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>PriorityBlockingQueue示例</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @ClassMame: DemoPriorityBlockingQueue</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author 宝全</span><br><span class="line"> * @Email wb-lbq444313@alibaba-inc.com</span><br><span class="line"> * @Date 2018/10/15 15:54</span><br><span class="line"> * @Version 1.0</span><br><span class="line"> */</span><br><span class="line">public class DemoPriorityBlockingQueue &#123;</span><br><span class="line">    public static void main(String[] args) throws InterruptedException &#123;</span><br><span class="line">        PriorityBlockingQueue&lt;Object&gt; queue = new PriorityBlockingQueue&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        queue.add(new City(10,&quot;北京&quot;,&quot;北京好&quot;));</span><br><span class="line">        queue.put(new City(100,&quot;上海&quot;,&quot;上海好&quot;));</span><br><span class="line">        queue.offer(new City(101,&quot;南京&quot;,&quot;南京好&quot;));</span><br><span class="line"></span><br><span class="line">        System.out.println(queue.take());</span><br><span class="line">        System.out.println(queue.take());</span><br><span class="line">        System.out.println(queue.take());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="2-3-DelayQueue"><a href="#2-3-DelayQueue" class="headerlink" title="2-3.DelayQueue"></a><strong>2-3.DelayQueue</strong></h4><p><img src="file:///C:/Users/Administrator/Documents/My Knowledge/temp/694674dc-7cca-4194-8442-f2536fdfac42/128/index_files/2346ca43fe3c972b6bb4beab5edf1328.png" alt="img"></p>
+<h4 id="2-3-DelayQueue"><a href="#2-3-DelayQueue" class="headerlink" title="2-3.DelayQueue"></a><strong>2-3.DelayQueue</strong></h4><p><img src="https://i.imgur.com/mY0upaA.png" alt=""></p>
 <p>DelayQueue中内部使用的是<strong>PriorityQueue</strong>存放数据，使用ReentrantLock实现线程同步，阻塞队列。</p>
 <p><strong>DelayQueue = BlockingQueue + PriorityQueue + Delayed</strong></p>
 <p><strong>注意:</strong>队列里面的元素要实现<strong>Delayed</strong>接口,一个是获取<strong>当前剩余时间</strong>的接口，一个是<strong>元素时间比较</strong>的接口.</p>
@@ -455,8 +455,7 @@
 <h1 id=""><a href="#" class="headerlink" title=" "></a> </h1><h5 id="并发队列对比之一：ConcurrentLinkedQueue、LinkedBlockingQueue对比分析"><a href="#并发队列对比之一：ConcurrentLinkedQueue、LinkedBlockingQueue对比分析" class="headerlink" title="并发队列对比之一：ConcurrentLinkedQueue、LinkedBlockingQueue对比分析"></a>并发队列对比之一：ConcurrentLinkedQueue、LinkedBlockingQueue对比分析</h5><p><a href="https://www.cnblogs.com/duanxz/archive/2012/10/12/2721290.html" target="_blank" rel="noopener">https://www.cnblogs.com/duanxz/archive/2012/10/12/2721290.html</a> </p>
 <h4 id="2-5-SynchronousQueue"><a href="#2-5-SynchronousQueue" class="headerlink" title="2-5. SynchronousQueue"></a>2-5. SynchronousQueue</h4><p>特殊的同步阻塞队列,他内部没有容器,队列中<strong>只有一个元素</strong></p>
 <p>如果队列中有1个元素,则插入线程进入阻塞</p>
-<p>如果队列中没有元素,则移除线程进入阻塞</p>
-<p><img src="file:///C:/Users/Administrator/Documents/My Knowledge/temp/694674dc-7cca-4194-8442-f2536fdfac42/128/index_files/20160917104622034_2.png" alt="img"></p>
+<p>如果队列中没有元素,则移除线程进入阻塞<br><img src="https://i.imgur.com/LWtgHSZ.png" alt=""></p>
 <p>底层与ArrayBlockingQueue/LinkedBlockingQueue(依赖AQS实现线程安全)不同,</p>
 <p>而是直接由大量CAS代码(Unsafe)保障其安全</p>
 <p><strong>匹配通信机制</strong></p>
@@ -688,13 +687,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/09/05/Docker容器基础/">Docker容器基础</a>
+                    <a href="/2018/09/05/kafka基础/">Kafka基础</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/09/05/kafka基础/">Kafka基础</a>
+                    <a href="/2018/09/05/Docker容器基础/">Docker容器基础</a>
                 </span>
             </li>
             
@@ -740,7 +739,25 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
+                    <a href="/2017/05/06/IDEA整合Git基础/">IDEA整合Git基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/08/Linux基础操作/">Linux基础操作文档</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/Zookeeper与Dubbo基础原理/">Zookeeper与Dubbo基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
                 </span>
             </li>
             
@@ -752,19 +769,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/02/06/javaSE-继承/">JAVAEE-继承</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/07/12/实用工具类集合/">实用工具类集合</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/10/09/快速入门自定义Starter/">快速入门自定义Starter</a>
+                    <a href="/2017/06/02/java-IO/">java-IO</a>
                 </span>
             </li>
             
@@ -776,13 +781,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/08/24/Spring boot整合篇/">Spring Boot整合篇</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/10/15/concurrent并发包入门(二)/">Concurrent并发包入门(二)之BlockingQueue</a>
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
                 </span>
             </li>
             
