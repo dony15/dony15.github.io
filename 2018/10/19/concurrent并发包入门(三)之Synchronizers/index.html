@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="宝全哥哥">
+    
+    
+    
+    
+    
+    
+    <title>Concurrent并发包入门(三)之Synchronizers | DonY15</title>
+    <link href=”http://yoursite.com“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz',
+        appKey: 'nYP6CNjSvE1TUhTur6M4ldxz'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpg,preview7.jpg,preview8.jpg,preview9.jpg,preview10.jpg,preview11.jpg,preview12.jpg,preview13.jpg,preview14.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+		<!--统计-->
+			<!--<script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>-->
+		<!--<script>AV.initialize("Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz", "nYP6CNjSvE1TUhTur6M4ldxz");</script>-->
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-realtime@4.1.0/dist/realtime.browser.min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-live-query-min.js"></script>
+		
+		<script>
+		// 存储服务
+		var { Query, User } = AV;
+		AV.init('Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz', 'nYP6CNjSvE1TUhTur6M4ldxz');
+		// 实时消息服务
+		var { Realtime, TextMessage } = AV;
+		
+		</script>
+		
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="http://yoursite.com" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/categories" class="menuItem" style="left: 50%; top: 85%;">目录</a>
+            <a href="/message" class="menuItem" style="left: 19.6891%; top: 67.5%;">留言板</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <!--<a href="http://yoursite.com">-->
+						<a href="/">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">DonY15</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>目录
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/框架/">框架</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/组件/">组件</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/搭建/">搭建</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IDE/">IDE</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Linux基础/">Linux基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Spring全家桶/">Spring全家桶</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Web基础/">Web基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IO/">IO</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SE基础/">SE基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/工具类/">工具类</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/微服务/">微服务</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/初等数学/">初等数学</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/服务器/">服务器</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/JAVA并发编程/">JAVA并发编程</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/网络编程/">网络编程</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SQL/">SQL</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="">
+                    <a href="/tags">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-user"></i>留言板
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+       
+				<a href="/">DonY15</a>
+        >
+        <span>Concurrent并发包入门(三)之Synchronizers</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2018/10/19/concurrent并发包入门(三)之Synchronizers/">Concurrent并发包入门(三)之Synchronizers</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-10-19
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2018/10/19/concurrent并发包入门(三)之Synchronizers/">Concurrent并发包入门(三)之Synchronizers</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-10-19
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h2 id="Concurrent并发包入门-三-之Synchronizers"><a href="#Concurrent并发包入门-三-之Synchronizers" class="headerlink" title="Concurrent并发包入门(三)之Synchronizers"></a>Concurrent并发包入门(三)之Synchronizers</h2><p>[TOC]</p>
+<h3 id="线程同步工具"><a href="#线程同步工具" class="headerlink" title="线程同步工具"></a>线程同步工具</h3><ol>
+<li>闭锁 CountDownLatch</li>
+<li>栅栏 CyclicBarrier</li>
+<li>信号量 Semaphore</li>
+<li>交换器 Exchanger</li>
+<li>BlockingQueue(查看第二章即可)</li>
+</ol>
+<h3 id="1-CountDownLatch-闭锁"><a href="#1-CountDownLatch-闭锁" class="headerlink" title="1.CountDownLatch 闭锁"></a>1.CountDownLatch 闭锁</h3><p>java.util.concurrent.CountDownLatch是一个并发构造,允许一个或多个线程等待一系列指定操作完成后,继续线程执行.</p>
+<p>CountDownLatch内部包含一个指定的计数器,一开始初始化为一个整数,发生一个事件,则调用一次countDown方法,计数器减一,直到计数器为0时,才继续执行<br><img src="https://i.imgur.com/o7PgHYj.jpg" alt=""></p>
+<p><strong>FutureTask也可以用作闭锁,其get方法会等待任务完成后返回结果,否则一直阻塞</strong></p>
+<h4 id="场景"><a href="#场景" class="headerlink" title="场景"></a><strong>场景</strong></h4><p><strong>实现最大的并行性</strong></p>
+<p><strong>开始执行前等待n个线程完成各自任务,如:</strong></p>
+<p>多线程下载任务,每个线程下载一部分,最后一个线程合并拼接</p>
+<p><strong>死锁/并发问题检测</strong></p>
+<p>n个线程访问共享资源,每次测试阶段的线程数目是不同的,最后产生死锁或者并发问题检测</p>
+<h4 id="源码"><a href="#源码" class="headerlink" title="源码"></a><strong>源码</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public CountDownLatch(int count) 指定计数器构造</span><br><span class="line">private final Sync sync; //异步操作</span><br></pre></td></tr></table></figure>
+<p><strong>await方法</strong></p>
+<p>进入等待的方法,计数器归零后执行该线程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void await() throws InterruptedException &#123;</span><br><span class="line">     sync.acquireSharedInterruptibly(1);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="await调用acquireSharedInterruptibly方法"><a href="#await调用acquireSharedInterruptibly方法" class="headerlink" title="await调用acquireSharedInterruptibly方法"></a>await调用<strong>acquireSharedInterruptibly</strong>方法</h5><p>线程中断或超时时,抛出异常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public final void acquireSharedInterruptibly(int arg)</span><br><span class="line">        throws InterruptedException &#123;</span><br><span class="line">    if (Thread.interrupted())</span><br><span class="line">        throw new InterruptedException();</span><br><span class="line">    if (tryAcquireShared(arg) &lt; 0)</span><br><span class="line">        doAcquireSharedInterruptibly(arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="acquireSharedInterruptibly调用doAcquireSharedInterruptibly-arg-方法"><a href="#acquireSharedInterruptibly调用doAcquireSharedInterruptibly-arg-方法" class="headerlink" title="acquireSharedInterruptibly调用doAcquireSharedInterruptibly(arg);方法"></a>acquireSharedInterruptibly调用<strong>doAcquireSharedInterruptibly(arg);</strong>方法</h5><p>调用AQS共享锁,读不上锁,写加锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">     * Acquires in shared interruptible mode.</span><br><span class="line">     * @param arg the acquire argument</span><br><span class="line">     */</span><br><span class="line">    private void doAcquireSharedInterruptibly(int arg)</span><br><span class="line">        throws InterruptedException &#123;</span><br><span class="line">        final Node node = addWaiter(Node.SHARED);</span><br><span class="line">        boolean failed = true;</span><br><span class="line">        try &#123;</span><br><span class="line">            for (;;) &#123;</span><br><span class="line">                final Node p = node.predecessor();</span><br><span class="line">                if (p == head) &#123;</span><br><span class="line">                    int r = tryAcquireShared(arg);</span><br><span class="line">                    if (r &gt;= 0) &#123;</span><br><span class="line">                        setHeadAndPropagate(node, r);</span><br><span class="line">                        p.next = null; // help GC</span><br><span class="line">                        failed = false;</span><br><span class="line">                        return;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                if (shouldParkAfterFailedAcquire(p, node) &amp;&amp;</span><br><span class="line">                    parkAndCheckInterrupt())</span><br><span class="line">                    throw new InterruptedException();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            if (failed)</span><br><span class="line">                cancelAcquire(node);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="await-long-timeout-TimeUnit-unit-方法"><a href="#await-long-timeout-TimeUnit-unit-方法" class="headerlink" title="await(long timeout,TimeUnit unit)方法"></a><strong>await(long timeout,TimeUnit unit)方法</strong></h5><p>调用可中断共享超时锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public boolean await(long timeout, TimeUnit unit)</span><br><span class="line">    throws InterruptedException &#123;</span><br><span class="line">    return sync.tryAcquireSharedNanos(1, unit.toNanos(timeout));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="countDown方法"><a href="#countDown方法" class="headerlink" title="countDown方法"></a><strong>countDown方法</strong></h5><p>计数器的数量其实是锁的数量,每次调用,则释放一个共享锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void countDown() &#123;</span><br><span class="line">       sync.releaseShared(1);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="getCount方法"><a href="#getCount方法" class="headerlink" title="getCount方法"></a><strong>getCount方法</strong></h5><p>通过异步查看当前存在锁的数量(计时器剩余数)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public long getCount() &#123;</span><br><span class="line">    return sync.getCount();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a><strong>示例</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @ClassMame: DemoCountDownLatch</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author 宝全</span><br><span class="line"> * @Date 2018/10/16 10:11</span><br><span class="line"> * @Version 1.0</span><br><span class="line"> */</span><br><span class="line">public class DemoCountDownLatch &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        CountDownLatch countDownLatch = new CountDownLatch(3);</span><br><span class="line"></span><br><span class="line">        new Thread(() -&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                countDownLatch.await();</span><br><span class="line">                System.out.println(&quot;操作完成,提交!&quot;);</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ).start();</span><br><span class="line"></span><br><span class="line">        new Thread(() -&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                System.out.println(&quot;1操作,连接&quot;);</span><br><span class="line">                countDownLatch.countDown();</span><br><span class="line">                Thread.sleep(1000);</span><br><span class="line">                System.out.println(&quot;2操作,业务&quot;);</span><br><span class="line">                countDownLatch.countDown();</span><br><span class="line">                System.out.println(countDownLatch.getCount()); //1  即计数器还剩1</span><br><span class="line">                Thread.sleep(1000);</span><br><span class="line">                System.out.println(&quot;3操作,业务完成&quot;);</span><br><span class="line">                countDownLatch.countDown();</span><br><span class="line">                Thread.sleep(1000);</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-CyclicBarrier-栅栏"><a href="#2-CyclicBarrier-栅栏" class="headerlink" title="2.CyclicBarrier 栅栏"></a>2.CyclicBarrier 栅栏</h3><p><strong>CyclicBarrier</strong>是一个同步机制,可以对算法线程实现同步</p>
+<p>内部由ReeantrantLock,Condition,计数器count控制线程执行</p>
+<p>与CountDownLatch区别在于CyclicBarrier<strong>可重用</strong></p>
+<p>所有的线程都执行到栅栏位置后,才能继续往下执行,否则阻塞等待其他线程</p>
+<p>通过调用await()方法即可(重载超时方法)<br><img src="https://i.imgur.com/1JO5JZ8.jpg" alt=""></p>
+<h5 id="释放条件"><a href="#释放条件" class="headerlink" title="释放条件"></a><strong>释放条件</strong></h5><ol>
+<li>最后一个调用await()方法到达CyclicBarrier</li>
+<li>当前线程被其他线程打断(其他线程调用本线程的interrupt方法)</li>
+<li>其他等待栅栏的线程被打断</li>
+<li>其他等待栅栏的线程超时释放</li>
+<li>外部调用了栅栏的CyclicBarrier.rest()方法</li>
+</ol>
+<h4 id="场景-1"><a href="#场景-1" class="headerlink" title="场景"></a><strong>场景</strong></h4><h4 id="源码-1"><a href="#源码-1" class="headerlink" title="源码"></a><strong>源码</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public CyclicBarrier(int parties) &#123;    //构造,指定线程数量</span><br><span class="line">        this(parties, null);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">public CyclicBarrier(int parties, Runnable barrierAction) &#123;    //构造,指定线程数和栅栏线程Runnable</span><br><span class="line">        if (parties &lt;= 0) throw new IllegalArgumentException();</span><br><span class="line">        this.parties = parties;</span><br><span class="line">        this.count = parties;</span><br><span class="line">        this.barrierCommand = barrierAction;</span><br><span class="line">    &#125;</span><br><span class="line">                        </span><br><span class="line">private final ReentrantLock lock = new ReentrantLock(); //全局重入锁</span><br><span class="line">private final Condition trip = lock.newCondition(); //控制线程等待</span><br><span class="line">private final int parties; //栅栏数量</span><br><span class="line">private final Runnable barrierCommand; //到达CyclicBarrier时运行线程(到达栅栏时)</span><br><span class="line">private Generation generation = new Generation(); //初始化 generation</span><br><span class="line">private int count; //计数器</span><br><span class="line">                        </span><br><span class="line">    private void nextGeneration() &#123;    //生成下一个Generation</span><br><span class="line">        // signal completion of last generation</span><br><span class="line">        //唤醒所有等待的线程来获取 AQS 的state的值</span><br><span class="line">        trip.signalAll();</span><br><span class="line">        // set up next generation</span><br><span class="line">        //重新赋值计算器</span><br><span class="line">        count = parties;</span><br><span class="line">        //重新初始化generation</span><br><span class="line">        generation = new Generation();</span><br><span class="line">    &#125;</span><br><span class="line">                        </span><br><span class="line">   private void breakBarrier() &#123;    //当等待线程中断或超时时,唤醒所有等待中的线程</span><br><span class="line">        generation.broken = true;</span><br><span class="line">        count = parties;</span><br><span class="line">        trip.signalAll();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="await方法"><a href="#await方法" class="headerlink" title="await方法"></a><strong>await</strong>方法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> public int await() throws InterruptedException, BrokenBarrierException &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            return dowait(false, 0L);</span><br><span class="line">        &#125; catch (TimeoutException toe) &#123;</span><br><span class="line">            throw new Error(toe); // cannot happen</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">public int await(long timeout, TimeUnit unit)</span><br><span class="line">        throws InterruptedException,</span><br><span class="line">               BrokenBarrierException,</span><br><span class="line">               TimeoutException &#123;</span><br><span class="line">        return dowait(true, unit.toNanos(timeout));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="dowait方法-主要阻塞方法-await调用它-CyclicBarrier核心方法"><a href="#dowait方法-主要阻塞方法-await调用它-CyclicBarrier核心方法" class="headerlink" title="dowait方法(主要阻塞方法,await调用它)CyclicBarrier核心方法"></a><strong>dowait方法(主要阻塞方法,await调用它)CyclicBarrier核心方法</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">private int dowait(boolean timed, long nanos)</span><br><span class="line">        throws InterruptedException, BrokenBarrierException,</span><br><span class="line">               TimeoutException &#123;</span><br><span class="line">        final ReentrantLock lock = this.lock;    //获取重入锁</span><br><span class="line">        lock.lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            final Generation g = generation; </span><br><span class="line"></span><br><span class="line">            if (g.broken)    //判断 generation 是否已经 broken</span><br><span class="line">                throw new BrokenBarrierException();</span><br><span class="line"></span><br><span class="line">            if (Thread.interrupted()) &#123;    //判断线程是否中断或超时,进行breakBarrier</span><br><span class="line">                breakBarrier();</span><br><span class="line">                throw new InterruptedException();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            int index = --count;    //没有问题,则未执行的线程数减一,减到0表示等待线程都执行完毕</span><br><span class="line">            if (index == 0) &#123;  // tripped</span><br><span class="line">                boolean ranAction = false;</span><br><span class="line">                try &#123;</span><br><span class="line">                    final Runnable command = barrierCommand; //最后一个到达的线程执行command</span><br><span class="line">                    if (command != null) </span><br><span class="line">                        command.run();  </span><br><span class="line">                    ranAction = true;</span><br><span class="line">                    nextGeneration();    //更新generation</span><br><span class="line">                    return 0;</span><br><span class="line">                &#125; finally &#123;</span><br><span class="line">                    if (!ranAction)</span><br><span class="line">                        breakBarrier();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // loop until tripped, broken, interrupted, or timed out</span><br><span class="line">            //自旋</span><br><span class="line">            for (;;) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    if (!timed)</span><br><span class="line">                        trip.await();  //如果没有设置timeout,则一直等待</span><br><span class="line">                    else if (nanos &gt; 0L)//设置超时,进行超时等待</span><br><span class="line">                        nanos = trip.awaitNanos(nanos);</span><br><span class="line">                &#125; catch (InterruptedException ie) &#123;</span><br><span class="line">                    if (g == generation &amp;&amp; ! g.broken) &#123; //等待过程线程被中断,则直接唤醒所有等待线程</span><br><span class="line">                        breakBarrier();</span><br><span class="line">                        throw ie;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        // We&apos;re about to finish waiting even if we had not</span><br><span class="line">                        // been interrupted, so this interrupt is deemed to</span><br><span class="line">                        // &quot;belong&quot; to subsequent execution.</span><br><span class="line">                        Thread.currentThread().interrupt();    //中断,此处是为了让外界知道自己被中断过,因为此处breakBarrier激活了线程,所以这里中断对本线程没有影响</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                if (g.broken)     //barrierbraken异常抛出</span><br><span class="line">                    throw new BrokenBarrierException();</span><br><span class="line"></span><br><span class="line">                if (g != generation) //所有线程到达barrier直接返回</span><br><span class="line">                    return index;</span><br><span class="line"></span><br><span class="line">                if (timed &amp;&amp; nanos &lt;= 0L) &#123; //等待超时直接抛出异常,重置generation</span><br><span class="line">                    breakBarrier();</span><br><span class="line">                    throw new TimeoutException();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            lock.unlock(); //释放锁</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="CyclicBarrier一般方法"><a href="#CyclicBarrier一般方法" class="headerlink" title="CyclicBarrier一般方法"></a><strong>CyclicBarrier一般方法</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">   //判断barrier是否broken=true </span><br><span class="line">public boolean isBroken() &#123;</span><br><span class="line">        final ReentrantLock lock = this.lock;</span><br><span class="line">        lock.lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            return generation.broken;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">//重置barrier</span><br><span class="line">    public void reset() &#123;</span><br><span class="line">        final ReentrantLock lock = this.lock;</span><br><span class="line">        lock.lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            breakBarrier();   // break the current generation</span><br><span class="line">            nextGeneration(); // start a new generation</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //主要用于调试,返回当前阻塞剩余的线程数</span><br><span class="line">  public int getNumberWaiting() &#123;</span><br><span class="line">        final ReentrantLock lock = this.lock;</span><br><span class="line">        lock.lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            return parties - count;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a><strong>示例</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @ClassMame: DemoCyclicBarrier</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author 宝全</span><br><span class="line"> * @Date 2018/10/16 11:01</span><br><span class="line"> * @Version 1.0</span><br><span class="line"> */</span><br><span class="line">public class DemoCyclicBarrier &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        CyclicBarrier cyclicBarrier = new CyclicBarrier(2);</span><br><span class="line">        new Thread(() -&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                System.out.println(&quot;线程1开始运行&quot;);</span><br><span class="line">                cyclicBarrier.await();</span><br><span class="line">                System.out.println(&quot;线程1运行中&quot;);</span><br><span class="line">                Thread.sleep(10000);</span><br><span class="line">                cyclicBarrier.await();</span><br><span class="line">                System.out.println(&quot;线程1结束运行&quot;);</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ).start();</span><br><span class="line"></span><br><span class="line">        new Thread(() -&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                System.out.println(&quot;线程2开始运行&quot;);</span><br><span class="line">                Thread.sleep(5000);</span><br><span class="line">                cyclicBarrier.await();</span><br><span class="line">                System.out.println(&quot;线程2运行中&quot;);</span><br><span class="line">                //java.util.concurrent.TimeoutException</span><br><span class="line">                //java.util.concurrent.BrokenBarrierException</span><br><span class="line">                cyclicBarrier.await(5, TimeUnit.SECONDS);</span><br><span class="line">                System.out.println(&quot;线程2结束运行&quot;);</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-Semaphore-信号量"><a href="#3-Semaphore-信号量" class="headerlink" title="3.Semaphore 信号量"></a>3.Semaphore 信号量</h3><p>Semaphore类是一个计数信号量,从概念上看,信号量维护了一个许可集,两个主要方法</p>
+<ol>
+<li>acquire()获得一个许可</li>
+<li>release()释放一个许可</li>
+</ol>
+<p>在许可可用前,会阻塞每一个acquire</p>
+<p>调用时,使用release方法添加一个许可,获得许可的线程被释放,未获得许可的线程仍然阻塞</p>
+<p>主要用于<strong>限量控制并发执行</strong>代码的工具类,内部通过一个permit来定义并发执行的数量,理解为限制数量的ReadLock获取</p>
+<p><strong>Semaphore通过Sync(AQS的继承类)代理来实现</strong></p>
+<p><strong>支持公平和非公平模式</strong>,都是在AQS子类中,主要区分在tryAcquire中</p>
+<h4 id="场景-2"><a href="#场景-2" class="headerlink" title="场景"></a><strong>场景</strong></h4><ol>
+<li>比如停车场停车信号,假设只有一个车位,同时来了两辆车,则只能释放一辆车进去,另一辆车需要等该车离开后才能进入</li>
+<li>实现资源池</li>
+<li>数据库连接池</li>
+<li>线程池</li>
+<li>对象池 ObjectCache</li>
+<li>等等</li>
+</ol>
+<p><img src="https://i.imgur.com/1C0wtjI.jpg" alt=""></p>
+<h4 id="源码-2"><a href="#源码-2" class="headerlink" title="源码"></a><strong>源码</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private final Sync sync;    //所有机制都通过AQS子类Sync来实现</span><br></pre></td></tr></table></figure>
+<h4 id="构造"><a href="#构造" class="headerlink" title="构造"></a><strong>构造</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">   public Semaphore(int permits) &#123; //调用非平锁,传入同时允许的最大许可数</span><br><span class="line">       sync = new NonfairSync(permits);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">public Semaphore(int permits, boolean fair) &#123; //true调用公平锁,传入同时允许的最大许可数</span><br><span class="line">       sync = fair ? new FairSync(permits) : new NonfairSync(permits);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Sync内部类"><a href="#Sync内部类" class="headerlink" title="Sync内部类"></a><strong>Sync内部类</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">abstract static class Sync extends AbstractQueuedSynchronizer &#123;</span><br><span class="line">        private static final long serialVersionUID = 1192457210091910933L;</span><br><span class="line"></span><br><span class="line">        Sync(int permits) &#123; //permits许可数</span><br><span class="line">            setState(permits);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        final int getPermits() &#123; //返回剩余许可数</span><br><span class="line">            return getState();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        final int nonfairTryAcquireShared(int acquires) &#123;  //传入acquires的许可数(permits)</span><br><span class="line">            for (;;) &#123;</span><br><span class="line">                int available = getState();    //获得剩余许可数</span><br><span class="line">                int remaining = available - acquires; //许可数少于0时,停止自旋,跳出</span><br><span class="line">                if (remaining &lt; 0 ||</span><br><span class="line">                    compareAndSetState(available, remaining))</span><br><span class="line">                    return remaining;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected final boolean tryReleaseShared(int releases) &#123; //传入释放许可数(releases)</span><br><span class="line">            for (;;) &#123;</span><br><span class="line">                int current = getState(); //获得剩余许可数</span><br><span class="line">                int next = current + releases; //剩余许可数+允许释放许可数=下次释放数量,如果下次释放量小于剩余当前剩余量,则抛出异常,否则置换状态后,返回true</span><br><span class="line">                if (next &lt; current) // overflow</span><br><span class="line">                    throw new Error(&quot;Maximum permit count exceeded&quot;);</span><br><span class="line">                if (compareAndSetState(current, next))</span><br><span class="line">                    return true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        final void reducePermits(int reductions) &#123; //减少permits</span><br><span class="line">            for (;;) &#123;</span><br><span class="line">                int current = getState();</span><br><span class="line">                int next = current - reductions;</span><br><span class="line">                if (next &gt; current) // underflow</span><br><span class="line">                    throw new Error(&quot;Permit count underflow&quot;);</span><br><span class="line">                if (compareAndSetState(current, next))</span><br><span class="line">                    return;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">         //将permit置为0</span><br><span class="line">        final int drainPermits() &#123;</span><br><span class="line">            for (;;) &#123;</span><br><span class="line">                int current = getState();</span><br><span class="line">                if (current == 0 || compareAndSetState(current, 0))</span><br><span class="line">                    return current;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="NonfairSync-FairSync方法"><a href="#NonfairSync-FairSync方法" class="headerlink" title="NonfairSync/FairSync方法"></a><strong>NonfairSync/FairSync</strong>方法</h5><p><strong>非公平锁/公平锁</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">//非公平锁</span><br><span class="line">static final class NonfairSync extends Sync &#123;</span><br><span class="line">        private static final long serialVersionUID = -2694183684443567898L;</span><br><span class="line"></span><br><span class="line">        NonfairSync(int permits) &#123;</span><br><span class="line">            super(permits);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected int tryAcquireShared(int acquires) &#123;</span><br><span class="line">            return nonfairTryAcquireShared(acquires);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">//公平锁</span><br><span class="line">static final class FairSync extends Sync &#123;</span><br><span class="line">        private static final long serialVersionUID = 2014338818796000944L;</span><br><span class="line"></span><br><span class="line">        FairSync(int permits) &#123;</span><br><span class="line">            super(permits);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected int tryAcquireShared(int acquires) &#123;</span><br><span class="line">            for (;;) &#123;</span><br><span class="line">                if (hasQueuedPredecessors())</span><br><span class="line">                    return -1;</span><br><span class="line">                int available = getState();</span><br><span class="line">                int remaining = available - acquires;</span><br><span class="line">                if (remaining &lt; 0 ||</span><br><span class="line">                    compareAndSetState(available, remaining))</span><br><span class="line">                    return remaining;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="主要方法acquire-release"><a href="#主要方法acquire-release" class="headerlink" title="主要方法acquire/release"></a>主要方法<strong>acquire/release</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public void acquire() throws InterruptedException &#123;</span><br><span class="line">      sync.acquireSharedInterruptibly(1);    //许可数,默认加1</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"> public void release() &#123;</span><br><span class="line">      sync.releaseShared(1); //释放数,默认减1</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>通过AQS中的tate来控制permit的获取控制,类似一个限制数量的ReadLock,大量调用AQS</p>
+<h5 id="示例一个线程中"><a href="#示例一个线程中" class="headerlink" title="示例一个线程中"></a><strong>示例一个线程中</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @ClassMame: Semaphore</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author 宝全</span><br><span class="line"> * @Date 2018/10/16 13:33</span><br><span class="line"> * @Version 1.0</span><br><span class="line"> */</span><br><span class="line">public class DemoSemaphore &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Semaphore semaphore = new Semaphore(1, true);//许可集中一次只允许存在并释放一个许可线程,开启公平模式</span><br><span class="line">        ExecutorService executorService = Executors.newFixedThreadPool(5);</span><br><span class="line">        for (int i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">            executorService.execute(new SemapRunnable(semaphore));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class SemapRunnable implements Runnable &#123;</span><br><span class="line">    private Semaphore semaphore;</span><br><span class="line"></span><br><span class="line">    public SemapRunnable(Semaphore semaphore) &#123;</span><br><span class="line">        this.semaphore = semaphore;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            semaphore.acquire();</span><br><span class="line">            Thread.sleep(1000);</span><br><span class="line">            System.out.println(&quot;acquire加入许可集&quot;);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            System.out.println(&quot;释放线程许可&quot;);</span><br><span class="line">            semaphore.release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="示例两个线程中"><a href="#示例两个线程中" class="headerlink" title="示例两个线程中"></a>示例<strong>两个线程中</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @ClassMame: Semaphore</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author 宝全</span><br><span class="line"> * @Date 2018/10/16 13:33</span><br><span class="line"> * @Version 1.0</span><br><span class="line"> */</span><br><span class="line">public class DemoSemaphore &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Semaphore semaphore = new Semaphore(1, true);//许可集中一次只允许存在并释放一个许可线程,开启公平模式</span><br><span class="line">        new Thread(new SemapRunnable(semaphore)).start();</span><br><span class="line">        new Thread(new SemapRunnableRelease(semaphore)).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class SemapRunnable implements Runnable &#123;</span><br><span class="line">    private Semaphore semaphore;</span><br><span class="line"></span><br><span class="line">    public SemapRunnable(Semaphore semaphore) &#123;</span><br><span class="line">        this.semaphore = semaphore;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            semaphore.acquire();</span><br><span class="line">            Thread.sleep(1000);</span><br><span class="line">            System.out.println(&quot;acquire加入许可集&quot;);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class SemapRunnableRelease implements Runnable &#123;</span><br><span class="line">    private Semaphore semaphore;</span><br><span class="line"></span><br><span class="line">    public SemapRunnableRelease(Semaphore semaphore) &#123;</span><br><span class="line">        this.semaphore = semaphore;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(5000);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;释放线程许可&quot;);</span><br><span class="line">        semaphore.release();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-Exchanger-交换机"><a href="#4-Exchanger-交换机" class="headerlink" title="4.Exchanger 交换机"></a>4.Exchanger 交换机</h3><p>两个线程都达到共同的同步点(都执行到exchanger.exchange时刻),发生数据交换,否则等待到其他线程到达</p>
+<p>当一个线程到达exchange调用点时，如果它的伙伴线程此前已经调用了此方法，那么它的伙伴会被调度唤醒并与之进行对象交换，然后各自返回。可以看成一个<strong>双向栅栏</strong></p>
+<p>双向数据传输</p>
+<ul>
+<li>单槽(两个线程交换,高并发时性能低)机制(低并发使用)slotExchange</li>
+<li>多槽(多个线程交换,线程间不影响)机制(高并发使用)arenaExchange</li>
+<li>多槽的优先级更高,在单槽中也有特殊情况(线程竞争导致CAS失败)初始化,从而路由到多槽机制</li>
+</ul>
+<p>(单槽向多槽自动切换,这两个方法是私有的)</p>
+<p><img src="https://i.imgur.com/jvriLCn.jpg" alt=""></p>
+<h4 id="场景-3"><a href="#场景-3" class="headerlink" title="场景"></a><strong>场景</strong></h4><p>常见在生产者-消费者 模型中,用于数据同步<br><img src="https://i.imgur.com/hmYcpPg.png" alt=""></p>
+<h4 id="源码-3"><a href="#源码-3" class="headerlink" title="源码"></a><strong>源码</strong></h4><p>依赖ThreadLocal<node></node></p>
+<p><strong>如图,创建一个ThreadLocal对象,并设置初始值,用来存储本地Node</strong></p>
+<p>node对象就是线程交换时,实际存储数据的容器,A线程数据存在item中,则B线程的数据存在match中,称为匹配,parked线程对象是用来挂起线程使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@sun.misc.Contended static final class Node &#123;</span><br><span class="line">       int index;              // Arena index node在Arena数组下标</span><br><span class="line">       int bound;              // Last recorded value of Exchanger.bound 交换机最后记录</span><br><span class="line">       int collides;           // Number of CAS failures at current bound  CAS失败记录</span><br><span class="line">       int hash;               // Pseudo-random for spins    伪随机的自旋数</span><br><span class="line">       Object item;            // This thread&apos;s current item 这个线程的数据项</span><br><span class="line">       volatile Object match;  // Item provided by releasing thread 别的线程提供的元素,也就是释放他的线程提供的数据item</span><br><span class="line">       volatile Thread parked; // Set to this thread when parked, else null 当阻塞时,设置此线程,不阻塞就不必要(会自旋)</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Exchanger属性"><a href="#Exchanger属性" class="headerlink" title="Exchanger属性"></a><strong>Exchanger</strong>属性</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> private static final int ASHIFT = 7;</span><br><span class="line">private static final int MMASK = 0xff;</span><br><span class="line">private static final int SEQ = MMASK + 1;</span><br><span class="line"> private static final int NCPU = Runtime.getRuntime().availableProcessors();</span><br><span class="line">static final int FULL = (NCPU &gt;= (MMASK &lt;&lt; 1)) ? MMASK : NCPU &gt;&gt;&gt; 1;</span><br><span class="line">private static final int SPINS = 1 &lt;&lt; 10;</span><br><span class="line">private static final Object NULL_ITEM = new Object();</span><br><span class="line">private static final Object TIMED_OUT = new Object();</span><br><span class="line">private final Participant participant; //线程状态(可监测交换节点,进行交换机制判断使用)</span><br><span class="line"> private volatile Node[] arena; //多槽机制数组</span><br><span class="line"> private volatile Node slot;    //单槽机制数组</span><br><span class="line">private volatile int bound;    //统计记录数</span><br></pre></td></tr></table></figure>
+<h5 id="构造-1"><a href="#构造-1" class="headerlink" title="构造"></a><strong>构造</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public Exchanger() &#123;</span><br><span class="line">    participant = new Participant();    //创建新的线程状态(交换机)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static final class Participant extends ThreadLocal&lt;Node&gt; &#123; //交换机继承ThreadLocal</span><br><span class="line">    public Node initialValue() &#123; return new Node(); &#125; //创建ThreadLocal本地副本的Node对象,隔离线程</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="slotExchange-单槽交换方法"><a href="#slotExchange-单槽交换方法" class="headerlink" title="slotExchange 单槽交换方法"></a><strong>slotExchange</strong> 单槽交换方法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">private final Object slotExchange(Object item, boolean timed, long ns) &#123; //交换数据/是否开启超时/超时时间设置,默认0L</span><br><span class="line">       Node p = participant.get();    //当前线程携带的交换节点</span><br><span class="line">       Thread t = Thread.currentThread();</span><br><span class="line">       if (t.isInterrupted()) // preserve interrupt status so caller can recheck    //线程中断状态检查</span><br><span class="line">           return null;</span><br><span class="line"></span><br><span class="line">       for (Node q;;) &#123;</span><br><span class="line">           if ((q = slot) != null) &#123;    //slot!=null,说明有线程已经到达节点并占用了slot</span><br><span class="line">               if (U.compareAndSwapObject(this, SLOT, q, null)) &#123;</span><br><span class="line">                   Object v = q.item; //获取交换数据</span><br><span class="line">                   q.match = item;   //设置交换数据</span><br><span class="line">                   Thread w = q.parked; </span><br><span class="line">                   if (w != null) //如果线程已经阻塞,则添加许可,唤醒此槽位线程</span><br><span class="line">                       U.unpark(w);</span><br><span class="line">                   return v;</span><br><span class="line">               &#125;</span><br><span class="line">               // create arena on contention, but continue until slot null</span><br><span class="line">               //如果cpu核数超过1,且bound为0时创建arena数组,并将bound设置为SEQ大小</span><br><span class="line">               if (NCPU &gt; 1 &amp;&amp; bound == 0 &amp;&amp;</span><br><span class="line">                   U.compareAndSwapInt(this, BOUND, 0, SEQ))</span><br><span class="line">                   arena = new Node[(FULL + 2) &lt;&lt; ASHIFT];    //如果多个配对线程竞争修改slot槽位,导致某个线程CAS修改slot失败,就会初始化arena多槽数组,进入arenaExchange</span><br><span class="line">           &#125;</span><br><span class="line">           else if (arena != null) //单槽交换中途出现初始化arena的操作,多槽数组不为空时,需要重新路由到多槽交换</span><br><span class="line">               return null; // caller must reroute to arenaExchange</span><br><span class="line">           else &#123;</span><br><span class="line">               p.item = item;</span><br><span class="line">               if (U.compareAndSwapObject(this, SLOT, null, p)) //将slot槽占用</span><br><span class="line">                   break;</span><br><span class="line">               p.item = null; //CAS操作失败,继续下一次自旋</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       //执行到这说明当前线程已经到达,且已经占用了slot槽,需要等待配对线程到达</span><br><span class="line">       // await release</span><br><span class="line">       int h = p.hash;</span><br><span class="line">       long end = timed ? System.nanoTime() + ns : 0L;</span><br><span class="line">       int spins = (NCPU &gt; 1) ? SPINS : 1;  //自旋次数(和CPU核数有关)</span><br><span class="line">       Object v;    </span><br><span class="line">       while ((v = p.match) == null) &#123;    //p.match==null表示,匹配的线程还没到达</span><br><span class="line">           if (spins &gt; 0) &#123;        //优化操作:自旋过程中随机释放cpu</span><br><span class="line">               h ^= h &lt;&lt; 1; h ^= h &gt;&gt;&gt; 3; h ^= h &lt;&lt; 10;</span><br><span class="line">               if (h == 0)</span><br><span class="line">                   h = SPINS | (int)t.getId();</span><br><span class="line">               else if (h &lt; 0 &amp;&amp; (--spins &amp; ((SPINS &gt;&gt;&gt; 1) - 1)) == 0)</span><br><span class="line">                   Thread.yield();</span><br><span class="line">           &#125;</span><br><span class="line">           else if (slot != p)    //配对线程已经到达,但尚未做好准备,仍需要自旋一会</span><br><span class="line">               spins = SPINS;</span><br><span class="line">           else if (!t.isInterrupted() &amp;&amp; arena == null &amp;&amp;</span><br><span class="line">                    (!timed || (ns = end - System.nanoTime()) &gt; 0L)) &#123;    //如果自旋了很久,还是等不到匹配,则阻塞当前线程(优化)</span><br><span class="line">               U.putObject(t, BLOCKER, this);</span><br><span class="line">               p.parked = t;</span><br><span class="line">               if (slot == p)</span><br><span class="line">                   U.park(false, ns);    //阻塞当前线程</span><br><span class="line">               p.parked = null;</span><br><span class="line">               U.putObject(t, BLOCKER, null);</span><br><span class="line">           &#125;</span><br><span class="line">           else if (U.compareAndSwapObject(this, SLOT, p, null)) &#123;</span><br><span class="line">               v = timed &amp;&amp; ns &lt;= 0L &amp;&amp; !t.isInterrupted() ? TIMED_OUT : null; //超时或者其他(中断,取消),给其他线程腾出slot</span><br><span class="line">               break;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       U.putOrderedObject(p, MATCH, null);</span><br><span class="line">       p.item = null;</span><br><span class="line">       p.hash = h;</span><br><span class="line">       return v;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="arena多槽机制"><a href="#arena多槽机制" class="headerlink" title="arena多槽机制"></a>arena多槽机制</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 多槽交换</span><br><span class="line"> *</span><br><span class="line"> * @param item 待交换的数据</span><br><span class="line"> * @return 其它配对线程的数据; 如果被中断返回null, 如果超时返回TIMED_OUT(一个Obejct对象)</span><br><span class="line"> */</span><br><span class="line">private final Object arenaExchange(Object item, boolean timed, long ns) &#123;</span><br><span class="line">    Node[] a = arena;</span><br><span class="line">    Node p = participant.get();                     // 当前线程携带的交换结点</span><br><span class="line">    for (int i = p.index; ; ) &#123;                     // 当前线程的arena索引</span><br><span class="line">        int b, m, c;</span><br><span class="line">        long j;</span><br><span class="line"></span><br><span class="line">        // 从arena数组中选出偏移地址为(i &lt;&lt; ASHIFT) + ABASE的元素, 即真正可用的Node</span><br><span class="line">        Node q = (Node) U.getObjectVolatile(a, j = (i &lt;&lt; ASHIFT) + ABASE);</span><br><span class="line"></span><br><span class="line">        if (q != null &amp;&amp; U.compareAndSwapObject(a, j, q, null)) &#123;   // CASE1: 槽不为空，说明已经有线程到达并在等待了</span><br><span class="line">            Object v = q.item;                     // 获取已经到达的线程所携带的值</span><br><span class="line">            q.match = item;                        // 把当前线程携带的值交换给已经到达的线程</span><br><span class="line">            Thread w = q.parked;                   // q.parked指向已经到达的线程</span><br><span class="line">            if (w != null)</span><br><span class="line">                U.unpark(w);                       // 唤醒已经到达的线程</span><br><span class="line">            return v;</span><br><span class="line">        &#125; else if (i &lt;= (m = (b = bound) &amp; MMASK) &amp;&amp; q == null) &#123;       // CASE2: 有效槽位位置且槽位为空</span><br><span class="line">            p.item = item;</span><br><span class="line">            if (U.compareAndSwapObject(a, j, null, p)) &#123;            // 占用该槽位, 成功</span><br><span class="line">                long end = (timed &amp;&amp; m == 0) ? System.nanoTime() + ns : 0L;</span><br><span class="line">                Thread t = Thread.currentThread();</span><br><span class="line">                for (int h = p.hash, spins = SPINS; ; ) &#123;               // 自旋等待一段时间,看看有没其它配对线程到达该槽位</span><br><span class="line">                    Object v = p.match;</span><br><span class="line">                    if (v != null) &#123;                                    // 有配对线程到达了该槽位</span><br><span class="line">                        U.putOrderedObject(p, MATCH, null);</span><br><span class="line">                        p.item = null;</span><br><span class="line">                        p.hash = h;</span><br><span class="line">                        return v;   // 返回配对线程交换过来的值</span><br><span class="line">                    &#125; else if (spins &gt; 0) &#123;</span><br><span class="line">                        h ^= h &lt;&lt; 1;</span><br><span class="line">                        h ^= h &gt;&gt;&gt; 3;</span><br><span class="line">                        h ^= h &lt;&lt; 10;</span><br><span class="line">                        if (h == 0)                // initialize hash</span><br><span class="line">                            h = SPINS | (int) t.getId();</span><br><span class="line">                        else if (h &lt; 0 &amp;&amp;          // approx 50% true</span><br><span class="line">                                (--spins &amp; ((SPINS &gt;&gt;&gt; 1) - 1)) == 0)</span><br><span class="line">                            Thread.yield();        // 每一次等待有两次让出CPU的时机</span><br><span class="line">                    &#125; else if (U.getObjectVolatile(a, j) != p)       // 优化操作:配对线程已经到达, 但是还未完全准备好, 所以需要再自旋等待一会儿</span><br><span class="line">                        spins = SPINS;</span><br><span class="line">                    else if (!t.isInterrupted() &amp;&amp; m == 0 &amp;&amp;</span><br><span class="line">                            (!timed || (ns = end - System.nanoTime()) &gt; 0L)) &#123;      // 等不到配对线程了, 阻塞当前线程</span><br><span class="line">                        U.putObject(t, BLOCKER, this);</span><br><span class="line">                        p.parked = t;                           // 在结点引用当前线程，以便配对线程到达后唤醒我</span><br><span class="line">                        if (U.getObjectVolatile(a, j) == p)</span><br><span class="line">                            U.park(false, ns);</span><br><span class="line">                        p.parked = null;</span><br><span class="line">                        U.putObject(t, BLOCKER, null);</span><br><span class="line">                    &#125; else if (U.getObjectVolatile(a, j) == p &amp;&amp;</span><br><span class="line">                            U.compareAndSwapObject(a, j, p, null)) &#123;    // 尝试缩减arena槽数组的大小</span><br><span class="line">                        if (m != 0)                // try to shrink</span><br><span class="line">                            U.compareAndSwapInt(this, BOUND, b, b + SEQ - 1);</span><br><span class="line">                        p.item = null;</span><br><span class="line">                        p.hash = h;</span><br><span class="line">                        i = p.index &gt;&gt;&gt;= 1;        // descend</span><br><span class="line">                        if (Thread.interrupted())</span><br><span class="line">                            return null;</span><br><span class="line">                        if (timed &amp;&amp; m == 0 &amp;&amp; ns &lt;= 0L)</span><br><span class="line">                            return TIMED_OUT;</span><br><span class="line">                        break;                     // expired; restart</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else                                 // 占用槽位失败</span><br><span class="line">                p.item = null;</span><br><span class="line">        &#125; else &#123;                                   // CASE3: 无效槽位位置, 需要扩容</span><br><span class="line">            if (p.bound != b) &#123;</span><br><span class="line">                p.bound = b;</span><br><span class="line">                p.collides = 0;</span><br><span class="line">                i = (i != m || m == 0) ? m : m - 1;</span><br><span class="line">            &#125; else if ((c = p.collides) &lt; m || m == FULL ||</span><br><span class="line">                    !U.compareAndSwapInt(this, BOUND, b, b + SEQ + 1)) &#123;</span><br><span class="line">                p.collides = c + 1;</span><br><span class="line">                i = (i == 0) ? m : i - 1;          // cyclically traverse</span><br><span class="line">            &#125; else</span><br><span class="line">                i = m + 1;                         // grow</span><br><span class="line">            p.index = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="exchange方法"><a href="#exchange方法" class="headerlink" title="exchange方法"></a><strong>exchange方法</strong></h5><p>如果slotExchange有结果,则不执行arenaExchange,</p>
+<p>如果slot被占用,则进入arenaExchange</p>
+<p>该方法的返回值就是对方线程的数据,会存到本A线程item中,此时B线程的match存储A线程的item数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public V exchange(V x) throws InterruptedException &#123;</span><br><span class="line">       Object v;</span><br><span class="line">       Object item = (x == null) ? NULL_ITEM : x; // translate null args</span><br><span class="line"></span><br><span class="line">       //arena(多槽数组)不为null,但返回null,说明线程中断了</span><br><span class="line">       //如果slotExchange(单槽数组)不为null时,说明slot有效,返回false,反之进入if</span><br><span class="line">       if ((arena != null ||(v = slotExchange(item, false, 0L)) == null) &amp;&amp;</span><br><span class="line">       //如果线程中断或者返回null,则进入if</span><br><span class="line">           ((Thread.interrupted() || (v = arenaExchange(item, false, 0L)) == null)))</span><br><span class="line">           throw new InterruptedException();</span><br><span class="line">       return (v == NULL_ITEM) ? null : (V)v;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>上部代码判断流程图</strong></p>
+<p><img src="https://i.imgur.com/qIzO8PX.png" alt=""></p>
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a><strong>示例</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @ClassMame: DemoExchanger</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author 宝全</span><br><span class="line"> * @Date 2018/10/16 14:43</span><br><span class="line"> * @Version 1.0</span><br><span class="line"> */</span><br><span class="line">public class DemoExchanger &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Exchanger&lt;Object&gt; exchanger = new Exchanger&lt;&gt;();</span><br><span class="line">        new Thread(() -&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                String name=&quot;线程1:&quot;;</span><br><span class="line"></span><br><span class="line">                Object exchange = exchanger.exchange(&quot;线程1的内容&quot;);</span><br><span class="line">                System.out.println(name+exchange); //线程1:线程2的内容</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ).start();</span><br><span class="line">        new Thread(() -&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                String name=&quot;线程2:&quot;;</span><br><span class="line"></span><br><span class="line">                Object exchange = exchanger.exchange(&quot;线程2的内容&quot;);</span><br><span class="line">                System.out.println(name+exchange); //线程2:线程1的内容</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="优秀传送门"><a href="#优秀传送门" class="headerlink" title="优秀传送门"></a>优秀传送门</h3><p><a href="https://www.cnblogs.com/chenpi/p/5614290.html" target="_blank" rel="noopener">https://www.cnblogs.com/chenpi/p/5614290.html</a></p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'Concurrent并发包入门(三)之Synchronizers'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            宝全哥哥
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/19/concurrent并发包入门(三)之Synchronizers/">Concurrent并发包入门(三)之Synchronizers</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/15/concurrent并发包入门(二)/">Concurrent并发包入门(二)之BlockingQueue</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/10/Concurrent并发包入门(一)/">Concurrent并发包入门(一)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/09/Apollo基础(一)/">Apollo基础(一)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/09/快速入门自定义Starter/">快速入门自定义Starter</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/01/WebSocket入门/">WebSocket入门</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/10/微服务入门/">微服务入门</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/05/kafka基础/">Kafka基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/05/Docker容器基础/">Docker容器基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/24/Spring boot整合篇/">Spring Boot整合篇</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/08/23/Cat基础使用/">Cat监控基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/03/02/GitHub博客搭建/">GitHub 博客快速搭建</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/20/Spring Cloud基础使用/">Spring Cloud基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/04/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/03/23/javaSE-集合/">javaSE-集合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/07/14/服务器搭建/">服务器搭建(持续更新)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/12/06/FastDfs基础原理/">FastDFS 基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                <li class="">
+                    <a href="/2018/10/19/concurrent并发包入门(三)之Synchronizers/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                <li class="">
+                    <a href="/2018/10/19/concurrent并发包入门(三)之Synchronizers/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                <li class="">
+                    <a href="/2018/10/19/concurrent并发包入门(三)之Synchronizers/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+</div>
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://kdays.net/days/" target="_blank">KDays Forum</a>
+    </li>
+    
+    <li>
+        <a href="http://www.gal123.com/" target="_blank">绅士导航♂</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">萌导航</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/dony15" target="_blank">Github</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 宝全哥哥 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+
+<!--page counter part统计-->
+<script>
+function addCount (Counter) {
+        url=$('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query=new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url",url);
+        query.find({
+            success: function(results){
+                if(results.length>0)
+                {
+                    var counter=results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                }
+                else
+                {
+                    var newcounter=new Counter();
+                    newcounter.set("title",title);
+                    newcounter.set("url",url);
+                    newcounter.set("time",1);
+                    newcounter.save(null,{
+                        success: function(newcounter){
+                        //alert('New object created');
+                        },
+                        error: function(newcounter,error){
+                        alert('Failed to create');
+                        }
+                        });
+                }
+            },
+            error: function(error){
+                //find null is not a error
+                alert('Error:'+error.code+" "+error.message);
+            }
+        });
+}
+$(function(){
+        var Counter=AV.Object.extend("Counter");
+        //only increse visit counting when intering a page
+        if ($('.article-title').length == 1)
+           addCount(Counter);
+        var query=new AV.Query(Counter);
+        query.descending("time");
+        // the sum of popular posts
+        query.limit(10); 
+        query.find({
+            success: function(results){
+                    for(var i=0;i<results.length;i++)    
+                    {
+                        var counter=results[i];
+                        title=counter.get("title");
+                        url=counter.get("url");
+                        time=counter.get("time");
+                        // add to the popularlist widget
+                        showcontent=title+" ("+time+")";
+                        //notice the "" in href
+                        $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
+                    }
+                },
+            error: function(error){
+                alert("Error:"+error.code+" "+error.message);
+            }
+            }
+        )
+        });
+</script>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '8'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri Oct 19 2018 00:00:00 GMT+0800'
+      window.commentConfig.owner = 'dony15'
+      window.commentConfig.repo = 'reply.github.io'
+      window.commentConfig.client_id = '3e620f638731b84942ed'
+      window.commentConfig.client_secret = '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e'
+      window.commentConfig.redirect_uri = ''
+    } else {
+      window.commentConfig = {
+      	id: 'Fri Oct 19 2018 00:00:00 GMT+0800',
+        owner: 'dony15',
+        repo: 'reply.github.io',
+        client_id: '3e620f638731b84942ed',
+        client_secret: '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e',
+        redirect_uri: ''
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>
