@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="宝全哥哥">
+    
+    
+    
+    
+    
+    
+    <title>NIO基础入门(六)之选择器selectors | DonY15</title>
+    <link href=”http://yoursite.com“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz',
+        appKey: 'nYP6CNjSvE1TUhTur6M4ldxz'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpg,preview7.jpg,preview8.jpg,preview9.jpg,preview10.jpg,preview11.jpg,preview12.jpg,preview13.jpg,preview14.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+		<!--统计-->
+			<!--<script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>-->
+		<!--<script>AV.initialize("Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz", "nYP6CNjSvE1TUhTur6M4ldxz");</script>-->
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-realtime@4.1.0/dist/realtime.browser.min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-live-query-min.js"></script>
+		
+		<script>
+		// 存储服务
+		var { Query, User } = AV;
+		AV.init('Sd0rIgx60GcgbzBuEgMwUyzG-gzGzoHsz', 'nYP6CNjSvE1TUhTur6M4ldxz');
+		// 实时消息服务
+		var { Realtime, TextMessage } = AV;
+		
+		</script>
+		
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="http://yoursite.com" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/categories" class="menuItem" style="left: 50%; top: 85%;">目录</a>
+            <a href="/message" class="menuItem" style="left: 19.6891%; top: 67.5%;">留言板</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <!--<a href="http://yoursite.com">-->
+						<a href="/">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">DonY15</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>目录
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/Web基础/">Web基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/框架/">框架</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/组件/">组件</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/JAVA并发编程/">JAVA并发编程</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/搭建/">搭建</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Linux基础/">Linux基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/IDE/">IDE</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/I-O/">I/O</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Spring全家桶/">Spring全家桶</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SE基础/">SE基础</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/工具类/">工具类</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/微服务/">微服务</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/初等数学/">初等数学</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/服务器/">服务器</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/网络编程/">网络编程</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/SQL/">SQL</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="">
+                    <a href="/tags">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-user"></i>留言板
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+       
+				<a href="/">DonY15</a>
+        >
+        <span>NIO基础入门(六)之选择器selectors</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2018/10/24/NIO基础入门(六)之选择器Selectors/">NIO基础入门(六)之选择器selectors</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-10-24
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2018/10/24/NIO基础入门(六)之选择器Selectors/">NIO基础入门(六)之选择器selectors</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-10-24
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h2 id="NIO基础入门-六-之选择器selectors"><a href="#NIO基础入门-六-之选择器selectors" class="headerlink" title="NIO基础入门(六)之选择器selectors"></a>NIO基础入门(六)之选择器selectors</h2><h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h3><p>使单线程能够有效的管理多个I/O通道,非阻塞的方式节省资源消耗</p>
+<p>主要由三个有关类组成</p>
+<h3 id="2-组成"><a href="#2-组成" class="headerlink" title="2.组成"></a>2.组成</h3><ol>
+<li>Selector选择器</li>
+<li>SelectableChannel 可选择通道</li>
+<li>SelectionKey 选择键</li>
+</ol>
+<p><strong>注意:选择器才是管理功能的对象</strong></p>
+<h4 id="1-Selector选择器"><a href="#1-Selector选择器" class="headerlink" title="1.Selector选择器"></a><strong>1.Selector选择器</strong></h4><p>选择器类管理着一个被注册的通道集合的信息和就绪状态</p>
+<p>通道和选择器一起被注册,并通过选择器来更新通道状态</p>
+<p><strong>方法</strong></p>
+<p><strong>open()</strong></p>
+<p>建立选择器对象</p>
+<p><strong>isOpen()</strong></p>
+<p>判断选择器对象是否建立</p>
+<p><strong>close()</strong></p>
+<p><strong>provider()</strong></p>
+<p><strong>select()</strong> </p>
+<p>可立刻或指定睡眠时间后准备好I/O,进行调用</p>
+<p><strong>selectNow()</strong></p>
+<p><strong>wakeup()</strong></p>
+<p>停止选择的过程(退出select睡眠)</p>
+<p><strong>keys()</strong></p>
+<p><strong>selectedKeys()</strong></p>
+<h4 id="2-SelectableChannel可选择通道"><a href="#2-SelectableChannel可选择通道" class="headerlink" title="2.SelectableChannel可选择通道"></a><strong>2.SelectableChannel可选择通道</strong></h4><p>这个抽象类提供了实现通道可选择性所需要的公共方法</p>
+<p>所有的<strong>socket和Pipe都是可选择</strong>的,但是<strong>FileChannel不是</strong>可选择的(没有继承SelectableChannel父类)</p>
+<ul>
+<li><strong>SelectableChannel</strong>可以被注册到选择器,并且可以指定哪个选择器</li>
+<li>一个通道可以被注册到多个选择器(后续注册的通道策略更新之前的策略),但一个选择器只能注册一次</li>
+</ul>
+<p><strong>方法</strong></p>
+<p><strong>register()</strong></p>
+<p>注册通道到这顶选择器</p>
+<p><strong>isRegistered()</strong></p>
+<p>通道是否被注册</p>
+<p><strong>keyFor()</strong></p>
+<p>返回<strong>该通道</strong>与<strong>选择器</strong>之间关系的<strong>选择键对象(没有注册关系则返回null)</strong></p>
+<p><strong>configureBlocking()</strong></p>
+<p><strong>isBlocking()</strong></p>
+<p><strong>blockingLock()</strong></p>
+<p>以上三个为非阻塞相关方法</p>
+<p><strong>调用register()方法将可选择通道注册到选择器</strong></p>
+<p>只能注册非阻塞通道,否则异常;而且该通道无法改回阻塞通道</p>
+<p>试图注册已关闭的通道也会抛出异常</p>
+<h4 id="3-SelectionKey选择键"><a href="#3-SelectionKey选择键" class="headerlink" title="3.SelectionKey选择键"></a><strong>3.SelectionKey选择键</strong></h4><p>选择键<strong>封装了特定的通道</strong>与<strong>特定的选择器</strong>之间的<strong>注册关系(和操作策略,读/写/连接/接收等)</strong></p>
+<p><strong>validOps()方法可以获得指定通道支持哪些操作策略</strong></p>
+<p>选择器对象被<strong>SelectableChannel.register()</strong>返回并提供一个表示注册关系的<strong>标记</strong></p>
+<p><strong>标记</strong>:该注册关系<strong>关心的通道操作</strong>和<strong>通道已经准备好的操作</strong></p>
+<p><strong>方法</strong></p>
+<p><strong>(可以提前通过keyFor获得选择键对象)</strong></p>
+<p><strong>(可通过通道注册选择器返回该对象)</strong></p>
+<p><strong>channel()</strong></p>
+<p>返回与该键相关的通道对象</p>
+<p><strong>selector()</strong></p>
+<p>返回与该键相关的选择器对象</p>
+<p><strong>cancel()</strong></p>
+<p>终结通道和选择器的注册关系(<strong>注册不会立刻消失,但键会立刻失效</strong>)</p>
+<p><strong>isValid()</strong></p>
+<p>判断通道和选择器是否有注册关系</p>
+<p><strong>interestOps()</strong></p>
+<p>interest策略集合,如果需要这些操作策略,从该方法中获得</p>
+<p>选择器下次调用select()时生效</p>
+<p><strong>readyOps()</strong></p>
+<p>ready策略集合,如果需要这些操作策略,从该方法中获得</p>
+<p>当前select()操作即可生效</p>
+<p>if((key.readyOps()&amp;SelectionKeyOP_READ)!=0)</p>
+<p><strong>isReadable()</strong></p>
+<p>是否准备好读</p>
+<p><strong>isWritable()</strong></p>
+<p>是否准备好写</p>
+<p><strong>isConnectable()</strong></p>
+<p>是否准备好连接</p>
+<p><strong>isAcceptable()</strong></p>
+<p>是否准备好接收</p>
+<p><strong>attach()</strong></p>
+<p><strong>保存一个任意对象作为附件</strong>,选择键除了保存他,<strong>不会再其他地方调用</strong>,可以存放<strong>业务对象</strong>/<strong>会话句柄</strong>/<strong>其他通道</strong>等等</p>
+<p><strong>attachment()</strong></p>
+<p>通过该方法获得附件,如果没有附件,则返回null</p>
+<h3 id="3-选择器操作"><a href="#3-选择器操作" class="headerlink" title="3.选择器操作"></a>3.选择器操作</h3><h4 id="1-建立选择器"><a href="#1-建立选择器" class="headerlink" title="1.建立选择器"></a>1.建立选择器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">SocketChannel channel1 = SocketChannel.open();</span><br><span class="line">channel1.bind(new InetSocketAddress(&quot;localhost&quot;, 8001));</span><br><span class="line">SocketChannel channel2 = SocketChannel.open();</span><br><span class="line">channel2.bind(new InetSocketAddress(&quot;localhost&quot;, 8002));</span><br><span class="line">SocketChannel channel3 = SocketChannel.open();</span><br><span class="line">channel3.bind(new InetSocketAddress(&quot;localhost&quot;, 8003));</span><br><span class="line"></span><br><span class="line">channel1.configureBlocking(false);</span><br><span class="line">channel2.configureBlocking(false);</span><br><span class="line">channel3.configureBlocking(false);</span><br><span class="line"></span><br><span class="line">Selector selector = Selector.open();</span><br><span class="line">channel1.register(selector, SelectionKey.OP_READ);</span><br><span class="line">channel2.register(selector,SelectionKey.OP_READ|SelectionKey.OP_WRITE);</span><br><span class="line">channel3.register(selector,SelectionKey.OP_READ|SelectionKey.OP_WRITE);</span><br><span class="line">selector.select(10000);</span><br></pre></td></tr></table></figure>
+<h4 id="2-关闭选择器"><a href="#2-关闭选择器" class="headerlink" title="2.关闭选择器"></a>2.关闭选择器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (selector.isOpen())&#123;</span><br><span class="line">            selector.close();</span><br><span class="line">            System.out.println(&quot;选择器关闭成功&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id=""><a href="#" class="headerlink" title=" "></a> </h4><h4 id="3-选择器维护三种键"><a href="#3-选择器维护三种键" class="headerlink" title="3.选择器维护三种键"></a>3.选择器维护三种键</h4><ol>
+<li><strong>已注册键的集合</strong>Registered key set,通过keys()方法返回,可能是空</li>
+<li><strong>已选择键的集合</strong>(注册建集合的子类)Selected key set,这些键包还在interset集合的操作,selectedKeys()返回,可能是空</li>
+<li><strong>已取消键的集合</strong>Cancelled key set,包含了cancel()方法被调用过得键,还没有被注销,但已无效(下次select时注销)</li>
+</ol>
+<h4 id="4-停止选择过程"><a href="#4-停止选择过程" class="headerlink" title="4.停止选择过程"></a>4.<strong>停止选择过程</strong></h4><p>有三种方法停止</p>
+<ol>
+<li>Selector中的<strong>wakeup()</strong>,使线程从<strong>被阻塞</strong>(睡眠)的select()方法中<strong>优雅</strong>的退出;</li>
+<li>Selector中的<strong>close()</strong>,阻塞线程被唤醒,但是与选择器相关的通道会被注销,键也会被取消</li>
+<li>Selector中的<strong>interrupt(),</strong>中断,如果继续执行会抛出异常</li>
+</ol>
+<p><strong>以上三个方法只会中断选择器,并不会中断通道</strong></p>
+<h4 id="5-异步关闭能力"><a href="#5-异步关闭能力" class="headerlink" title="5.异步关闭能力"></a><strong>5.异步关闭能力</strong></h4><p>当一个通道被关闭,选择器的select()并不会受影响,这意味着调用select()之前仍然有效,但是返回时无效</p>
+<h4 id="6-选择过程的可扩展性-重点"><a href="#6-选择过程的可扩展性-重点" class="headerlink" title="6.选择过程的可扩展性(重点)"></a>6.选择过程的可扩展性(重点)</h4><p>相对于使用一个线程来管理所有通道而言,在分布式不同业务环境下可能不是最好的选择</p>
+<p><strong>一个更好的策略是(负载):</strong></p>
+<p>对所有<strong>可选择通道</strong>使用<strong>一个选择器</strong>,然后<strong>对就绪通道</strong>的服务<strong>委托给其他线程</strong>.</p>
+<ol>
+<li>这样可以通过一个线程来监控通道的就绪状态</li>
+<li>通过一个协调好的线程池来处理接受到的数据</li>
+</ol>
+<p><strong>另一个场景:</strong></p>
+<p>某些通道要求比其他通道更高的响应速度</p>
+<p>可以使用两个选择器管理,</p>
+<ol>
+<li>一个为<strong>命令连接服务</strong></li>
+<li>一个为<strong>普通连接服务</strong></li>
+</ol>
+<p>这样类似于第一种策略,但分配更为精细,会根据情况使用多个线程池来为准备好的通道提供服务,</p>
+<p>如:<strong>日志线程池,命令/控制线程池,状态请求线程池</strong>等等</p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'NIO基础入门(六)之选择器selectors'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            宝全哥哥
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/24/NIO基础入门(四)之Channel-to-Channel传输/">NIO基础入门(四)之Channel-to-Channel传输</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/24/NIO基础入门(六)之选择器Selectors/">NIO基础入门(六)之选择器selectors</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/24/NIO基础入门(五)之Socket通道&管道/">NIO基础入门(五)之Socket通道&amp;管道</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/23/NIO基础入门(二)之通道Channel/">NIO基础入门(二)之通道Channel</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/23/NIO基础入门(三)之文件锁定与内存映射文件/">NIO基础入门(三)之文件锁定与内存映射文件</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/23/NIO基础入门(一)之缓冲区Buffer/">NIO基础入门(一)之缓冲区Buffer</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/19/Concurrent并发包入门(四)之Executor/">Concurrent并发包入门(四)之Executor</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/19/Concurrent并发包入门(三)之Synchronizers/">Concurrent并发包入门(三)之Synchronizers</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/15/Concurrent并发包入门(二)/">Concurrent并发包入门(二)之BlockingQueue</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/10/Concurrent并发包入门(一)/">Concurrent并发包入门(一)</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/12/02/FreeMarker和Nginx_FTP原理使用/">FreeMarker结合Nginx|FTP基础使用</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/04/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/05/08/基础排序 组合/">基础排序 组合</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/07/14/服务器搭建/">服务器搭建(持续更新)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/10/Concurrent并发包入门(一)/">Concurrent并发包入门(一)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/12/06/FastDfs基础原理/">FastDFS 基础原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2017/05/06/Git回顾/">Git回顾</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                <li class="">
+                    <a href="/2018/10/24/NIO基础入门(六)之选择器Selectors/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                <li class="">
+                    <a href="/2018/10/24/NIO基础入门(六)之选择器Selectors/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                <li class="">
+                    <a href="/2018/10/24/NIO基础入门(六)之选择器Selectors/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+</div>
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://kdays.net/days/" target="_blank">KDays Forum</a>
+    </li>
+    
+    <li>
+        <a href="http://www.gal123.com/" target="_blank">绅士导航♂</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">萌导航</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/dony15" target="_blank">Github</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 宝全哥哥 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+
+<!--page counter part统计-->
+<script>
+function addCount (Counter) {
+        url=$('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query=new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url",url);
+        query.find({
+            success: function(results){
+                if(results.length>0)
+                {
+                    var counter=results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                }
+                else
+                {
+                    var newcounter=new Counter();
+                    newcounter.set("title",title);
+                    newcounter.set("url",url);
+                    newcounter.set("time",1);
+                    newcounter.save(null,{
+                        success: function(newcounter){
+                        //alert('New object created');
+                        },
+                        error: function(newcounter,error){
+                        alert('Failed to create');
+                        }
+                        });
+                }
+            },
+            error: function(error){
+                //find null is not a error
+                alert('Error:'+error.code+" "+error.message);
+            }
+        });
+}
+$(function(){
+        var Counter=AV.Object.extend("Counter");
+        //only increse visit counting when intering a page
+        if ($('.article-title').length == 1)
+           addCount(Counter);
+        var query=new AV.Query(Counter);
+        query.descending("time");
+        // the sum of popular posts
+        query.limit(10); 
+        query.find({
+            success: function(results){
+                    for(var i=0;i<results.length;i++)    
+                    {
+                        var counter=results[i];
+                        title=counter.get("title");
+                        url=counter.get("url");
+                        time=counter.get("time");
+                        // add to the popularlist widget
+                        showcontent=title+" ("+time+")";
+                        //notice the "" in href
+                        $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
+                    }
+                },
+            error: function(error){
+                alert("Error:"+error.code+" "+error.message);
+            }
+            }
+        )
+        });
+</script>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '8'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Wed Oct 24 2018 00:00:00 GMT+0800'
+      window.commentConfig.owner = 'dony15'
+      window.commentConfig.repo = 'reply.github.io'
+      window.commentConfig.client_id = '3e620f638731b84942ed'
+      window.commentConfig.client_secret = '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e'
+      window.commentConfig.redirect_uri = ''
+    } else {
+      window.commentConfig = {
+      	id: 'Wed Oct 24 2018 00:00:00 GMT+0800',
+        owner: 'dony15',
+        repo: 'reply.github.io',
+        client_id: '3e620f638731b84942ed',
+        client_secret: '2a6265b3e1a280bf5d9b6c9d5e1c96c1915a778e',
+        redirect_uri: ''
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

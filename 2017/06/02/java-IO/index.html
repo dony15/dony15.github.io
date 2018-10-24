@@ -157,15 +157,11 @@
                         
                         
                         <li>
-                            <a href="/categories/框架/">框架</a>
-                        </li>
-                        
-                        <li>
                             <a href="/categories/Web基础/">Web基础</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/JAVA并发编程/">JAVA并发编程</a>
+                            <a href="/categories/框架/">框架</a>
                         </li>
                         
                         <li>
@@ -173,7 +169,15 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/JAVA并发编程/">JAVA并发编程</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/搭建/">搭建</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Linux基础/">Linux基础</a>
                         </li>
                         
                         <li>
@@ -189,10 +193,6 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/Linux基础/">Linux基础</a>
-                        </li>
-                        
-                        <li>
                             <a href="/categories/SE基础/">SE基础</a>
                         </li>
                         
@@ -205,11 +205,11 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/服务器/">服务器</a>
+                            <a href="/categories/初等数学/">初等数学</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/初等数学/">初等数学</a>
+                            <a href="/categories/服务器/">服务器</a>
                         </li>
                         
                         <li>
@@ -301,7 +301,33 @@
         </center>
     </div>
     <div class="content-article">
-        <h3 id="1-文件上传方案一"><a href="#1-文件上传方案一" class="headerlink" title="1.文件上传方案一"></a>1.文件上传方案一</h3><p><strong>CommonsMultipartFile</strong></p>
+        <h2 id="IO基础"><a href="#IO基础" class="headerlink" title="IO基础"></a>IO基础</h2><p>[TOC]</p>
+<h3 id="1-File类"><a href="#1-File类" class="headerlink" title="1.File类"></a>1.File类</h3><h4 id="1-1-概念"><a href="#1-1-概念" class="headerlink" title="1-1.概念"></a>1-1.概念</h4><p>表示文件和目录路径名的抽象表示形式</p>
+<p>可以实现文件<strong>创建/删除/重命名/得到路径/创建时间</strong>等</p>
+<h4 id="1-2-方法"><a href="#1-2-方法" class="headerlink" title="1-2.方法"></a>1-2.方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">File(String path) //创建文件实例</span><br><span class="line">separator() 	//表示路径分隔号&quot;\&quot;</span><br><span class="line">createNewFile() //创建新文件</span><br><span class="line">mkdir()	//创建新文件夹</span><br><span class="line">delete()	//删除文件&amp;文件夹(如果是文件夹,内部必须为空)</span><br><span class="line">renameTo() //重命名</span><br><span class="line"></span><br><span class="line">isDirectory() //判断是否为文件夹</span><br><span class="line">isFile() //判断是否为文件</span><br><span class="line">exists() //判断文件是否存在</span><br><span class="line"></span><br><span class="line">list() //String[] 列出当前目录文件&amp;&amp;文件夹名</span><br><span class="line">listFiles() //String[] 列出当前目录文件信息(绝对路径+文件名)</span><br><span class="line">getName() //获取文件名</span><br><span class="line">getPath() //获取相对路径</span><br><span class="line">getParent() //获得当前文件父路径</span><br><span class="line">getAbsolutePath() //获取绝对路径</span><br><span class="line">lastModified() //最后修改时间</span><br><span class="line">...见名知意</span><br></pre></td></tr></table></figure>
+<h3 id="2-各种输入输出流"><a href="#2-各种输入输出流" class="headerlink" title="2.各种输入输出流"></a>2.各种输入输出流</h3><p><img src="https://i.imgur.com/iIqJoDh.png" alt=""></p>
+<h3 id="3-分割合并文件"><a href="#3-分割合并文件" class="headerlink" title="3.分割合并文件"></a>3.分割合并文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line">package com.demo.file;</span><br><span class="line"></span><br><span class="line">import java.io.*;</span><br><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author DonY15</span><br><span class="line"> * @description 简易版I/O切割合并,流媒体概念</span><br><span class="line"> * @create 2018\10\23 0023</span><br><span class="line"> */</span><br><span class="line">public class DemoFile &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        String srcPathHttpUser=&quot;F:\\websevice.wmv&quot;;    //假定该文件来自上传</span><br><span class="line">        File srcFile = new File(srcPathHttpUser);</span><br><span class="line">//        segmentation(srcFile,1024*1024*50); //切割目标文件</span><br><span class="line"></span><br><span class="line">        String srcPathDatabase=srcPathHttpUser; //假定该文件目录来自数据控</span><br><span class="line">        merge(srcPathDatabase);    //合并目标文件</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 切割文件</span><br><span class="line">     * @param srcFile 来源File</span><br><span class="line">     * @param cutSize 单体文件切割大小</span><br><span class="line">     */</span><br><span class="line">    private static void segmentation(File srcFile,long cutSize)  &#123;</span><br><span class="line">        if(srcFile==null)&#123;return;&#125;</span><br><span class="line">        int num=srcFile.length()%cutSize==0?(int)(srcFile.length()/cutSize):(int)(srcFile.length()/cutSize+1);</span><br><span class="line">        BufferedInputStream bis=null;</span><br><span class="line">        BufferedOutputStream bos=null;</span><br><span class="line">        byte[] bytes=null;  //每次读取字节数</span><br><span class="line">        int len=-1; //每次实际读取长度</span><br><span class="line">        int count=0;    //每个文件读取次数</span><br><span class="line">        String[] fileName=srcFile.getName().split(&quot;[.]&quot;);   //分割文件名</span><br><span class="line">        try &#123;</span><br><span class="line">             bis = new BufferedInputStream(new FileInputStream(srcFile));</span><br><span class="line">            for (int i = 0; i &lt; num; i++) &#123; //文件个数</span><br><span class="line">                bos= new BufferedOutputStream(new FileOutputStream(new File(srcFile.getParent()+fileName[0]+&quot;-temp-&quot;+ (i + 1)+&quot;.&quot;+fileName[1])));</span><br><span class="line">                if (cutSize&lt;=1024)&#123; //如果文件小于1024字节,则缓冲区大小为文件大小</span><br><span class="line">                    bytes=new byte[(int)cutSize];</span><br><span class="line">                    count=1;</span><br><span class="line">                &#125;else&#123;  //如果该文件大于1024,则缓冲区大小为1024,进行分割</span><br><span class="line">                    bytes=new byte[1024];</span><br><span class="line">                    count=(int)cutSize/1024;</span><br><span class="line">                &#125;</span><br><span class="line">                while(count&gt;0&amp;&amp;(len=bis.read(bytes))!=-1)&#123;</span><br><span class="line">                    bos.write(bytes,0,len);</span><br><span class="line">                    bos.flush();</span><br><span class="line">                    count--;</span><br><span class="line">                &#125;</span><br><span class="line">                if (cutSize/1024!=0)&#123;   //如果文件大小有余数,则再读一次剩余大小,节省缓冲区开销</span><br><span class="line">                    bytes = new byte[(int) cutSize % 1024];</span><br><span class="line">                    len=bis.read(bytes);</span><br><span class="line">                    bos.write(bytes,0,len);</span><br><span class="line">                    bos.flush();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                bis.close();</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 合并</span><br><span class="line">     * @param mergeFileName 合并生成文件路径</span><br><span class="line">     */</span><br><span class="line">    private static void merge(String mergeFileName)&#123;</span><br><span class="line">        //适配文件名</span><br><span class="line">        String[] split = mergeFileName.split(File.separator+File.separator );</span><br><span class="line">        String parentPath = mergeFileName.split(split[split.length - 1])[0];</span><br><span class="line">        String fileFirstName=split[split.length-1].split(&quot;[.]&quot;)[0];</span><br><span class="line">        String fileLastName=split[split.length-1].split(&quot;[.]&quot;)[1];</span><br><span class="line">        System.out.println(parentPath+fileFirstName+fileLastName);</span><br><span class="line">        File fileDir = new File(parentPath);</span><br><span class="line">        String[] list = fileDir.list();</span><br><span class="line"></span><br><span class="line">        TreeMap mergeTarget = new TreeMap();</span><br><span class="line">        for (int i = 0; i &lt; list.length; i++) &#123;</span><br><span class="line">            if (list[i].contains(fileFirstName))&#123;</span><br><span class="line">                if (list[i].contains(&quot;.&quot;+fileLastName))&#123;</span><br><span class="line">                    mergeTarget.put(list[i],list[i]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        Vector&lt;InputStream&gt; vector = new Vector&lt;&gt;();</span><br><span class="line">        for (int i = 0; i &lt; list.length; i++) &#123;</span><br><span class="line">            if (list[i].contains(fileFirstName))&#123;</span><br><span class="line">                if (list[i].contains(&quot;.&quot;+fileLastName))&#123;</span><br><span class="line">                    System.out.println(list[i]);</span><br><span class="line">                    BufferedInputStream bis=null;</span><br><span class="line">                    String fileName = (String) mergeTarget.get(list[i]);</span><br><span class="line">                    try &#123;</span><br><span class="line">                        bis= new BufferedInputStream(new FileInputStream(parentPath + File.separator + fileName));</span><br><span class="line">                    &#125; catch (FileNotFoundException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                    vector.add(bis);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //输入流枚举</span><br><span class="line">        Enumeration&lt;InputStream&gt; es = vector.elements();</span><br><span class="line"></span><br><span class="line">        //合并流</span><br><span class="line">        SequenceInputStream sis = new SequenceInputStream(es);</span><br><span class="line">        BufferedOutputStream bos=null;</span><br><span class="line">        try &#123;</span><br><span class="line">             bos= new BufferedOutputStream(new FileOutputStream(mergeFileName));</span><br><span class="line">            byte[] bytes = new byte[1024];</span><br><span class="line">            int len=-1;</span><br><span class="line">            while ((len=sis.read(bytes))!=-1)&#123;</span><br><span class="line">                bos.write(bytes,0,len);</span><br><span class="line">                bos.flush();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;finally &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                bos.close();</span><br><span class="line">                sis.close();</span><br><span class="line">                System.out.println(&quot;合并完成&quot;);</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-I-O装饰者模式"><a href="#4-I-O装饰者模式" class="headerlink" title="4.I/O装饰者模式"></a>4.I/O装饰者模式</h3><p>利用各种<strong>Buffered包装</strong>真实的输入输出流,从而获得不同的扩展功能(<strong>如:缓存/打印等</strong>)</p>
+<p>防止类爆炸问题(继承的子类过多,当添加一个子类时(该子类的功能,可能其他各种子类都需要))</p>
+<p>以装饰者模式,来动态包装各种子类并扩展功能,降低添加大量子类导致的管理难度.</p>
+<p><strong>组件的形式动态扩展被装饰者,复用性高</strong></p>
+<ol>
+<li>Component(被装饰对象基类) <strong>具有功能1接口</strong></li>
+<li>ConcreteComponent(具体被装饰对象)  <strong>具有功能1实现</strong></li>
+<li>Decorator(装饰者抽象类) <strong>具有功能1抽象类</strong></li>
+<li>ConcreteDecorator(具体装饰者)  <strong>具有功能1(方法内部+具体装饰者特有的功能)实现</strong></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Component dec=new ConcreteDecorator(new Component()); //实现模式</span><br></pre></td></tr></table></figure>
+<h4 id="4-1-豆浆计价器功能示例"><a href="#4-1-豆浆计价器功能示例" class="headerlink" title="4-1.豆浆计价器功能示例"></a>4-1.豆浆计价器功能示例</h4><p><strong>需求:</strong>饮品:纯豆浆价格10元,加一份糖1元,加一份鸡蛋1.5元,加一份黑豆2元</p>
+<h5 id="目录"><a href="#目录" class="headerlink" title="目录:"></a><strong>目录:</strong></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-----------[被装饰者分支]-----------</span><br><span class="line">interface Drink 饮品(被装饰者基类)	[总接口]</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SoyaBeanMilk</span> <span class="keyword">implements</span> <span class="title">Drink</span> 豆浆(具体被装饰者) 实现类</span></span><br><span class="line"><span class="class"></span></span><br><span class="line">------------[装饰者分支]------------[需要实现总接口]</span><br><span class="line"><span class="function"><span class="keyword">abstract</span> class Decorator implements <span class="title">Drink</span> <span class="params">(装饰者基类)</span> 实现抽象类</span></span><br><span class="line"><span class="function">class BlackBeanDecorator extends Decorator 加黑豆组件<span class="params">(具体装饰者)</span> 实现类</span></span><br><span class="line"><span class="function">class SugarDecorator extends Decorator 加糖组件<span class="params">(具体装饰者)</span> 实现类</span></span><br><span class="line"><span class="function">class EggDecorator extends Decorator  加鸡蛋组件<span class="params">(具体装饰者)</span>  实现类</span></span><br></pre></td></tr></table></figure>
+<h5 id="被装饰者基类"><a href="#被装饰者基类" class="headerlink" title="被装饰者基类"></a><strong>被装饰者基类</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public interface Drink &#123;</span><br><span class="line">    float cost(); //价格</span><br><span class="line">    String desc(); //描述</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="被装饰者具体类"><a href="#被装饰者具体类" class="headerlink" title="被装饰者具体类"></a>被装饰者具体类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class SoyaBeanMilk implements Drink &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public float cost() &#123;</span><br><span class="line">        return 10f;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String desc() &#123;</span><br><span class="line">        return &quot;纯豆浆&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="装饰者基类"><a href="#装饰者基类" class="headerlink" title="装饰者基类"></a>装饰者基类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public abstract class Decorator implements Drink &#123;</span><br><span class="line"></span><br><span class="line">    private Drink drink;</span><br><span class="line"></span><br><span class="line">    public Decorator(Drink drink) &#123;</span><br><span class="line">        this.drink = drink;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public float cost() &#123;</span><br><span class="line">        return drink.cost();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String desc() &#123;</span><br><span class="line">        return drink.desc();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="装饰者具体类-加黑豆"><a href="#装饰者具体类-加黑豆" class="headerlink" title="装饰者具体类-加黑豆"></a>装饰者具体类-加黑豆</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class BlackBeanDecorator extends Decorator &#123;</span><br><span class="line"></span><br><span class="line">    public BlackBeanDecorator(Drink drink) &#123;</span><br><span class="line">        super(drink);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public float cost() &#123;</span><br><span class="line">        return super.cost()+2.0f;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String desc() &#123;</span><br><span class="line">        return super.desc()+&quot;+黑豆&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="装饰者具体类-加鸡蛋"><a href="#装饰者具体类-加鸡蛋" class="headerlink" title="装饰者具体类-加鸡蛋"></a>装饰者具体类-加鸡蛋</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class EggDecorator extends Decorator &#123;</span><br><span class="line"></span><br><span class="line">    public EggDecorator(Drink drink) &#123;</span><br><span class="line">        super(drink);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public float cost() &#123;</span><br><span class="line">        return super.cost()+1.5f;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String desc() &#123;</span><br><span class="line">        return super.desc()+&quot;+鸡蛋&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="装饰者具体类-加糖"><a href="#装饰者具体类-加糖" class="headerlink" title="装饰者具体类-加糖"></a>装饰者具体类-加糖</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class SugarDecorator extends Decorator &#123;</span><br><span class="line"></span><br><span class="line">    public SugarDecorator(Drink drink) &#123;</span><br><span class="line">        super(drink);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public float cost() &#123;</span><br><span class="line">        return super.cost()+1.0f;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String desc() &#123;</span><br><span class="line">        return super.desc()+&quot;+糖&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="计价器实现"><a href="#计价器实现" class="headerlink" title="计价器实现"></a>计价器实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">        Drink drink = new SoyaBeanMilk(); //纯豆浆</span><br><span class="line">        System.out.println(&quot;------------------购买收据------------------&quot;);</span><br><span class="line">        System.out.println(drink.cost()+&quot;元&quot;);</span><br><span class="line">        System.out.println(drink.desc());</span><br><span class="line"></span><br><span class="line">        Drink sugarDecorator = new SugarDecorator(drink); //加糖</span><br><span class="line"></span><br><span class="line">        System.out.println(sugarDecorator.cost()+&quot;元&quot;);</span><br><span class="line">        System.out.println(sugarDecorator.desc());</span><br><span class="line"></span><br><span class="line">        Drink eggDecorator = new EggDecorator(sugarDecorator); //加鸡蛋</span><br><span class="line"></span><br><span class="line">        System.out.println(eggDecorator.cost()+&quot;元&quot;);</span><br><span class="line">        System.out.println(eggDecorator.desc());</span><br><span class="line"></span><br><span class="line">        Drink blackBeanDecorator = new BlackBeanDecorator(eggDecorator); //加豆浆</span><br><span class="line">        System.out.println(&quot;------------------共计金额------------------&quot;);</span><br><span class="line">        System.out.println(&quot;共计:&quot;+blackBeanDecorator.cost()+&quot;元&quot;);</span><br><span class="line">        System.out.println(&quot;配方:&quot;+blackBeanDecorator.desc());</span><br><span class="line">        </span><br><span class="line">/*</span><br><span class="line">------------------购买收据------------------</span><br><span class="line">10.0元</span><br><span class="line">纯豆浆</span><br><span class="line">11.0元</span><br><span class="line">纯豆浆+糖</span><br><span class="line">12.5元</span><br><span class="line">纯豆浆+糖+鸡蛋</span><br><span class="line">------------------共计金额------------------</span><br><span class="line">共计:14.5元</span><br><span class="line">配方:纯豆浆+糖+鸡蛋+黑豆</span><br><span class="line">*/</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-文件上传方案一"><a href="#1-文件上传方案一" class="headerlink" title="1.文件上传方案一"></a>1.文件上传方案一</h3><p><strong>CommonsMultipartFile</strong></p>
 <p>CommonsMultipartFile常用方法通过spring管理后实现文件上传,具体过程百度很多,如下</p>
 <p><a href="https://www.2cto.com/kf/201412/360788.html" target="_blank" rel="noopener">https://www.2cto.com/kf/201412/360788.html</a></p>
 <p><a href="https://www.cnblogs.com/liaohongbin/p/7904536.html" target="_blank" rel="noopener">https://www.cnblogs.com/liaohongbin/p/7904536.html</a></p>
@@ -389,7 +415,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/10/23/NIO基础入门(一)之缓冲区Buffer/">NIO基础入门(一)之缓冲区Buffer</a>
+                    <a href="/2018/10/24/NIO基础入门(四)之Channel-to-Channel传输/">NIO基础入门(四)之Channel-to-Channel传输</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/24/NIO基础入门(六)之选择器Selectors/">NIO基础入门(六)之选择器selectors</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/24/NIO基础入门(五)之Socket通道&管道/">NIO基础入门(五)之Socket通道&amp;管道</a>
                 </span>
             </li>
             
@@ -402,6 +440,12 @@
             <li class="list-group-item">
                 <span class="post-title">
                     <a href="/2018/10/23/NIO基础入门(三)之文件锁定与内存映射文件/">NIO基础入门(三)之文件锁定与内存映射文件</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/23/NIO基础入门(一)之缓冲区Buffer/">NIO基础入门(一)之缓冲区Buffer</a>
                 </span>
             </li>
             
@@ -429,24 +473,6 @@
                 </span>
             </li>
             
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/10/09/Apollo基础(一)/">Apollo基础(一)</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/10/09/快速入门自定义Starter/">快速入门自定义Starter</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/10/01/WebSocket入门/">WebSocket入门</a>
-                </span>
-            </li>
-            
         </ul>
     </div>
 </aside>
@@ -465,19 +491,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/08/24/MQ基础与运用/">MQ基础与运用</a>
+                    <a href="/2018/10/24/NIO基础入门(五)之Socket通道&管道/">NIO基础入门(五)之Socket通道&amp;管道</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/02/04/Nginx基础原理/">Nginx基础原理</a>
+                    <a href="/2018/10/24/NIO基础入门(六)之选择器Selectors/">NIO基础入门(六)之选择器selectors</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/13/Spring Boot基础/">Spring Boot基础使用</a>
+                    <a href="/2018/07/06/Solr基础原理/">Solr基础原理</a>
                 </span>
             </li>
             
@@ -489,31 +515,31 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/04/17/jQuery基础(实用部分)整理/">jQuery基础(实用部分)整理</a>
+                    <a href="/2018/03/23/javaSE-集合/">javaSE-集合</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
+                    <a href="/2017/07/14/服务器搭建/">服务器搭建(持续更新)</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/09/10/微服务入门/">微服务入门</a>
+                    <a href="/2018/07/08/工具类集合分析--接口/">工具类集合分析--接口</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/05/08/基础排序 组合/">基础排序 组合</a>
+                    <a href="/2018/10/01/WebSocket入门/">WebSocket入门</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/09/15/Struts2基础/">Struts2基础</a>
+                    <a href="/2018/06/04/Shiro基础原理/">Shiro基础原理</a>
                 </span>
             </li>
             

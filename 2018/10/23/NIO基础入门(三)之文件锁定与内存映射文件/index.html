@@ -157,15 +157,11 @@
                         
                         
                         <li>
-                            <a href="/categories/框架/">框架</a>
-                        </li>
-                        
-                        <li>
                             <a href="/categories/Web基础/">Web基础</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/JAVA并发编程/">JAVA并发编程</a>
+                            <a href="/categories/框架/">框架</a>
                         </li>
                         
                         <li>
@@ -173,7 +169,15 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/JAVA并发编程/">JAVA并发编程</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/搭建/">搭建</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Linux基础/">Linux基础</a>
                         </li>
                         
                         <li>
@@ -189,10 +193,6 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/Linux基础/">Linux基础</a>
-                        </li>
-                        
-                        <li>
                             <a href="/categories/SE基础/">SE基础</a>
                         </li>
                         
@@ -205,11 +205,11 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/服务器/">服务器</a>
+                            <a href="/categories/初等数学/">初等数学</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/初等数学/">初等数学</a>
+                            <a href="/categories/服务器/">服务器</a>
                         </li>
                         
                         <li>
@@ -332,7 +332,7 @@
 <p><strong>3-2.方法</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public abstract MappedByteBuffer map(MapMode mode,long position, long size)throws IOException;</span><br></pre></td></tr></table></figure>
 <p><strong>第一个参数MapMode</strong>:指定内存映射策略</p>
-<p> <code>MapMode READ_ONLY //只读,force操作无法在该策略下生效`</code>MapMode READ_WRITE //读写<code></code>MapMode PRIVATE  //私有副本拷贝页,所有操作不影响本地文件,修改的是内存副本,如果内存清空会丢失,force操作无法在该策略下生效`</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MapMode READ_ONLY //只读,force操作无法在该策略下生效</span><br><span class="line">MapMode READ_WRITE //读写</span><br><span class="line">MapMode PRIVATE  //私有副本拷贝页,所有操作不影响本地文件,修改的是内存副本,如果内存清空会丢失,force操作无法在该策略下生效</span><br></pre></td></tr></table></figure>
 <p><strong>第二个参数position</strong>:映射文件的起始位置,0是从头开始,与lock参数相同意思</p>
 <p><strong>第三个参数size</strong>:cap,映射容量,与lock参数相同意思,<strong>通道.size 映射整个文件</strong></p>
 <p><strong>没有unmap()方法</strong></p>
@@ -343,7 +343,7 @@
 <p>将磁盘数据读取到内存,有的操作系统可能不会自动读取到内存(win7可以自动读取),因此可以使用load方法</p>
 <p><strong>过程:</strong></p>
 <p>类似打开一个文件:文件先被定位,然后创建一个文件句柄,准备好之后就可以通过这个句柄来访问文件数据,虚拟内存系统将根据指定需要,将文件中相应区域的数据读进来,因为将文件读到内存中也需要一次或多次,如果将所有数据读到内存中,那么<strong>相当于文件的所有页是常住内存,那么他的访问速度就和基于内存的缓冲区一样了</strong></p>
-<p>未完.待补充;</p>
+<h4 id="3-4-示例"><a href="#3-4-示例" class="headerlink" title="3-4.示例"></a><strong>3-4.示例</strong></h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">long start = System.currentTimeMillis();</span><br><span class="line">File src = new File(&quot;d:\\testdd.txt&quot;);</span><br><span class="line">File target = new File(&quot;d:\\testddTarget.txt&quot;);</span><br><span class="line"></span><br><span class="line">RandomAccessFile readRaf = new RandomAccessFile(src, &quot;rw&quot;);</span><br><span class="line">RandomAccessFile writeRaf = new RandomAccessFile(target, &quot;rw&quot;);</span><br><span class="line"></span><br><span class="line">FileChannel readChannel = readRaf.getChannel();</span><br><span class="line">FileChannel writeChannel = writeRaf.getChannel();</span><br><span class="line"></span><br><span class="line">MappedByteBuffer map = readChannel.map(MapMode.READ_WRITE, 0, readChannel.size()); //内存映射整个文件</span><br><span class="line"></span><br><span class="line">writeChannel.write(map);</span><br><span class="line">readChannel.close();</span><br><span class="line">writeChannel.close();</span><br><span class="line">readRaf.close();</span><br><span class="line">writeRaf.close();</span><br><span class="line">long end = System.currentTimeMillis();</span><br><span class="line">System.out.println(end-start); //28-90</span><br></pre></td></tr></table></figure>
 
     </div>
 </article>
@@ -426,7 +426,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/10/23/NIO基础入门(一)之缓冲区Buffer/">NIO基础入门(一)之缓冲区Buffer</a>
+                    <a href="/2018/10/24/NIO基础入门(四)之Channel-to-Channel传输/">NIO基础入门(四)之Channel-to-Channel传输</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/24/NIO基础入门(六)之选择器Selectors/">NIO基础入门(六)之选择器selectors</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/24/NIO基础入门(五)之Socket通道&管道/">NIO基础入门(五)之Socket通道&amp;管道</a>
                 </span>
             </li>
             
@@ -439,6 +451,12 @@
             <li class="list-group-item">
                 <span class="post-title">
                     <a href="/2018/10/23/NIO基础入门(三)之文件锁定与内存映射文件/">NIO基础入门(三)之文件锁定与内存映射文件</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/23/NIO基础入门(一)之缓冲区Buffer/">NIO基础入门(一)之缓冲区Buffer</a>
                 </span>
             </li>
             
@@ -466,24 +484,6 @@
                 </span>
             </li>
             
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/10/09/Apollo基础(一)/">Apollo基础(一)</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/10/09/快速入门自定义Starter/">快速入门自定义Starter</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2018/10/01/WebSocket入门/">WebSocket入门</a>
-                </span>
-            </li>
-            
         </ul>
     </div>
 </aside>
@@ -502,13 +502,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/07/10/Ajax基础服务/">Ajax基础服务</a>
+                    <a href="/2018/08/08/IDE基础-Eclipse/">IDE基础-Eclipse</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/02/04/Nginx基础原理/">Nginx基础原理</a>
+                    <a href="/2018/10/23/NIO基础入门(三)之文件锁定与内存映射文件/">NIO基础入门(三)之文件锁定与内存映射文件</a>
                 </span>
             </li>
             
@@ -520,19 +520,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/07/13/Spring Boot基础/">Spring Boot基础使用</a>
+                    <a href="/2018/07/03/hello-world/">Hello World</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2017/05/23/javaSE-接口&抽象类/">javaSE-接口&amp;抽象类</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2017/12/02/javaSE-数据类型/">javaSE-数据类型</a>
+                    <a href="/2017/09/18/java POI辅助框架/">java POI辅助框架基础</a>
                 </span>
             </li>
             
@@ -544,19 +538,25 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/09/10/微服务入门/">微服务入门</a>
+                    <a href="/2018/09/05/kafka基础/">Kafka基础</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/10/01/WebSocket入门/">WebSocket入门</a>
+                    <a href="/2018/10/09/快速入门自定义Starter/">快速入门自定义Starter</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2018/05/04/Redis基础原理/">Redis基础原理</a>
+                    <a href="/2018/10/10/Concurrent并发包入门(一)/">Concurrent并发包入门(一)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/23/NIO基础入门(一)之缓冲区Buffer/">NIO基础入门(一)之缓冲区Buffer</a>
                 </span>
             </li>
             
